@@ -56,7 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Target Frenzy.sln",
+    "dotnet.defaultSolution": "TargetFrenzy.sln",
     "cSpell.words": [
         "Lerp",
         "Lerping"
