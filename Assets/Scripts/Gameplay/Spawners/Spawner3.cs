@@ -7,42 +7,32 @@ public class Spawner3 : SpawnerClass //This class inherits from the Spawner Clas
 
     //Variables & Lists
     private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
-    private float lerptime;
 
 
     void Start()
     {
-        //SpawnTargets(); //Call the SpawnTargets method here 
+        SpawnTargets(); //Call the SpawnTargets method here 
     }
 
-    void Update()
-    {
-        //Call the target Lerping method here
-        //TargetLerping();
-    }
 
     //Override the Instantiation code here
-    // public override void SpawnTargets()
-    // {
-    //     //StartCoroutine(SpawnRate());
-    //     foreach (GameObject prefabs in targetObjects)
-    //     {
-    //         GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
-    //         spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
-    //     }
-    // }
-    
+    public override void SpawnTargets()
+    {
+        StartCoroutine(InstantiateTargets());
+    }
 
-    // public override void TargetLerping()
-    // {
-        
-    //     for (int i = 0; i < spawnedTargets.Count; i++)
-    //     {
-    //         GameObject target = spawnedTargets[i]; //Accessing the targets in the spawned target list
-
-    //         lerptime += Time.deltaTime * targetMoveSpeed; //Increments the interpolation value using time.delta time multiplied by the move speed. Ensures consistent movement regardless of framerate
-
-    //         target.transform.position = Vector2.Lerp(startPos.transform.position, EndPos.transform.position, lerptime);
-    //     }
-    // }
+    IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
+    {
+        while (true) //Using a while loop so the spawning continues
+        {
+            foreach (GameObject prefabs in targetObjects)
+            {
+                GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
+                //Debug.Log("Spawning targets!");
+                spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
+                //Debug.Log("Waiting!");
+                yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class
+            }
+        }
+    }
 }

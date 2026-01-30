@@ -21,7 +21,6 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
         //TargetLerping();
     }
 
-
     //Override the Instantiation code here
     public override void SpawnTargets()
     {
@@ -30,26 +29,17 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
 
     IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
     {
-        foreach (GameObject prefabs in targetObjects)
+        while (true) //Using a while loop so the spawning continues
         {
-            GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
-            spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
-            yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class
+            foreach (GameObject prefabs in targetObjects)
+            {
+                GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
+                //Debug.Log("Spawning targets!");
+                spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
+                //Debug.Log("Waiting!");
+                yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class
+            }
         }
+        
     }
-
-    //-- Disregard this method! Target Lerping will be done by the targets itself and not the spawner!! ---//
-    
-    //Override the TargetLerping method Header
-    // public override void TargetLerping()
-    // {
-    //     for (int i = 0; i < spawnedTargets.Count; i++)
-    //     {
-    //         GameObject target = spawnedTargets[i]; //Accessing the targets in the spawned target list
-
-    //         lerptime += Time.deltaTime * targetMoveSpeed; //Increments the interpolation value using time.delta time multiplied by the move speed. Ensures consistent movement regardless of framerate
-
-    //         target.transform.position = Vector2.Lerp(startPos.transform.position, EndPos.transform.position, lerptime);
-    //     }
-    // }
 }

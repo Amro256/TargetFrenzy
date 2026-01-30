@@ -364,6 +364,10 @@ MonoBehaviour:
   EndPos: {fileID: 1022725211}
   targetObjects:
   - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
+  - {fileID: 6677434541727546543, guid: 644c247ac2935a749a2973f6ae4912f8, type: 3}
+  - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
+  - {fileID: 6677434541727546543, guid: 644c247ac2935a749a2973f6ae4912f8, type: 3}
+  - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +509,10 @@ MonoBehaviour:
   startPos: {fileID: 547356823}
   EndPos: {fileID: 674522541}
   targetObjects:
+  - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
+  - {fileID: 6677434541727546543, guid: 644c247ac2935a749a2973f6ae4912f8, type: 3}
+  - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
+  - {fileID: 6677434541727546543, guid: 644c247ac2935a749a2973f6ae4912f8, type: 3}
   - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
 --- !u!1 &609494573
 GameObject:
@@ -782,6 +790,10 @@ MonoBehaviour:
   startPos: {fileID: 1808147570}
   EndPos: {fileID: 1174213720}
   targetObjects:
+  - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
+  - {fileID: 6677434541727546543, guid: 644c247ac2935a749a2973f6ae4912f8, type: 3}
+  - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
+  - {fileID: 6677434541727546543, guid: 644c247ac2935a749a2973f6ae4912f8, type: 3}
   - {fileID: 6677434541727546543, guid: a23cc5badfbe83f44b6be548a2074a71, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
