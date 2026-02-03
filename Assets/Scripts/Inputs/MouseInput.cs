@@ -44,7 +44,7 @@ public class MouseInput : MonoBehaviour
         {
             currentTarget = hit.collider.gameObject;
             //Debug.Log("Basic Target Detected");
-            Debug.Log($"Hovering over: {currentTarget.name}"); 
+            //Debug.Log($"Hovering over: {currentTarget.name}"); 
            
         }
         else
@@ -60,14 +60,21 @@ public class MouseInput : MonoBehaviour
     {
         if (context.performed) //Check if the action has been performed / completed
         {
-            if (currentTarget != null) //If the mouse IS currently hovering over a target, destory the current target
+            if (currentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
-                Destroy(currentTarget);
+                BasicTarget bTarget = currentTarget.GetComponent<BasicTarget>();
+                
+                if (bTarget != null)
+                {
+                    bTarget.AddScore();
+                }
             }
             else
             {
                 Debug.Log("Currently not hovering over a target");
             }
+                Destroy(currentTarget);
+            
         }
     }
 }
