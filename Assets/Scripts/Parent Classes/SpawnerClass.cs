@@ -18,6 +18,10 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     [Header("Target Objects List")] //List of targets to Instantiate
     [SerializeField] protected List<GameObject> targetObjects = new List<GameObject>();
 
+    [Header("Movement Points")]
+    [SerializeField] protected Transform[] lerpPoints; //The spawner itself will hold the lerp points' transform, as this will allow me to drag and drop them into the inspector with no issue!
+    //NOTE: This is also using a protected access modifier, so each for the spawner classes will be able to access this variable.
+
 
     //Method to Instantiate target game objects
     public virtual void SpawnTargets()

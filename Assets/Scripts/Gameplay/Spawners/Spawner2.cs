@@ -23,7 +23,7 @@ public class Spawner2 : SpawnerClass //This class inherits from the Spawner Clas
 
     IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
     {
-        while (true) //Using a while loop so the spawning continues
+        while (true) //Using a while loop so spawning continues
         {
             foreach (GameObject prefabs in targetObjects)
             {

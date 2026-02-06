@@ -6,19 +6,20 @@ using UnityEngine;
 
 public class TargetClass : MonoBehaviour //Parent class that all the target scripts will inherit from
 {
+    [Header("References")]
+    protected Transform[] lerp_Points; //Array to store the lerpPoints' transform (the lerp points are a empty gameObjects) - ACCESS MODIFIER: Protected (This will give the derived class access to this variable)
+    private Rigidbody2D rb; //Reference to target's rigidbody component
+    private Vector3 initialSpawnPoint; //Private vector 3 storing the initial spawn position of the target from the spawner
+
     //General Variables
     [Header("General Variables")]
     [SerializeField] private float moveSpeed; //To control the speed of the targets
 
-
-    //Variables for score and target effects
+    //Variables for general gameplay effects
     [Header("Target Gameplay Effects")]
     [SerializeField] protected int score;
     [SerializeField] private int scoreMultiplier;
     [SerializeField] private int timePenalty;
-
-    private Rigidbody2D rb; //Reference to target's rigidbody component
-    private Vector3 initialSpawnPoint; //Private vector 3 that will be used to store the initial spawn position of the targets
 
     void Start()
     {
@@ -27,22 +28,13 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         //Grab a reference to the targets' initial spawn position on start 
         initialSpawnPoint = transform.position;
         Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position
-
-
-        rb.velocity = test(-0.5f, -2f).normalized * moveSpeed; //Normalising this ensures consistent movement!
-        
+        //rb.velocity = test(-0.5f, -2f).normalized * moveSpeed; //Normalising this ensures consistent movement!
     }
 
-    //Add a method to shoot the targets in a random direction when they spawn in
-    // public void ShootTargetsInRanDir()
-    // {
+    public void initialisePoints(Transform[] points) //As gameObjects can not be assigned to a prefab in the inspector, I will need to assign the lerp points to the targets during runtime
+    { //So this method is used to Initialise the lerp points by taking in an array of lerp points' transform
 
-    // }   
+        lerp_Points = points; //Assigning the lerp points declared above to the points taken in by this method
+    }
     
-    private Vector2 test(float min, float max)
-        {
-            var x = Random.Range(min, max);
-            var y = Random.Range(min, max);
-            return new Vector2(x, y);
-        }
 }
