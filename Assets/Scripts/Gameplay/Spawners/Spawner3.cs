@@ -29,6 +29,14 @@ public class Spawner3 : SpawnerClass //This class inherits from the Spawner Clas
             {
                 GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
                 //Debug.Log("Spawning targets!");
+
+                TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that derive from it, to it!
+
+                if (target != null)
+                {
+                    target.initialisePoints(lerpPoints); //Assign the lerp points to the targets by calling the initialisePoints from the target class
+                }
+
                 spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
                 //Debug.Log("Waiting!");
                 yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class

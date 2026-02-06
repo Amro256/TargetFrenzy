@@ -175,8 +175,3 @@ MonoBehaviour:
   score: 2
   scoreMultiplier: 0
   timePenalty: 0
-  lerpPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
