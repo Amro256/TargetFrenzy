@@ -17,6 +17,9 @@ public class MouseInput : MonoBehaviour
 
     private GameObject currentTarget; //To store the target the mouse is current hovering over
 
+    private int maxMisses = 3; //Amount of clicks the player gets before the game end
+    private int missCount = 0; //Variable to track how many misses the player has done
+
 
     private void Start()
     {
@@ -45,7 +48,7 @@ public class MouseInput : MonoBehaviour
             currentTarget = hit.collider.gameObject;
             //Debug.Log("Basic Target Detected");
             //Debug.Log($"Hovering over: {currentTarget.name}"); 
-           
+
         }
         else
         {
@@ -63,18 +66,32 @@ public class MouseInput : MonoBehaviour
             if (currentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
                 BasicTarget bTarget = currentTarget.GetComponent<BasicTarget>();
-                
+
                 if (bTarget != null)
                 {
                     bTarget.AddScore();
                 }
+                Destroy(currentTarget);
             }
             else
             {
-                Debug.Log("Currently not hovering over a target");
+                Debug.Log("You have clicked on nothing");
+                PlayerMiss();
+
             }
-                Destroy(currentTarget);
             
+
         }
     }
+
+    private void PlayerMiss()
+    {
+        missCount++;
+        Debug.Log("Missed Counts: " + missCount);
+
+        if (missCount >+ maxMisses)
+        {
+            Debug.Log("Game Over");
+         }
+     }
 }
