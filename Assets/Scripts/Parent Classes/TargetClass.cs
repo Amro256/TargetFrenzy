@@ -42,7 +42,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
             if (Vector3.Distance(transform.position, lerp_Points[currentPointIndex].position) < 0.5f)
             {
-                currentPointIndex++;
+                currentPointIndex = Random.Range(0, lerp_Points.Length);
             }
         }
     }
@@ -51,6 +51,11 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     { //So this method is used to Initialise the lerp points by taking in an array of the lerp points' transform
 
         lerp_Points = points; //Assigning the lerp points declared above to the points taken in by this method
+
+        if (currentPointIndex < lerp_Points.Length)
+        {
+            currentPointIndex = Random.Range(0, lerp_Points.Length);
+        }
     }
     
 }
