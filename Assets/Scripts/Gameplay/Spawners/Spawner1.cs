@@ -37,11 +37,15 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
                 GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
                 //Debug.Log("Spawning targets!");
 
-                TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that derive from it, to it!
+                TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that have the target class attached to it
 
-                if (target != null)
+                if (target != null) //Checks if the Instantiated targets have the target script attached to it, and if so, run the code below
                 {
-                    target.initialisePoints(lerpPoints); //Assign the lerp points to the targets by calling the initialisePoints from the target class
+                    target.initialisePoints(lerpPoints); //Assigns the lerp points to the targets by calling the initialisePoints from the target class
+                }
+                else
+                {
+                    Debug.LogError("No Target script found on the Instantiated target!"); //Error handling 
                 }
 
                 spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
