@@ -1,11 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+         }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +33,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void GameOver()
+    {
+        Time.timeScale = 0; //Acts as if the game is "paused"
+        Debug.Log("Gg lol");
+    }
+
     //Main Menu Functions
-    public void loadLevel() //Function that will load the level
+    public void LoadLevel() //Function that will load the level
     {
         SceneManager.LoadScene("GameScene");
         Debug.Log("Loading Scene");

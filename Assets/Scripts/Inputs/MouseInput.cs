@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -17,8 +18,8 @@ public class MouseInput : MonoBehaviour
 
     private GameObject currentTarget; //To store the target the mouse is current hovering over
 
-    private int maxMisses = 3; //Amount of clicks the player gets before the game end
-    private int missCount = 0; //Variable to track how many misses the player has done
+    private int maxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
+    private int missCount = 0; //Variable that will track the player's misses 
 
 
     private void Start()
@@ -77,21 +78,19 @@ public class MouseInput : MonoBehaviour
             {
                 Debug.Log("You have clicked on nothing");
                 PlayerMiss();
-
             }
-            
-
         }
     }
 
-    private void PlayerMiss()
+    private void PlayerMiss() //Method responsible for the player's misses
     {
         missCount++;
         Debug.Log("Missed Counts: " + missCount);
 
-        if (missCount >+ maxMisses)
+        if (missCount > +maxMisses)
         {
             Debug.Log("Game Over");
+            GameManager.Instance.GameOver(); 
          }
      }
 }
