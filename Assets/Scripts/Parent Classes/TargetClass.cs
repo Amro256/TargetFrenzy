@@ -32,6 +32,8 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
 
         //rb.velocity = test(-0.5f, -2f).normalized * moveSpeed; //Normalising this ensures consistent movement! (unused)
+
+        moveSpeed = Random.Range(10, 17);
     }
 
     void Update()

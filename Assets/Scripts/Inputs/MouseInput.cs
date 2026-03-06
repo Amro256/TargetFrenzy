@@ -78,6 +78,7 @@ public class MouseInput : MonoBehaviour
             {
                 Debug.Log("You have clicked on nothing");
                 PlayerMiss();
+                
             }
         }
     }
@@ -87,10 +88,14 @@ public class MouseInput : MonoBehaviour
         missCount++;
         Debug.Log("Missed Counts: " + missCount);
 
-        if (missCount > +maxMisses)
+        if (missCount > maxMisses)
         {
+            //The player input map needs to be disable here, as the game still registers inputs and the "OnFire" method is still called
+            Inputs.Player.Disable(); // This disables the player action map! 
+
             Debug.Log("Game Over");
-            GameManager.Instance.GameOver(); 
-         }
+            GameManager.Instance.GameOver();
+        }
+        return;
      }
 }
