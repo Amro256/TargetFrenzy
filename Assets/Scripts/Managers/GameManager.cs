@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     //Initial UI Testing - Refactor when its best
     [SerializeField] public TMP_Text scoreText;
     [SerializeField] public GameObject[] ammoSprites;
-
+    //Add a bool here for "IsPaused"
 
     void Awake()
     {
@@ -57,4 +57,6 @@ public class GameManager : MonoBehaviour
         Application.Quit();
         Debug.Log("Quitting the application");
     }
+
+    //Add a method here for gamePausing and calling the display pause UI from the UI manager
 }

@@ -14,7 +14,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     // [SerializeField] protected GameObject startPos;
     // [SerializeField] protected GameObject EndPos;
 
-
     [Header("Target Objects List")] //List of targets to Instantiate
     [SerializeField] protected List<GameObject> targetObjects = new List<GameObject>();
 
@@ -27,7 +26,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     public virtual void SpawnTargets()
     {
         //Method will be overridden by derived classes
-
     }
     
 }
