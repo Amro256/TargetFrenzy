@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class MouseInput : MonoBehaviour
@@ -21,6 +22,7 @@ public class MouseInput : MonoBehaviour
     private int maxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
     private int missCount = 0; //Variable that will track the player's misses 
 
+    [SerializeField] private AudioClip fireTest;
 
 
     private void Start()
@@ -68,6 +70,7 @@ public class MouseInput : MonoBehaviour
             if (currentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
                 BasicTarget bTarget = currentTarget.GetComponent<BasicTarget>();
+                 AudioManager.Instance.PlaySound(fireTest, 1f);
 
                 if (bTarget != null)
                 {
