@@ -8,7 +8,6 @@ public class Spawner2 : SpawnerClass //This class inherits from the Spawner Clas
     //Variables & Lists
     private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
 
-
     void Start()
     {
         SpawnTargets(); //Call the SpawnTargets method here

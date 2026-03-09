@@ -30,23 +30,4 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
 
     }
     
-
-    //-- Disregard this method! Target Lerping will be done by the targets itself and not the spawner!! ---//
-
-    //Method to handle lerping the targets between two points 
-
-    // public virtual void TargetLerping()
-    // {
-    //     //Method will be overridden by derived spawner classes
-    // }
-
-    // protected IEnumerator SpawnRate() -- Used for inital Debugging
-    // {
-    //     while (true)
-    //     {
-    //        Debug.Log("Test)");
-    //        yield return new WaitForSeconds(SpawnTime); 
-    //     }
-
-    // }
 }

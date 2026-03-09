@@ -8,14 +8,16 @@ using UnityEngine.SceneManagement;
 //For Initial UI testing
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
 
-    //Initial UI Testing
+    //Initial UI Testing - Refactor when its best
     [SerializeField] public TMP_Text scoreText;
+    [SerializeField] public GameObject[] ammoSprites;
 
 
     void Awake()
@@ -30,11 +32,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
+
     //General Methods 
     public void GameOver()
     {
         Time.timeScale = 0; //Acts as if the game is "paused"
         Debug.Log("Gg lol");
+
     }
 
     //Main Menu Functions

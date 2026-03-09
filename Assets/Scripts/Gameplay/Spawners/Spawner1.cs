@@ -16,11 +16,6 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
         SpawnTargets();
     }
 
-    void Update()
-    {
-        //Call the target Lerping method here
-        //TargetLerping();
-    }
 
     //Override the Instantiation code here
     public override void SpawnTargets()
