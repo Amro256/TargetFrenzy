@@ -22,6 +22,7 @@ public class MouseInput : MonoBehaviour
     private int missCount = 0; //Variable that will track the player's misses 
 
 
+
     private void Start()
     {
         Inputs = new TargetFrenzy(); // Creates a new instance of inputs. Next, enable to map which has the action
@@ -72,6 +73,7 @@ public class MouseInput : MonoBehaviour
                 {
                     bTarget.AddScore();
                 }
+
                 Destroy(currentTarget);
             }
             else
