@@ -93,15 +93,6 @@ public class MouseInput : MonoBehaviour
         missCount++;
         Debug.Log("Missed Counts: " + missCount);
 
-        //call a method that will destroy the current placeholder UI sprites when the player misses
-
-        foreach (GameObject sprites in GameManager.Instance.ammoSprites )
-        {
-            //Debug.Log("Ui assets removed"); -- Code is being called
-            sprites.SetActive(false); //This sets all of the sprites to false
-        }
-        
-
         if (missCount > maxMisses)
         {
             //The player input map needs to be disable here, as the game still registers inputs and the "OnFire" method is still called

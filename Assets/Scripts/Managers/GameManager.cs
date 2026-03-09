@@ -5,22 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//For Initial UI testing
-using UnityEngine.UI;
-using TMPro;
-using System.Runtime.Serialization;
-
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
 
+    //General variables and other things 
+    public static GameManager Instance; //Static instance so other scripts can access this
+    //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
-    //Initial UI Testing - Refactor when its best
-    [SerializeField] public TMP_Text scoreText;
-    [SerializeField] public GameObject[] ammoSprites;
-    //Add a bool here for "IsPaused"
-
-    void Awake()
+    void Awake() //Singleton pattern
     {
         if (Instance == null)
         {
@@ -31,8 +23,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
-
 
 
     //General Methods 

@@ -13,7 +13,7 @@ public class BasicTarget : TargetClass
         //Debug.Log("Before: " + totalScore); - Used for testing
         totalScore += score;
         //Update the UI text here - which gets called in the mouse input script
-        GameManager.Instance.scoreText.text = totalScore.ToString();
+        UIManager.Instance.scoreText.text = totalScore.ToString();
         
         //Debug.Log("After: " + totalScore); - Used for testing
 
