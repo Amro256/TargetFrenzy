@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class TargetClass : MonoBehaviour //Parent class that all the target scripts will inherit from

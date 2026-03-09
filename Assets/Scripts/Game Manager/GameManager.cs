@@ -5,9 +5,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//For Initial UI testing
+using UnityEngine.UI;
+using TMPro;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+
+    //Initial UI Testing
+    [SerializeField] public TMP_Text scoreText;
+
 
     void Awake()
     {
@@ -18,21 +27,10 @@ public class GameManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-         }
+        }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    //General Methods 
     public void GameOver()
     {
         Time.timeScale = 0; //Acts as if the game is "paused"
@@ -52,5 +50,5 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Quitting the application");
-    } 
+    }
 }

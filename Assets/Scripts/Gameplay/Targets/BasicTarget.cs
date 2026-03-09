@@ -10,9 +10,14 @@ public class BasicTarget : TargetClass
     //Create a method that will handle the score and then call it in the mouse input script
     public void AddScore() //This could be moved to the game manager down the line
     {
-        Debug.Log("Before: " + totalScore);
+        //Debug.Log("Before: " + totalScore); - Used for testing
         totalScore += score;
-        Debug.Log("After: " + totalScore);
+        //Update the UI text here - which gets called in the mouse input script
+        GameManager.Instance.scoreText.text = totalScore.ToString();
+        
+        //Debug.Log("After: " + totalScore); - Used for testing
+
+
     } 
 }
 
