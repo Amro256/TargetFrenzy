@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     //General variables and other things 
     public static GameManager Instance; //Static instance so other scripts can access this
-    //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
+    private bool isPaused;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
     void Awake() //Singleton pattern
     {
@@ -24,6 +24,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        UIManager.Instance.isTimerRunning = true; //Sets the timer bool to true, so the timer starts running when the game starts
+    }
+
+
+    //Re-add the update method to handle time
+    void Update() //
+    {
+        if (UIManager.Instance.isTimerRunning)
+        {
+            if (UIManager.Instance.timeRemaining > 0)
+            {
+                UIManager.Instance.timeRemaining -= Time.deltaTime;
+                UIManager.Instance.displayTime(UIManager.Instance.timeRemaining);
+            }
+            else
+            {
+                Debug.Log("Time has run out bozo!");
+                UIManager.Instance.timeRemaining = 0; //Sets the tiem remaining to 0 to prevent it from going into the negatives
+                UIManager.Instance.isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
+            }
+        }
+    }
 
     //General Methods 
     public void GameOver()
