@@ -70,8 +70,8 @@ public class MouseInput : MonoBehaviour
             if (currentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
                 BasicTarget bTarget = currentTarget.GetComponent<BasicTarget>();
-                 AudioManager.Instance.PlaySound(fireTest, 1f);
 
+                //AudioManager.Instance.PlaySound(fireTest, 1f); - This is working as a simple test. Rework and review the audio manager later down the line :D
                 if (bTarget != null)
                 {
                     bTarget.AddScore();
@@ -82,6 +82,7 @@ public class MouseInput : MonoBehaviour
             else
             {
                 Debug.Log("You have clicked on nothing");
+                UIManager.Instance.imageVisability(); //This currently disables all of the sprites at once instead of one by one 
                 PlayerMiss();
                 
             }

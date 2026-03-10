@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     //General variables / others
     public float timeRemaining = 10;
     public bool isTimerRunning;
+    private int ammoIndex = 0;
 
 
     [Header("TMP Text References")]
@@ -21,7 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text timerText;
 
     [Header("Game Objects")]
-    [SerializeField] private GameObject[] ammoSprites;
+    [SerializeField] public GameObject[] ammoSprites;
 
 
     void Awake() //Singleton pattern
@@ -49,4 +50,12 @@ public class UIManager : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    public void imageVisability() //Call this method in the mouseInput script
+    {
+        if (ammoIndex < ammoSprites.Length)
+        {
+            ammoSprites[ammoIndex].SetActive(false);
+            ammoIndex++;
+         }
+    }
 }

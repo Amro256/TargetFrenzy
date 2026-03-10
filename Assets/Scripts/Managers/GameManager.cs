@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     //General variables and other things 
     public static GameManager Instance; //Static instance so other scripts can access this
-    private bool isPaused;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
+    //private bool isPaused;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
     void Awake() //Singleton pattern
     {
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
 
     //Re-add the update method to handle time
-    void Update() //
+    void Update() //Refactor this later - Basically create a public methods in the UI script and call it here. It's a bit messy to keep have to use "UIManager.Instance" every time lol
     {
         if (UIManager.Instance.isTimerRunning)
         {
