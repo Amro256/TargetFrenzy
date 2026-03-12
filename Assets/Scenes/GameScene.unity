@@ -325,9 +325,9 @@ RectTransform:
   - {fileID: 511317902}
   m_Father: {fileID: 1402205135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -37.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &166904096
@@ -2229,8 +2229,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeRemaining: 90
   isTimerRunning: 0
-  scoreText: {fileID: 1254299928}
-  timerText: {fileID: 223418915}
+  ScoreText: {fileID: 1254299928}
+  TimerText: {fileID: 223418915}
+  PauseMenuCanvas: {fileID: 1959797049}
   ammoSprites:
   - {fileID: 466574538}
   - {fileID: 223568378}
@@ -3121,9 +3122,9 @@ RectTransform:
   - {fileID: 625568916}
   m_Father: {fileID: 1402205135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -62.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1600662316
@@ -3479,7 +3480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1959797047
 MonoBehaviour:
   m_ObjectHideFlags: 0

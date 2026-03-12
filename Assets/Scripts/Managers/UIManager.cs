@@ -17,9 +17,10 @@ public class UIManager : MonoBehaviour
     private int ammoIndex = 0;
 
 
-    [Header("TMP Text References")]
-    [SerializeField] public TMP_Text scoreText;
-    [SerializeField] private TMP_Text timerText;
+    [Header("UI References")]
+    [SerializeField] public TMP_Text ScoreText;
+    [SerializeField] private TMP_Text TimerText;
+    [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
 
     [Header("Game Objects")]
     [SerializeField] public GameObject[] ammoSprites;
@@ -47,7 +48,7 @@ public class UIManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60); //Modulo operator - Returns the remainder after division
 
         //display the time value
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void imageVisability() //Call this method in the mouseInput script
@@ -56,6 +57,20 @@ public class UIManager : MonoBehaviour
         {
             ammoSprites[ammoIndex].SetActive(false);
             ammoIndex++;
-         }
+        }
     }
+
+
+    public void DisplayPauseMenu() //Method that can be called by the game manager script to display the pause menu
+    {
+        //Add code here
+        PauseMenuCanvas.enabled = true; //Now the canvas should be enabled when the player gets a game over
+    }
+
+     public void DisablePauseMenu() 
+    {
+        //Add code here
+        PauseMenuCanvas.enabled = false;
+    }
+    
 }

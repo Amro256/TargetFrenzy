@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         UIManager.Instance.isTimerRunning = true; //Sets the timer bool to true, so the timer starts running when the game starts
+        UIManager.Instance.DisablePauseMenu();
     }
 
 
@@ -54,6 +55,9 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0; //Acts as if the game is "paused"
         Debug.Log("Gg lol");
+
+        //Call method to display the "Pause menu". This will be used for testing
+        UIManager.Instance.DisplayPauseMenu();
 
     }
 
