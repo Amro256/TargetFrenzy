@@ -75,6 +75,7 @@ public class MouseInput : MonoBehaviour
                 if (bTarget != null)
                 {
                     bTarget.AddScore();
+                    bTarget.MultiTest();
                 }
 
                 Destroy(currentTarget);

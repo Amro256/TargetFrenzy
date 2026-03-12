@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Gg lol");
 
         //Call method to display the "Pause menu". This will be used for testing
-        UIManager.Instance.DisplayPauseMenu();
+        //UIManager.Instance.DisplayPauseMenu(); - This is working! It has been commented out for now, though
 
     }
 

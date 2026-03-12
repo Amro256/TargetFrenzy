@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] public TMP_Text ScoreText;
     [SerializeField] private TMP_Text TimerText;
+    [SerializeField] public TMP_Text MultiText;
     [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
 
     [Header("Game Objects")]

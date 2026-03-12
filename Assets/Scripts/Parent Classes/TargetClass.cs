@@ -18,7 +18,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     //Variables for general gameplay effects
     [Header("Target Gameplay Effects")]
     [SerializeField] protected int score;
-    [SerializeField] private int scoreMultiplier;
+    [SerializeField] protected int scoreMultiplier;
     [SerializeField] private int timePenalty;
 
     void Start()
@@ -28,7 +28,6 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         //Grab a reference to the targets' initial spawn position on start 
         initialSpawnPoint = transform.position;
         Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position
-
 
         //rb.velocity = test(-0.5f, -2f).normalized * moveSpeed; //Normalising this ensures consistent movement! (unused)
 
