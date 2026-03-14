@@ -23,6 +23,9 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     void Start()
     {
+        //Do we really need to be using Rigidbody physics for this lol - Review down the line
+
+        
         rb = GetComponent<Rigidbody2D>(); //Gets the Rigidbody2D component of the target
 
         //Grab a reference to the targets' initial spawn position on start 

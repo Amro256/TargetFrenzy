@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - BasicTarget
+  - MultiTarget
+  - AUTarget
+  - PenTarget
+  - TimeUpTarget
+  - TimeDownTarget
   layers:
   - Default
   - TransparentFX
