@@ -10,16 +10,13 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance; //Static instance so other scripts can access this
 
 
-
     //General variables / others
-    public float timeRemaining = 10;
-    public bool isTimerRunning;
     private int ammoIndex = 0;
 
 
     [Header("UI References")]
     [SerializeField] public TMP_Text ScoreText;
-    [SerializeField] private TMP_Text TimerText;
+    [SerializeField] public TMP_Text TimerText;
     [SerializeField] public TMP_Text MultiText;
     [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
 
@@ -41,7 +38,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    //Method here to display the time
+    //Method here to display the time (Now being moved to the Time Manager Script to isolate the system)
     public void displayTime(float timeToDisplay)
     {
         //Minutes 
@@ -60,7 +57,6 @@ public class UIManager : MonoBehaviour
             ammoIndex++;
         }
     }
-
 
     public void DisplayPauseMenu() //Method that can be called by the game manager script to display the pause menu
     {

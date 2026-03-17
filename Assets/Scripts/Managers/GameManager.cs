@@ -26,29 +26,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        UIManager.Instance.isTimerRunning = true; //Sets the timer bool to true, so the timer starts running when the game starts
+        // UIManager.Instance.isTimerRunning = true; 
         UIManager.Instance.DisablePauseMenu(); //Update these to use an event driven approach instead
     }
 
-
-    //Re-add the update method to handle time
-    void Update() //Refactor this later - Basically create a public methods in the UI script and call it here. It's a bit messy to keep have to use "UIManager.Instance" every time lol
-    {
-        if (UIManager.Instance.isTimerRunning)
-        {
-            if (UIManager.Instance.timeRemaining > 0)
-            {
-                UIManager.Instance.timeRemaining -= Time.deltaTime;
-                UIManager.Instance.displayTime(UIManager.Instance.timeRemaining);
-            }
-            else
-            {
-                Debug.Log("Time has run out bozo!");
-                UIManager.Instance.timeRemaining = 0; //Sets the tiem remaining to 0 to prevent it from going into the negatives
-                UIManager.Instance.isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
-            }
-        }
-    }
 
     //General Methods 
     public void GameOver()
