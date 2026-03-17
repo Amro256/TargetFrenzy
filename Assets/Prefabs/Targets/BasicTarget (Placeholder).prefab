@@ -172,6 +172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  score: 2
+  TargetScoreValue: 2
   scoreMultiplier: 4
   timePenalty: 0

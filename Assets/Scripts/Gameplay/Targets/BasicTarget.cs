@@ -8,33 +8,19 @@ public class BasicTarget : TargetClass
 
     //Variables for general gameplay effects
     [Header("Target Effects")]
-    //[SerializeField] private int score; //Changing to this private or static causes issues when trying to isolate the system
-    [SerializeField] private int scoreMultiplier;
-    [SerializeField] private int timePenalty;
-
-
-    private int TotalScore; //General Variable to store the total score
-    private int currentScore; //To keep track of the current score
+    [SerializeField] public int ScoreValue = 2; //Changing to this private or static causes issues when trying to isolate the system
+    [SerializeField] private int ScoreMultiValue; 
+    [SerializeField] private int TimeDeduction;
 
 
     //private static int CurrentMultiValue; //Variable to store the current Multiplier value
 
     //private bool MultiActive = false;
 
-    //Create a method that will handle the score and then call it in the mouse input script#endregion
-
-    public void AddScore() //This could be moved to the game manager down the line
+    //Create a method that will handle the score and then call it in the mouse input script
+    public void AddScore() //This methods gets called in the MouseInput Script
     {
-        ScoreManager.Instance.ScoreIncrease(2);
-        // //Debug.Log("Before: " + totalScore); - Used for testing
-        // TotalScore += score;
-        // currentScore = TotalScore;
-
-        // // //Update the UI text here - which gets called in the mouse input script
-        // UIManager.Instance.ScoreText.text = currentScore.ToString();
-
-        //Debug.Log("After: " + totalScore); - Used for testing
-
+        ScoreManager.Instance.ScoreIncrease(ScoreValue);
     }
     
 

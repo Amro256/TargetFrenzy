@@ -6,9 +6,9 @@ public class TimeIncreaseTarget : TargetClass
 {
     //Add functionality here
 
-    //Variables for general gameplay effects
+   //Variables for general gameplay effects
     [Header("Target Effects")]
-    [SerializeField] private int score; //Changing to this private or static causes issues when trying to isolate the system
-    [SerializeField] private int scoreMultiplier;
-    [SerializeField] private int timePenalty;
+    [SerializeField] private int ScoreValue; //Changing to this private or static causes issues when trying to isolate the system
+    [SerializeField] private int ScoreMultiValue;
+    [SerializeField] private int TimeDeduction;
 }
