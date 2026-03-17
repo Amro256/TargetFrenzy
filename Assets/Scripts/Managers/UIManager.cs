@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void imageVisability() //Call this method in the mouseInput script
+    public void ToggleAmmoVisibility() //Call this method in the mouseInput script
     {
         if (ammoIndex < ammoSprites.Length)
         {

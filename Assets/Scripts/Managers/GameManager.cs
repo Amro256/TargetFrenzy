@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         UIManager.Instance.isTimerRunning = true; //Sets the timer bool to true, so the timer starts running when the game starts
-        UIManager.Instance.DisablePauseMenu();
+        UIManager.Instance.DisablePauseMenu(); //Update these to use an event driven approach instead
     }
 
 

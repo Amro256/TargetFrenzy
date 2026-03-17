@@ -72,7 +72,8 @@ public class MouseInput : MonoBehaviour
                 BasicTarget bTarget = currentTarget.GetComponent<BasicTarget>();
 
                 //AudioManager.Instance.PlaySound(fireTest, 1f); - This is working as a simple test. Rework and review the audio manager later down the line :D
-                if (bTarget != null)
+
+                if (bTarget != null) //Change the If statement to a switch statement (due to multiple targets)
                 {
                     bTarget.AddScore();
                     bTarget.MultiTest();
@@ -83,7 +84,7 @@ public class MouseInput : MonoBehaviour
             else
             {
                 Debug.Log("You have clicked on nothing");
-                UIManager.Instance.imageVisability(); //This currently disables all of the sprites at once instead of one by one 
+                UIManager.Instance.ToggleAmmoVisibility(); //This currently disables all of the sprites at once instead of one by one 
                 PlayerMiss();
                 
             }
