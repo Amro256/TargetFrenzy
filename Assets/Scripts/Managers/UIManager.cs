@@ -38,17 +38,6 @@ public class UIManager : MonoBehaviour
     }
 
 
-    //Method here to display the time (Now being moved to the Time Manager Script to isolate the system)
-    public void displayTime(float timeToDisplay)
-    {
-        //Minutes 
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        float seconds = Mathf.FloorToInt(timeToDisplay % 60); //Modulo operator - Returns the remainder after division
-
-        //display the time value
-        TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-
     public void ToggleAmmoVisibility() //Call this method in the mouseInput script
     {
         if (ammoIndex < ammoSprites.Length)

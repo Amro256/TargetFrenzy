@@ -73,10 +73,10 @@ public class MouseInput : MonoBehaviour
 
                 //AudioManager.Instance.PlaySound(fireTest, 1f); - This is working as a simple test. Rework and review the audio manager later down the line :D
 
-                if (bTarget != null) //Change the If statement to a switch statement (due to multiple targets)
+                if (bTarget != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
                     bTarget.AddScore();
-                    bTarget.MultiTest();
+                    //bTarget.MultiTest();
                 }
 
                 Destroy(currentTarget);

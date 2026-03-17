@@ -28,7 +28,7 @@ public class TimeManager : MonoBehaviour
             else
             {
                 Debug.Log("Time has run out bozo!");
-                timeRemaining = 0; //Sets the tiem remaining to 0 to prevent it from going into the negatives
+                timeRemaining = 0; //Sets the time remaining to 0 to prevent it from going into the negatives
                 isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
             }
         }
@@ -42,7 +42,19 @@ public class TimeManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60); //Modulo operator - Returns the remainder after division
 
         //display the time value
-        UIManager.Instance.TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        UIManager.Instance.TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //Needs to be decoupled
+    }
+
+
+    public void TimeIncrease()
+    {
+
+    }
+
+
+    public void TimeDeduction()
+    {
+
     }
 
 }

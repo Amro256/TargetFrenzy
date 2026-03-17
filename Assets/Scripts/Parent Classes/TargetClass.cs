@@ -7,32 +7,19 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 {
     [Header("References")]
     protected Transform[] lerp_Points; //Array to store the lerpPoints' transform (the lerp points are empty game Objects) - ACCESS MODIFIER: Protected (This will give the derived class access to this variable)
-    private Rigidbody2D rb; //Reference to target's rigidbody component
     private Vector3 initialSpawnPoint; //Private vector 3 storing the initial spawn position of the target from the spawner
     private int currentPointIndex = 0; //Variable that will be used to store the current point the target is moving to
 
     //General Variables
-    [Header("General Variables")]
+    [Header("Movement Speed")]
     [SerializeField] private float moveSpeed; //To control the speed of the targets
-
-    //Variables for general gameplay effects
-    [Header("Target Gameplay Effects")]
-    [SerializeField] protected int score;
-    [SerializeField] protected int scoreMultiplier;
-    [SerializeField] private int timePenalty;
 
     void Start()
     {
-        //Do we really need to be using Rigidbody physics for this lol - Review down the line
-
-
-        rb = GetComponent<Rigidbody2D>(); //Gets the Rigidbody2D component of the target
-
         //Grab a reference to the targets' initial spawn position on start 
         initialSpawnPoint = transform.position;
-        Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position
 
-        //rb.velocity = test(-0.5f, -2f).normalized * moveSpeed; //Normalising this ensures consistent movement! (unused)
+        Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position
 
         moveSpeed = Random.Range(10, 17);
     }
@@ -60,8 +47,5 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
             currentPointIndex = Random.Range(0, lerp_Points.Length);
         }
     }
-    
-
-    //Maybe create a method here for scoring instead of having to update it within each target script
     
 }
