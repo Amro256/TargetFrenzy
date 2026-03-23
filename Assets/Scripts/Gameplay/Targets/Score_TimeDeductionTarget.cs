@@ -10,5 +10,11 @@ public class Score_TimeDeductionTarget : TargetClass
     [Header("Target Effects")]
     [SerializeField] private int score; //Changing to this private or static causes issues when trying to isolate the system
     [SerializeField] private int scoreMultiplier;
-    [SerializeField] private int timePenalty;   
+    [SerializeField] private int timePenalty;
+
+
+    public override void OnHit()
+    {
+        //Add code here for score and time deduction
+    }
 }

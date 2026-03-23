@@ -11,4 +11,13 @@ public class MultiplierTarget : TargetClass
     [SerializeField] private int ScoreValue; //Changing to this private or static causes issues when trying to isolate the system
     [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeDeduction;
+
+
+    public override void OnHit()
+    {
+        //Add Mutlivalue here
+    }
 }
+
+
+

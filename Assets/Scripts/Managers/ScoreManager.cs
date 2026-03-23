@@ -9,13 +9,12 @@ public class ScoreManager : MonoBehaviour
     //This script will be used to be track and store the player's score. It will also make it easier to implement the multiplier functionality without the code becoming a mess.
     public static ScoreManager Instance;
 
-    //General Variables to store the store
+    //General Variables for scoring and score multiplier
     private int TotalScore; //General Variable to store the total score.
     private int CurrentScore; //Variable to track and store the current score
-
-
-    //private static int CurrentMultiValue; //Will be used to track and store the current multiplier value
-    //private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not! --Will be implemented soon--
+    private static int CurrentMultiValue; //Will be used to track and store the current multiplier value
+    private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not!
+    
 
     void Awake() //Singleton Pattern  
     {
@@ -37,6 +36,36 @@ public class ScoreManager : MonoBehaviour
         //Update the UI text here
         UIManager.Instance.ScoreText.text = CurrentScore.ToString();
     }
+    
+
+    //Add method here to handle score Multiplier --Currently works! Call this method for targets will be use the multiplier value
+    // public void ScoreMultiplier(int MultiValue)
+    // {
+    //     CurrentMultiValue = MultiValue;
+    //     Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
+    //     IsMultiActive = true; //Set the boolean to true
+
+    //     if (IsMultiActive)
+    //     {
+    //         Debug.Log("MultiActive!");
+
+
+    //         //Apply the value to the score and update the text score
+    //         CurrentScore = TotalScore * CurrentMultiValue;
+    //         Debug.Log("Current Score: " + CurrentScore);
+
+    //         //Update text score
+    //         UIManager.Instance.ScoreText.text = CurrentScore.ToString();
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Multi currently not activated!");
+    //     }
+
+    //     //Update the text display
+    //     UIManager.Instance.MultiText.text = CurrentMultiValue.ToString();
+    // }
+
 
     public void ScoreDeduction() //Method for handling deduction in score
     {
@@ -44,9 +73,5 @@ public class ScoreManager : MonoBehaviour
     }
 
 
-    //Add a future method to handle score Multiplier
-    public void ScoreMultiplier()
-    {
-        //Code here!
-    }
+    
 }

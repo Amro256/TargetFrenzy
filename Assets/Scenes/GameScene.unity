@@ -1605,7 +1605,6 @@ MonoBehaviour:
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
-  fireTest: {fileID: 8300000, guid: 6b8c06b7ecee76547ab283145679d511, type: 3}
 --- !u!4 &609494575
 Transform:
   m_ObjectHideFlags: 0
@@ -2012,7 +2011,7 @@ MonoBehaviour:
   SpawnTime: 3.5
   targetObjects:
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
-  - {fileID: 1401802516157928131, guid: 6f60d3692f854de4c9981213e96d1f6a, type: 3}
+  - {fileID: 5752063571285583825, guid: 2856ffc113339a24392cbbade1d8096f, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
