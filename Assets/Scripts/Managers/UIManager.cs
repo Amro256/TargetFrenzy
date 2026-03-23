@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void ToggleAmmoVisibility() //Call this method in the mouseInput script
+    public void ToggleAmmoSpriteVisibility() //Call this method in the mouseInput script
     {
         if (ammoIndex < ammoSprites.Length)
         {

@@ -22,7 +22,6 @@ public class MouseInput : MonoBehaviour
     private int maxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
     private int missCount = 0; //Variable that will track the player's misses 
 
-    [SerializeField] private AudioClip fireTest;
 
 
     private void Start()
@@ -50,8 +49,7 @@ public class MouseInput : MonoBehaviour
         if (hit)
         {
             currentTarget = hit.collider.gameObject;
-            //Debug.Log("Basic Target Detected");
-            //Debug.Log($"Hovering over: {currentTarget.name}"); 
+           //Debug.Log($"Hovering over: {currentTarget.name}"); 
 
         }
         else
@@ -69,13 +67,11 @@ public class MouseInput : MonoBehaviour
         {
             if (currentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
-                BasicTarget bTarget = currentTarget.GetComponent<BasicTarget>();
-
-                //AudioManager.Instance.PlaySound(fireTest, 1f); - This is working as a simple test. Rework and review the audio manager later down the line :D
-
+                TargetClass bTarget = currentTarget.GetComponent<TargetClass>();
+                
                 if (bTarget != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
-                    bTarget.AddScore();
+                    bTarget.OnHit();
                     //bTarget.MultiTest();
                 }
 
@@ -84,7 +80,7 @@ public class MouseInput : MonoBehaviour
             else
             {
                 Debug.Log("You have clicked on nothing");
-                UIManager.Instance.ToggleAmmoVisibility(); //This currently disables all of the sprites at once instead of one by one 
+                UIManager.Instance.ToggleAmmoSpriteVisibility(); //This currently disables all of the sprites at once instead of one by one 
                 PlayerMiss();
                 
             }
@@ -103,7 +99,7 @@ public class MouseInput : MonoBehaviour
 
             Debug.Log("Game Over");
             GameManager.Instance.GameOver();
+            return;
         }
-        return;
      }
 }

@@ -9,9 +9,10 @@ public class ScoreManager : MonoBehaviour
     //This script will be used to be track and store the player's score. It will also make it easier to implement the multiplier functionality without the code becoming a mess.
     public static ScoreManager Instance;
 
-    //Variables
+    //General Variables to store the store
     private int TotalScore; //General Variable to store the total score.
     private int CurrentScore; //Variable to track and store the current score
+
 
     //private static int CurrentMultiValue; //Will be used to track and store the current multiplier value
     //private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not! --Will be implemented soon--
@@ -28,7 +29,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void ScoreIncrease(int ScoreValue) //Method for handling adding score
+    public void ScoreIncrease(int ScoreValue) //Method for handling adding score that takes in an integer as a parameter 
     {
         TotalScore += ScoreValue;
         CurrentScore = TotalScore;

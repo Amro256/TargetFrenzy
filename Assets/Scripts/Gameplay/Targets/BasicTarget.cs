@@ -6,10 +6,10 @@ using UnityEngine.SocialPlatforms.Impl;
 public class BasicTarget : TargetClass
 {
 
-    //Variables for general gameplay effects
+    //Values for the score, Multiplier, and how much time to deduct for this target
     [Header("Target Effects")]
-    [SerializeField] public int ScoreValue = 2; //Changing to this private or static causes issues when trying to isolate the system
-    [SerializeField] private int ScoreMultiValue; 
+    [SerializeField] private int ScoreValue = 2; //Changing to this private or static causes issues when trying to isolate the system
+    [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeDeduction;
 
 
@@ -18,7 +18,13 @@ public class BasicTarget : TargetClass
     //private bool MultiActive = false;
 
     //Create a method that will handle the score and then call it in the mouse input script
-    public void AddScore() //This methods gets called in the MouseInput Script
+    
+    // public void AddScore() //This methods gets called in the MouseInput Script
+    // {
+    //     ScoreManager.Instance.ScoreIncrease(ScoreValue);
+    // }
+
+    public override void OnHit()
     {
         ScoreManager.Instance.ScoreIncrease(ScoreValue);
     }

@@ -47,5 +47,10 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
             currentPointIndex = Random.Range(0, lerp_Points.Length);
         }
     }
+
+    public virtual void OnHit() //Child classes will override this method
+    {
+
+    } 
     
 }
