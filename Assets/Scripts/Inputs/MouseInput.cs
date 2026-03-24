@@ -67,12 +67,11 @@ public class MouseInput : MonoBehaviour
         {
             if (currentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
-                TargetClass bTarget = currentTarget.GetComponent<TargetClass>();
+                TargetClass Target = currentTarget.GetComponent<TargetClass>();
                 
-                if (bTarget != null) //Change the If statement to a switch statement (Due to the multiple targets)
+                if (Target != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
-                    bTarget.OnHit();
-                    //bTarget.MultiTest();
+                    Target.OnHit();
                 }
 
                 Destroy(currentTarget);

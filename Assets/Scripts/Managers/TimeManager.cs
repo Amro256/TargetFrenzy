@@ -72,7 +72,6 @@ public class TimeManager : MonoBehaviour
         } 
     }
 
-
     public void TimeDeduction(float timeDownValue) //We need to check whether the timer is running. If it is, then perform the code below 
     {
         if (isTimerRunning)

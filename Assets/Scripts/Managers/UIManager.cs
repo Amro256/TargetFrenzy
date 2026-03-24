@@ -40,6 +40,8 @@ public class UIManager : MonoBehaviour
 
     public void ToggleAmmoSpriteVisibility() //Call this method in the mouseInput script
     {
+        AmmoManager.Instance.UpdateAmmoValue(1); //Works
+
         if (ammoIndex < ammoSprites.Length)
         {
             ammoSprites[ammoIndex].SetActive(false);
