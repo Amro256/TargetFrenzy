@@ -67,8 +67,8 @@ public class TimeManager : MonoBehaviour
         //We need to check whether the timer is running. If it is, then perform the code below
         if (isTimerRunning)
         {
-            timeRemaining += timeUpValue; //Update the 'time remaining' variable to increase or deduct time
-            displayTime(timeRemaining);
+            timeRemaining += timeUpValue; //Update the 'time remaining' variable to increase time
+            displayTime(timeRemaining); //Calling the displayTime method to update the UI
         } 
     }
 
@@ -77,8 +77,8 @@ public class TimeManager : MonoBehaviour
     {
         if (isTimerRunning)
         {
-            timeRemaining -= timeDownValue; //Update the 'time remaining' variable to increase or deduct time
-            displayTime(timeRemaining);
+            timeRemaining -= timeDownValue; //Update the 'time remaining' variable to deduct time
+            displayTime(timeRemaining); //Calling the displayTime method to update the UI
         }
     }
 }
