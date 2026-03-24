@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4960658256727804275}
   - component: {fileID: 439279850746723234}
   - component: {fileID: 2193534146524870659}
-  - component: {fileID: 8467824249643538419}
+  - component: {fileID: -2664226318923393681}
   m_Layer: 0
   m_Name: Multiplier_Target
   m_TagString: MultiTarget
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8467824249643538419
+--- !u!114 &-2664226318923393681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,10 +168,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6085200119235597379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 018606286507a2448a88aea425a5c553, type: 3}
+  m_Script: {fileID: 11500000, guid: 13d7aef42cfde1d47bd11dda22bb8dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  score: 0
-  scoreMultiplier: 2
-  timePenalty: 0
+  ScoreValue: 0
+  ScoreMultiValue: 4
+  TimeDeduction: 0

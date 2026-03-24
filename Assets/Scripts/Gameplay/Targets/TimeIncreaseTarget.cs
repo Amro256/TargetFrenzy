@@ -8,12 +8,14 @@ public class TimeIncreaseTarget : TargetClass
 
     //Variables for general gameplay effects
     [Header("Target Effects")]
-    [SerializeField] private int ScoreValue; //Changing to this private or static causes issues when trying to isolate the system
+    [SerializeField] private int ScoreValue; 
     [SerializeField] private int ScoreMultiValue;
-    [SerializeField] private int TimeDeduction;
+    [SerializeField] private int TimeDeduction = 10; //This target's purpose is to add more time 
 
     public override void OnHit()
     {
         //Add code here for Increasing Time
+
+        TimeManager.Instance.TimeIncrease(TimeDeduction); //Working!!!
     }
 }

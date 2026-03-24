@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7277596770102226905}
   - component: {fileID: 8427692733226132383}
   - component: {fileID: 381228987075564841}
-  - component: {fileID: 3278397225193137027}
+  - component: {fileID: 5982534735651780287}
   m_Layer: 0
   m_Name: Penalty_Target
   m_TagString: PenTarget
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3278397225193137027
+--- !u!114 &5982534735651780287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,10 +168,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5004156872212290216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d7aef42cfde1d47bd11dda22bb8dcc, type: 3}
+  m_Script: {fileID: 11500000, guid: 018606286507a2448a88aea425a5c553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  score: 0
-  scoreMultiplier: 0
-  timePenalty: 0
+  ScoreValue: 10
+  ScoreMultiValue: 0
+  TimeDeduction: 0

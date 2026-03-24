@@ -17,8 +17,6 @@ public class BasicTarget : TargetClass
     public override void OnHit()
     {
         ScoreManager.Instance.ScoreIncrease(ScoreValue);
-
-        //ScoreManager.Instance.ScoreMultiplier(ScoreMultiValue); //--Current works with the new system - This is only being called in this script for testing
     }
 
 }

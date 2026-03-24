@@ -14,7 +14,7 @@ public class ScoreManager : MonoBehaviour
     private int CurrentScore; //Variable to track and store the current score
     private static int CurrentMultiValue; //Will be used to track and store the current multiplier value
     private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not!
-    
+
 
     void Awake() //Singleton Pattern  
     {
@@ -36,9 +36,18 @@ public class ScoreManager : MonoBehaviour
         //Update the UI text here
         UIManager.Instance.ScoreText.text = CurrentScore.ToString();
     }
-    
+
+    public void ScoreDeduction(int ScoreValue) //Method for handling deduction in score
+    {
+        TotalScore -= ScoreValue;
+        CurrentScore = TotalScore;
+
+        //Update the UI text here
+        UIManager.Instance.ScoreText.text = CurrentScore.ToString();
+    }
 
     //Add method here to handle score Multiplier --Currently works! Call this method for targets will be use the multiplier value
+
     // public void ScoreMultiplier(int MultiValue)
     // {
     //     CurrentMultiValue = MultiValue;
@@ -66,12 +75,13 @@ public class ScoreManager : MonoBehaviour
     //     UIManager.Instance.MultiText.text = CurrentMultiValue.ToString();
     // }
 
+    // public void TimeIncrease()
+    // {
+    //     //Check if the timer is currently running first
+    // }
 
-    public void ScoreDeduction() //Method for handling deduction in score
-    {
-        //Code here
-    }
-
-
-    
+    // public void TimeDeduction()
+    // {
+    //     //Check if the timer is currently running first
+    // }
 }

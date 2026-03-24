@@ -5,9 +5,24 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
 
+    public static TimeManager Instance;
+
     //General variables
     public float timeRemaining = 10;
     public bool isTimerRunning;
+
+
+    void Awake() //Singleton Pattern  
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -31,6 +46,7 @@ public class TimeManager : MonoBehaviour
                 timeRemaining = 0; //Sets the time remaining to 0 to prevent it from going into the negatives
                 isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
             }
+
         }
     }
 
@@ -46,15 +62,23 @@ public class TimeManager : MonoBehaviour
     }
 
 
-    public void TimeIncrease()
+    public void TimeIncrease(float timeUpValue)
     {
-
+        //We need to check whether the timer is running. If it is, then perform the code below
+        if (isTimerRunning)
+        {
+            timeRemaining += timeUpValue; //Update the 'time remaining' variable to increase or deduct time
+            displayTime(timeRemaining);
+        } 
     }
 
 
-    public void TimeDeduction()
+    public void TimeDeduction(float timeDownValue) //We need to check whether the timer is running. If it is, then perform the code below 
     {
-
+        if (isTimerRunning)
+        {
+            timeRemaining -= timeDownValue; //Update the 'time remaining' variable to increase or deduct time
+            displayTime(timeRemaining);
+        }
     }
-
 }
