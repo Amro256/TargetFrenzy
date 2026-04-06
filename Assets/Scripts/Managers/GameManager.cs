@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // UIManager.Instance.isTimerRunning = true; 
-        UIManager.Instance.DisablePauseMenu(); //Update these to use an event driven approach instead
+        //UIManager.Instance.DisablePauseMenu(); //Update these to use an event driven approach instead
     }
 
 

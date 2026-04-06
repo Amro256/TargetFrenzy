@@ -79,7 +79,7 @@ public class MouseInput : MonoBehaviour
             else
             {
                 Debug.Log("You have clicked on nothing");
-                UIManager.Instance.ToggleAmmoSpriteVisibility(); //This currently disables all of the sprites at once instead of one by one 
+                //UIManager.Instance.ToggleAmmoSpriteVisibility(); //This currently disables all of the sprites at once instead of one by one 
                 PlayerMiss();
                 
             }

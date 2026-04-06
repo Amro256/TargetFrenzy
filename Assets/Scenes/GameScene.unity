@@ -2010,11 +2010,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnTime: 3.5
   targetObjects:
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   lerpPoints:
   - {fileID: 1539626918}
   - {fileID: 161238151}
@@ -3381,6 +3381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880c8bcbf4caa4347bf9800804cec038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAmmo: 4
+  CurrentAmmoAmount: 0
 --- !u!1 &1770619273
 GameObject:
   m_ObjectHideFlags: 0

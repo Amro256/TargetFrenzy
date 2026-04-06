@@ -58,7 +58,7 @@ public class TimeManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60); //Modulo operator - Returns the remainder after division
 
         //display the time value
-        UIManager.Instance.TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //Needs to be decoupled
+        //UIManager.Instance.TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //Needs to be decoupled
     }
 
 

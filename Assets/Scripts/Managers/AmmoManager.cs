@@ -37,14 +37,15 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     {
 
         CurrentAmmoAmount -= amount; //Reduce the ammo value by one
+        Debug.Log("Current Ammo: " + CurrentAmmoAmount);
 
         //If statement to check if the currentAmmo Amount is less than 0
 
-        if (CurrentAmmoAmount < 1)
+        if (CurrentAmmoAmount < 4)
         {
             Debug.Log("Test! Reload! Reload! Reload!");
             IsOutOfAmmo = true;
-            Reload();   
+            Reload();
         }
     }
 

@@ -5,7 +5,6 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class BasicTarget : TargetClass
 {
-
     //Values for the score, Multiplier, and how much time to deduct for this target
     [Header("Target Effects")]
     [SerializeField] private int ScoreValue = 2; //Changing to this private or static causes issues when trying to isolate the system

@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System; //NameSpace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     //Migrate UI functionality from the game manager here!!!
-    public static UIManager Instance; //Static instance so other scripts can access this
+
+    //public static UIManager Instance; //Static instance so other scripts can access this
+
+   
 
 
     //General variables / others
@@ -24,18 +28,30 @@ public class UIManager : MonoBehaviour
     [SerializeField] public GameObject[] ammoSprites;
 
 
-    void Awake() //Singleton pattern
+    private void OnEnable()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        ScoreManager.OnScoreChanged += UpdateUI;
     }
+
+    private void OnDisable()
+    {
+        ScoreManager.OnScoreChanged -= UpdateUI;
+    }
+
+
+
+    // void Awake() //Singleton pattern
+    // {
+    //     if (Instance == null)
+    //     {
+    //         Instance = this;
+
+    //     }
+    //     else
+    //     {
+    //         DontDestroyOnLoad(gameObject);
+    //     }
+    // }
 
 
     public void ToggleAmmoSpriteVisibility() //Call this method in the mouseInput script
@@ -47,6 +63,11 @@ public class UIManager : MonoBehaviour
             ammoSprites[ammoIndex].SetActive(false);
             ammoIndex++;
         }
+    }
+
+    public void UpdateUI(int score)
+    {
+        ScoreText.text = score.ToString();
     }
 
     public void DisplayPauseMenu() //Method that can be called by the game manager script to display the pause menu
