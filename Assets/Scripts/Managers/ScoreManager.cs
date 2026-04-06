@@ -20,9 +20,6 @@ public class ScoreManager : MonoBehaviour
     public static event Action<int> OnScoreChanged;
 
 
-    
-
-
     void Awake() //Singleton Pattern  
     {
         if (Instance == null)
@@ -41,8 +38,6 @@ public class ScoreManager : MonoBehaviour
         CurrentScore = TotalScore;
 
         //Update the UI text here
-        //UIManager.Instance.ScoreText.text = CurrentScore.ToString();
-
         OnScoreChanged?.Invoke(CurrentScore);
     }
 
@@ -52,8 +47,7 @@ public class ScoreManager : MonoBehaviour
         CurrentScore = TotalScore;
 
         //Update the UI text here
-        //UIManager.Instance.ScoreText.text = CurrentScore.ToString();
-        
+
         OnScoreChanged?.Invoke(CurrentScore);
     }
 

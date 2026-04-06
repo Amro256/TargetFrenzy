@@ -22,6 +22,10 @@ public class MouseInput : MonoBehaviour
     private int maxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
     private int missCount = 0; //Variable that will track the player's misses 
 
+    //Actions
+
+    public static event Action OnPlayerMissUI;
+
 
 
     private void Start()
@@ -79,7 +83,9 @@ public class MouseInput : MonoBehaviour
             else
             {
                 Debug.Log("You have clicked on nothing");
-                //UIManager.Instance.ToggleAmmoSpriteVisibility(); //This currently disables all of the sprites at once instead of one by one 
+
+                //Invoke Action
+                OnPlayerMissUI?.Invoke();
                 PlayerMiss();
                 
             }

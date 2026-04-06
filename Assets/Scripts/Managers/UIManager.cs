@@ -7,12 +7,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    //Migrate UI functionality from the game manager here!!!
-
-    //public static UIManager Instance; //Static instance so other scripts can access this
-
-   
-
+    //Migrate UI functionality from the game manager here!!
 
     //General variables / others
     private int ammoIndex = 0;
@@ -30,28 +25,21 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ScoreManager.OnScoreChanged += UpdateUI;
+        ScoreManager.OnScoreChanged += UpdateScoreUI;
+        GameManager.OnOutOfAmmo += DisplayPauseMenu;
+        GameManager.OnGameStart += DisablePauseMenu;
+        MouseInput.OnPlayerMissUI += ToggleAmmoSpriteVisibility;
+        TimeManager.OnTimerChange += UpdateTimerUI;
     }
 
     private void OnDisable()
     {
-        ScoreManager.OnScoreChanged -= UpdateUI;
+        ScoreManager.OnScoreChanged -= UpdateScoreUI;
+        GameManager.OnOutOfAmmo -= DisplayPauseMenu;
+        GameManager.OnGameStart -= DisablePauseMenu;
+        MouseInput.OnPlayerMissUI -= ToggleAmmoSpriteVisibility;
+        TimeManager.OnTimerChange -= UpdateTimerUI;
     }
-
-
-
-    // void Awake() //Singleton pattern
-    // {
-    //     if (Instance == null)
-    //     {
-    //         Instance = this;
-
-    //     }
-    //     else
-    //     {
-    //         DontDestroyOnLoad(gameObject);
-    //     }
-    // }
 
 
     public void ToggleAmmoSpriteVisibility() //Call this method in the mouseInput script
@@ -65,10 +53,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateUI(int score)
+    public void UpdateScoreUI(int score)
     {
         ScoreText.text = score.ToString();
     }
+
+     public void UpdateTimerUI(float timeToDisplay)
+    {
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60); //Modulo operator - Returns the remainder after division
+
+
+        TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
 
     public void DisplayPauseMenu() //Method that can be called by the game manager script to display the pause menu
     {

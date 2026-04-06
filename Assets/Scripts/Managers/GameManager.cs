@@ -10,8 +10,15 @@ public class GameManager : MonoBehaviour
 
     //General variables and other things 
     public static GameManager Instance; //Static instance so other scripts can access this
+
     //private bool isPaused;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
+    //Actions 
+
+    public static event Action OnOutOfAmmo;
+    public static event Action OnGameStart;
+
+    
     void Awake() //Singleton pattern
     {
         if (Instance == null)
@@ -25,9 +32,9 @@ public class GameManager : MonoBehaviour
     }
 
     void Start()
-    {
-        // UIManager.Instance.isTimerRunning = true; 
-        //UIManager.Instance.DisablePauseMenu(); //Update these to use an event driven approach instead
+    {   
+        //Invoke action here  
+        OnGameStart?.Invoke();
     }
 
 
@@ -38,7 +45,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Gg lol");
 
         //Call method to display the "Pause menu". This will be used for testing
-        //UIManager.Instance.DisplayPauseMenu(); - This is working! It has been commented out for now, though
+
+        //Invoke action here  
+        OnOutOfAmmo?.Invoke(); //Working!!
 
     }
 

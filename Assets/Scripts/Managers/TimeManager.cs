@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TimeManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class TimeManager : MonoBehaviour
     //General variables
     public float timeRemaining = 10;
     public bool isTimerRunning;
+
+    //Actions
+    public static event Action<float> OnTimerChange;
 
 
     void Awake() //Singleton Pattern  
@@ -38,7 +42,7 @@ public class TimeManager : MonoBehaviour
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
-                displayTime(timeRemaining);
+                DisplayTime(timeRemaining);
             }
             else
             {
@@ -51,7 +55,7 @@ public class TimeManager : MonoBehaviour
     }
 
     //Method here to display the time (Now being moved to the Time Manager Script to isolate the system)
-    public void displayTime(float timeToDisplay)
+    public void DisplayTime(float timeToDisplay)
     {
         //Minutes 
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
@@ -59,6 +63,8 @@ public class TimeManager : MonoBehaviour
 
         //display the time value
         //UIManager.Instance.TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //Needs to be decoupled
+
+        OnTimerChange?.Invoke(timeToDisplay);
     }
 
 
@@ -68,7 +74,7 @@ public class TimeManager : MonoBehaviour
         if (isTimerRunning)
         {
             timeRemaining += timeUpValue; //Update the 'time remaining' variable to increase time
-            displayTime(timeRemaining); //Calling the displayTime method to update the UI
+            //DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
         } 
     }
 
@@ -77,7 +83,7 @@ public class TimeManager : MonoBehaviour
         if (isTimerRunning)
         {
             timeRemaining -= timeDownValue; //Update the 'time remaining' variable to deduct time
-            displayTime(timeRemaining); //Calling the displayTime method to update the UI
+            //DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
         }
     }
 }
