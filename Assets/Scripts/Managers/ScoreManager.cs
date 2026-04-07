@@ -8,7 +8,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class ScoreManager : MonoBehaviour
 {
     //This script will be used to be track and store the player's score. It will also make it easier to implement the multiplier functionality without the code becoming a mess.
-    public static ScoreManager Instance;
+
 
     //General Variables for scoring and score multiplier
     private int TotalScore; //General Variable to store the total score.
@@ -16,28 +16,26 @@ public class ScoreManager : MonoBehaviour
     private static int CurrentMultiValue; //Will be used to track and store the current multiplier value
     private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not!
 
-     //Actions
+    //Actions
     public static event Action<int> OnScoreChanged;
 
-
-    void Awake() //Singleton Pattern  
+    private void OnEnable()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        BasicTarget.OnTargetHit += ScoreIncrease;
     }
+
+    private void OnDisable()
+    {
+        BasicTarget.OnTargetHit -= ScoreIncrease;
+    }
+
 
     public void ScoreIncrease(int ScoreValue) //Method for handling adding score that takes in an integer as a parameter 
     {
         TotalScore += ScoreValue;
         CurrentScore = TotalScore;
 
-        //Update the UI text here
+        //Update UI text here
         OnScoreChanged?.Invoke(CurrentScore);
     }
 
@@ -46,8 +44,7 @@ public class ScoreManager : MonoBehaviour
         TotalScore -= ScoreValue;
         CurrentScore = TotalScore;
 
-        //Update the UI text here
-
+        //Update UI text here
         OnScoreChanged?.Invoke(CurrentScore);
     }
 

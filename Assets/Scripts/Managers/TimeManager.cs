@@ -16,17 +16,17 @@ public class TimeManager : MonoBehaviour
     public static event Action<float> OnTimerChange;
 
 
-    void Awake() //Singleton Pattern  
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-    }
+    // void Awake() //Singleton Pattern  
+    // {
+    //     if (Instance == null)
+    //     {
+    //         Instance = this;
+    //     }
+    //     else
+    //     {
+    //         DontDestroyOnLoad(gameObject);
+    //     }
+    // }
 
 
     // Start is called before the first frame update

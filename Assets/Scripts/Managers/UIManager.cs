@@ -53,6 +53,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ReloadAmmoSprite()
+    {
+        //Method that will handle the sprite's visibility when reloading
+    }
+
     public void UpdateScoreUI(int score)
     {
         ScoreText.text = score.ToString();

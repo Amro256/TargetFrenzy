@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate the ammo system and make it modular for future use!
 {
@@ -41,9 +42,9 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
         //If statement to check if the currentAmmo Amount is less than 0
 
-        if (CurrentAmmoAmount < 4)
+        if (CurrentAmmoAmount <= 0)
         {
-            Debug.Log("Test! Reload! Reload! Reload!");
+            Debug.LogError("Reload! Reload! Reload!");
             IsOutOfAmmo = true;
             Reload();
         }
@@ -58,7 +59,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         if (IsOutOfAmmo)
         {
             //This is where the code goes for handling reloading
-
+            
             //The reload button will be mapped to the right mouse button, but first just add ammo back
 
             CurrentAmmoAmount = 4;

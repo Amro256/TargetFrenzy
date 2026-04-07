@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GoldenTarget : TargetClass
 {
@@ -12,9 +13,11 @@ public class GoldenTarget : TargetClass
     [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeDeduction = 100;
 
-
+     //Actions
+    public static event Action<int> OnTargetHit;
+    
     public override void OnHit()
     {
-        ScoreManager.Instance.ScoreIncrease(ScoreValue);
+        OnTargetHit?.Invoke(ScoreValue);
     }
 }

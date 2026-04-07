@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using System;
 
 public class BasicTarget : TargetClass
 {
@@ -11,11 +12,14 @@ public class BasicTarget : TargetClass
     [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeDeduction;
 
+    //Actions
+    public static event Action<int> OnTargetHit;
+
 
     //Create a method that will handle the score and then call it in the mouse input script
     public override void OnHit()
     {
-        ScoreManager.Instance.ScoreIncrease(ScoreValue);
+        OnTargetHit?.Invoke(ScoreValue);
     }
 
 }
