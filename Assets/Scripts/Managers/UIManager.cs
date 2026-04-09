@@ -11,8 +11,7 @@ public class UIManager : MonoBehaviour
     //Migrate UI functionality from the game manager here!!
 
     //General variables / others
-    private int ammoIndex = 0;
-    private int ReloadIndex = 4;
+    private int ammoIndex;
 
 
     [Header("UI References")]
@@ -63,9 +62,13 @@ public class UIManager : MonoBehaviour
 
     public void EnableAmmoSpriteVisibility() //Does the opposite of the code above - used for when the player has to reload (Currently not being called)
     {
-        foreach (GameObject test in ammoSprites)
+        // Debug.Log("Sprite re-enabled!"); -- The Function is being called correctly
+        
+        foreach (GameObject sprites in ammoSprites) //Lol this worked initially, I just had to reset the ammo index back to 0 for the above function to work
         {
-            test.SetActive(true);    
+            sprites.SetActive(true);
+            //Reset the ammo index - so the UI can keep updating accordingly
+            ammoIndex = 0; 
         }
     }
 

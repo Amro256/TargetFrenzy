@@ -78,8 +78,9 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
             //The reload button will be mapped to the right mouse button, but first just add ammo back
 
             CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
-            IsOutOfAmmo = false;
             OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
+            IsOutOfAmmo = false;
+            
 
             Debug.Log("Ammo After reload: " + CurrentAmmoAmount);
     }

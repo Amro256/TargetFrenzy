@@ -104,8 +104,6 @@ public class MouseInput : MonoBehaviour
             //Code here - Invoke any actions here!
             OnPlayerReload?.Invoke();
             Debug.Log("Reload performed");
-            
-            
         }
     }
 
