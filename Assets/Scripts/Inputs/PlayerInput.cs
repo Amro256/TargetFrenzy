@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
@@ -15,7 +14,8 @@ public class MouseInput : MonoBehaviour
     public static Vector3 mouseWorldPos; // Stores the world space mouse position
 
     //Exposed part to assign the gameobject this script should compare tags (Will need to be revised when the other targets are implemented - using an array)
-    [SerializeField] List<GameObject> targetObjects = new List<GameObject>();
+
+    //[SerializeField] List<GameObject> targetObjects = new List<GameObject>();
 
     private GameObject currentTarget; //To store the target the mouse is current hovering over
 
@@ -23,8 +23,8 @@ public class MouseInput : MonoBehaviour
     private int missCount = 0; //Variable that will track the player's misses 
 
     //Actions
-
     public static event Action OnPlayerMissUI;
+    public static event Action OnPlayerReload;
 
 
 
@@ -65,7 +65,7 @@ public class MouseInput : MonoBehaviour
 
 
     //Method for shooting / firing - using Unity Events as the notification behaviour 
-    private void OnFire(InputAction.CallbackContext context)
+    public void OnFire(InputAction.CallbackContext context)
     {
         if (context.performed) //Check if the action has been performed / completed
         {
@@ -92,6 +92,23 @@ public class MouseInput : MonoBehaviour
         }
     }
 
+    public void OnReload(InputAction.CallbackContext context) //Reload is mapped to the "R" key as of now
+    {
+        //For handling reloading
+        if (!context.performed) //Checks if the R key was NOT PRESSED (performed)
+        {
+            return;
+        }
+        else
+        {
+            //Code here - Invoke any actions here!
+            OnPlayerReload?.Invoke();
+            Debug.Log("Reload performed");
+            
+            
+        }
+    }
+
     private void PlayerMiss() //Method responsible for the player's misses
     {
         missCount++;
@@ -100,11 +117,14 @@ public class MouseInput : MonoBehaviour
         if (missCount > maxMisses)
         {
             //The player input map needs to be disable here, as the game still registers inputs and the "OnFire" method is still called
-            Inputs.Player.Disable(); // This disables the player action map! 
+
+            //Inputs.Player.Disable(); // This disables the player action map! 
 
             Debug.Log("Game Over");
-            GameManager.Instance.GameOver();
+
+            //GameManager.Instance.GameOver();
+
             return;
         }
-     }
+    }
 }

@@ -14,11 +14,10 @@ public class GameManager : MonoBehaviour
     //private bool isPaused;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
     //Actions 
+    public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
+    public static event Action OnGameStart; //--Action: For disabling the pause UI on start--
 
-    public static event Action OnOutOfAmmo;
-    public static event Action OnGameStart;
 
-    
     void Awake() //Singleton pattern
     {
         if (Instance == null)
@@ -34,7 +33,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {   
         //Invoke action here  
-        OnGameStart?.Invoke();
+        OnGameStart?.Invoke(); //What this action does: Disables the "Pause" menu UI when the game starts
     }
 
 
@@ -47,7 +46,7 @@ public class GameManager : MonoBehaviour
         //Call method to display the "Pause menu". This will be used for testing
 
         //Invoke action here  
-        OnOutOfAmmo?.Invoke(); //Working!!
+        //OnOutOfAmmo?.Invoke(); //Working!!
 
     }
 
@@ -65,6 +64,4 @@ public class GameManager : MonoBehaviour
         Application.Quit();
         Debug.Log("Quitting the application");
     }
-
-    //Add a method here for gamePausing and calling the display pause UI from the UI manager
 }

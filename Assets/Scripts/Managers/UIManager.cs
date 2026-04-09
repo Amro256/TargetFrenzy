@@ -4,6 +4,7 @@ using UnityEngine;
 using System; //NameSpace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class UIManager : MonoBehaviour
 
     //General variables / others
     private int ammoIndex = 0;
+    private int ReloadIndex = 4;
 
 
     [Header("UI References")]
@@ -28,8 +30,11 @@ public class UIManager : MonoBehaviour
         ScoreManager.OnScoreChanged += UpdateScoreUI;
         GameManager.OnOutOfAmmo += DisplayPauseMenu;
         GameManager.OnGameStart += DisablePauseMenu;
-        MouseInput.OnPlayerMissUI += ToggleAmmoSpriteVisibility;
+        MouseInput.OnPlayerMissUI += DisableAmmoSpriteVisibility;
         TimeManager.OnTimerChange += UpdateTimerUI;
+
+        AmmoManager.OnPlayerReloadUI += EnableAmmoSpriteVisibility;
+
     }
 
     private void OnDisable()
@@ -37,25 +42,31 @@ public class UIManager : MonoBehaviour
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
         GameManager.OnOutOfAmmo -= DisplayPauseMenu;
         GameManager.OnGameStart -= DisablePauseMenu;
-        MouseInput.OnPlayerMissUI -= ToggleAmmoSpriteVisibility;
+        MouseInput.OnPlayerMissUI -= DisableAmmoSpriteVisibility;
         TimeManager.OnTimerChange -= UpdateTimerUI;
+
+        AmmoManager.OnPlayerReloadUI -= EnableAmmoSpriteVisibility;
     }
 
 
-    public void ToggleAmmoSpriteVisibility() //Call this method in the mouseInput script
+    public void DisableAmmoSpriteVisibility() //Call this method in the mouseInput script
     {
-        AmmoManager.Instance.UpdateAmmoValue(1); //Works
+        AmmoManager.Instance.UpdateAmmoValue(1); //Works but replace this later
 
         if (ammoIndex < ammoSprites.Length)
         {
             ammoSprites[ammoIndex].SetActive(false);
             ammoIndex++;
+            Debug.Log("Current Index: " + ammoIndex);
         }
     }
 
-    public void ReloadAmmoSprite()
+    public void EnableAmmoSpriteVisibility() //Does the opposite of the code above - used for when the player has to reload (Currently not being called)
     {
-        //Method that will handle the sprite's visibility when reloading
+        foreach (GameObject test in ammoSprites)
+        {
+            test.SetActive(true);    
+        }
     }
 
     public void UpdateScoreUI(int score)

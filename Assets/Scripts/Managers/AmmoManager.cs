@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,18 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     [SerializeField] private int CurrentAmmoAmount;
     private bool IsOutOfAmmo;
 
+    public static event Action OnPlayerReloadUI; // For the UI Manager 
+    public static event Action OnPlayerReload; //For the Player Input UI;
+
+    private void OnEnable()
+    {
+        MouseInput.OnPlayerReload += Reload;
+    }
+
+    private void OnDisable()
+    {
+        MouseInput.OnPlayerReload -= Reload; 
+    }
 
     void Awake()
     {
@@ -27,6 +40,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         }
     }
 
+
     void Start()
     {
         CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
@@ -38,15 +52,15 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     {
 
         CurrentAmmoAmount -= amount; //Reduce the ammo value by one
-        Debug.Log("Current Ammo: " + CurrentAmmoAmount);
+
+        //Debug.Log("Current Ammo: " + CurrentAmmoAmount);
 
         //If statement to check if the currentAmmo Amount is less than 0
 
         if (CurrentAmmoAmount <= 0)
         {
-            Debug.LogError("Reload! Reload! Reload!");
+            Debug.LogError("Please Reload!");
             IsOutOfAmmo = true;
-            Reload();
         }
     }
 
@@ -54,16 +68,20 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     //Add a method for reload functionality. Reloading will be mapped the right mouse button
     public void Reload()
     {
-        //First - Check if the player is out of ammo
+        //This is where the code goes for handling reloading
 
-        if (IsOutOfAmmo)
+        //First - Check if the player is NOT out of ammo
+        if (!IsOutOfAmmo)
         {
-            //This is where the code goes for handling reloading
-            
+            return;
+        }
             //The reload button will be mapped to the right mouse button, but first just add ammo back
 
-            CurrentAmmoAmount = 4;
-        }
+            CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
+            IsOutOfAmmo = false;
+            OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
+
+            Debug.Log("Ammo After reload: " + CurrentAmmoAmount);
     }
 
 }
