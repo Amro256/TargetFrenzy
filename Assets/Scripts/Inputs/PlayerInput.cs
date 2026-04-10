@@ -22,6 +22,7 @@ public class MouseInput : MonoBehaviour
     private int maxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
     private int missCount = 0; //Variable that will track the player's misses 
 
+
     //Actions
     public static event Action OnPlayerMissUI;
     public static event Action OnPlayerReload;
@@ -95,16 +96,18 @@ public class MouseInput : MonoBehaviour
     public void OnReload(InputAction.CallbackContext context) //Reload is mapped to the "R" key as of now
     {
         //For handling reloading
-        if (!context.performed) //Checks if the R key was NOT PRESSED (performed)
+        if (!context.performed) return; //Checks if the R key was NOT PRESSED (performed)
+
+
+        if (!AmmoManager.Instance.IsAmmoEmpty())
         {
+            Debug.Log("Cant reload yet bozo");
             return;
         }
-        else
-        {
-            //Code here - Invoke any actions here!
-            OnPlayerReload?.Invoke();
-            Debug.Log("Reload performed");
-        }
+        
+        //Code here - Invoke any actions here!
+        OnPlayerReload?.Invoke();
+        Debug.Log("Reload performed");
     }
 
     private void PlayerMiss() //Method responsible for the player's misses

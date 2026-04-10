@@ -24,7 +24,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     private void OnDisable()
     {
-        MouseInput.OnPlayerReload -= Reload; 
+        MouseInput.OnPlayerReload -= Reload;
     }
 
     void Awake()
@@ -75,14 +75,19 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         {
             return;
         }
-            //The reload button will be mapped to the right mouse button, but first just add ammo back
+        //The reload button will be mapped to the right mouse button, but first just add ammo back
 
-            CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
-            OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
-            IsOutOfAmmo = false;
-            
+        CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
+        OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
+        IsOutOfAmmo = false;
 
-            Debug.Log("Ammo After reload: " + CurrentAmmoAmount);
+
+        Debug.Log("Ammo After reload: " + CurrentAmmoAmount);
     }
+
+    public bool IsAmmoEmpty()
+    {
+        return IsOutOfAmmo;
+     }
 
 }
