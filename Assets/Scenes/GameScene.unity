@@ -530,6 +530,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 32932aca-3993-4a12-a145-0e71bc81663b
     m_ActionName: Player/Reload[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 609494576}
+        m_TargetAssemblyTypeName: MouseInput, Assembly-CSharp
+        m_MethodName: OnPlayerPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 99e593ca-f61d-4427-984d-46077fcd578f
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

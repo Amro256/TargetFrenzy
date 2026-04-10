@@ -110,6 +110,13 @@ public class MouseInput : MonoBehaviour
         Debug.Log("Reload performed");
     }
 
+    public void OnPlayerPause(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        GameManager.Instance.PauseGame();
+    }
+
     private void PlayerMiss() //Method responsible for the player's misses
     {
         missCount++;

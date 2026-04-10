@@ -27,8 +27,9 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
-        GameManager.OnOutOfAmmo += DisplayPauseMenu;
+        GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
         GameManager.OnGameStart += DisablePauseMenu;
+        GameManager.OnGameResume += DisablePauseMenu;
         MouseInput.OnPlayerMissUI += DisableAmmoSpriteVisibility;
         TimeManager.OnTimerChange += UpdateTimerUI;
 
@@ -39,8 +40,9 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
-        GameManager.OnOutOfAmmo -= DisplayPauseMenu;
+        GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
         GameManager.OnGameStart -= DisablePauseMenu;
+        GameManager.OnGameResume -= DisablePauseMenu;
         MouseInput.OnPlayerMissUI -= DisableAmmoSpriteVisibility;
         TimeManager.OnTimerChange -= UpdateTimerUI;
 
