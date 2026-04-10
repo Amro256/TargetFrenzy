@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     public void QuitGame() //Will quit the game
     {
         Application.Quit();
-        Debug.Log("Quitting the application");
+        Debug.Log("Quitting!");
     }
 
     public void PauseGame()
@@ -87,5 +87,10 @@ public class GameManager : MonoBehaviour
             //Invoke action here to hide the pause UI
             OnGameResume?.Invoke();
         }
+    }
+
+    public bool IsGamePaused()
+    {
+        return IsPaused;
     }
 }

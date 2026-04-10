@@ -88,6 +88,6 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     public bool IsAmmoEmpty()
     {
         return IsOutOfAmmo;
-     }
+    }
 
 }

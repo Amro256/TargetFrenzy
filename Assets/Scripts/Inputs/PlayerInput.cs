@@ -13,6 +13,8 @@ public class MouseInput : MonoBehaviour
     private Vector3 mousePos; //Stores the screen space mouse position    
     public static Vector3 mouseWorldPos; // Stores the world space mouse position
 
+    private PlayerInput pi;
+
     //Exposed part to assign the gameobject this script should compare tags (Will need to be revised when the other targets are implemented - using an array)
 
     //[SerializeField] List<GameObject> targetObjects = new List<GameObject>();
@@ -33,6 +35,8 @@ public class MouseInput : MonoBehaviour
     {
         Inputs = new TargetFrenzy(); // Creates a new instance of inputs. Next, enable to map which has the action
         Inputs.Player.Enable(); //Enable the input to be able to read the mouse position
+
+        pi = FindObjectOfType<PlayerInput>();
     }
 
     private void Update()
@@ -115,6 +119,28 @@ public class MouseInput : MonoBehaviour
         if (!context.performed) return;
 
         GameManager.Instance.PauseGame();
+
+        if (GameManager.Instance.IsGamePaused()) //This script will need to know the status of the game, whether its paused or not, to disable/enable the other actions
+        {
+            Debug.Log("Actions disabled");
+
+            // Inputs.Player.Look.Disable();
+            pi.actions.FindAction("Look").Disable();
+            pi.actions.FindAction("Fire").Disable();
+            // Inputs.Player.Fire.Disable();
+            // Inputs.Player.Reload.Disable();
+            pi.actions.FindAction("Reload").Disable();
+            return;
+        }
+        else
+        {
+            Debug.Log("Actions enabled");
+
+            pi.actions.FindAction("Look").Enable();
+            pi.actions.FindAction("Fire").Enable();
+            pi.actions.FindAction("Reload").Enable();
+            return;
+        }
     }
 
     private void PlayerMiss() //Method responsible for the player's misses

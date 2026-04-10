@@ -121,7 +121,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""99e593ca-f61d-4427-984d-46077fcd578f"",
+                    ""id"": ""8ced12a7-43df-4e1e-85ad-c30cc22c2b05"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -137,6 +137,17 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c884cd6e-d8f8-4f75-bbf2-dc09bdc17b4b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -161,17 +172,6 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7da4ccb5-0299-4cf2-ac8b-5f2a4d402220"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -192,7 +192,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""44c1241d-d615-4f19-9dc0-67c470770321"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -201,7 +201,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""7e8902c3-0f41-4f4a-855b-38c65f73a6c0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
