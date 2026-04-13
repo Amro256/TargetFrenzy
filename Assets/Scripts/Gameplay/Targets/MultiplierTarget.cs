@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MultiplierTarget : TargetClass
 {
@@ -12,11 +13,16 @@ public class MultiplierTarget : TargetClass
     [SerializeField] private int ScoreMultiValue = 4;
     [SerializeField] private int TimeDeduction;
 
+    public static event Action<int> OnMultiplierActive;
+
 
     public override void OnHit()
     {
-        //Add Mutlivalue here
+        //Add Mutlivalue here -Invoke action!
+        
         //ScoreManager.Instance.ScoreMultiplier(ScoreMultiValue); //--Current works with the new system - This is only being called in this script for testing
+        OnMultiplierActive?.Invoke(ScoreMultiValue);
+
     }
 }
 

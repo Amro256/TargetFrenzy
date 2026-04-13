@@ -5,6 +5,7 @@ using System; //NameSpace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
+        ScoreManager.OnMultiValueChanged += UpdateMultiUI;
+
         GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
         GameManager.OnGameStart += DisablePauseMenu;
         GameManager.OnGameResume += DisablePauseMenu;
@@ -40,6 +43,8 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
+        ScoreManager.OnMultiValueChanged -= UpdateMultiUI;
+
         GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
         GameManager.OnGameStart -= DisablePauseMenu;
         GameManager.OnGameResume -= DisablePauseMenu;
@@ -77,6 +82,11 @@ public class UIManager : MonoBehaviour
     public void UpdateScoreUI(int score)
     {
         ScoreText.text = score.ToString();
+    }
+
+    public void UpdateMultiUI(int multiValue)
+    {
+        MultiText.text = multiValue.ToString();
     }
 
      public void UpdateTimerUI(float timeToDisplay)

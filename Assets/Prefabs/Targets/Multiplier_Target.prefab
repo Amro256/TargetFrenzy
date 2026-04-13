@@ -173,5 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   ScoreValue: 0
-  ScoreMultiValue: 4
+  ScoreMultiValue: 2
   TimeDeduction: 0

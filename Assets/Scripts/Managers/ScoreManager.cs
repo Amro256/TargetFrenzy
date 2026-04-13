@@ -18,15 +18,18 @@ public class ScoreManager : MonoBehaviour
 
     //Actions
     public static event Action<int> OnScoreChanged;
+    public static event Action<int> OnMultiValueChanged;
 
     private void OnEnable()
     {
         BasicTarget.OnTargetHit += ScoreIncrease;
+        MultiplierTarget.OnMultiplierActive += ScoreMultiplier;
     }
 
     private void OnDisable()
     {
         BasicTarget.OnTargetHit -= ScoreIncrease;
+        MultiplierTarget.OnMultiplierActive -= ScoreMultiplier;
     }
 
 
@@ -34,6 +37,12 @@ public class ScoreManager : MonoBehaviour
     {
         TotalScore += ScoreValue;
         CurrentScore = TotalScore;
+
+        if (IsMultiActive == true)
+        {
+            CurrentScore = TotalScore * CurrentMultiValue;
+            Debug.Log("Current Score: " + CurrentScore);
+        }
 
         //Update UI text here
         OnScoreChanged?.Invoke(CurrentScore);
@@ -50,32 +59,36 @@ public class ScoreManager : MonoBehaviour
 
     //Add method here to handle score Multiplier --Currently works! Call this method for targets will be use the multiplier value
 
-    // public void ScoreMultiplier(int MultiValue)
-    // {
-    //     CurrentMultiValue = MultiValue;
-    //     Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
-    //     IsMultiActive = true; //Set the boolean to true
+    public void ScoreMultiplier(int MultiValue)
+    {
+        CurrentMultiValue = MultiValue;
+        Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
+        IsMultiActive = true; //Set the boolean to true
 
-    //     if (IsMultiActive)
-    //     {
-    //         Debug.Log("MultiActive!");
+        if (IsMultiActive)
+        {
+            Debug.Log("MultiActive!");
 
+            //Apply the value to the score and update the text score
 
-    //         //Apply the value to the score and update the text score
-    //         CurrentScore = TotalScore * CurrentMultiValue;
-    //         Debug.Log("Current Score: " + CurrentScore);
+            // CurrentScore = TotalScore * CurrentMultiValue;
+            // Debug.Log("Current Score: " + CurrentScore);
 
-    //         //Update text score
-    //         UIManager.Instance.ScoreText.text = CurrentScore.ToString();
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Multi currently not activated!");
-    //     }
+            //Update text score -Invoke Action
+            //UIManager.Instance.ScoreText.text = CurrentScore.ToString();
+            //OnScoreChanged?.Invoke(CurrentScore);
+            OnScoreChanged?.Invoke(CurrentScore);
+        }
+        else
+        {
+            Debug.Log("Multi currently not activated!");
+            IsMultiActive = false;
+        }
 
-    //     //Update the text display
-    //     UIManager.Instance.MultiText.text = CurrentMultiValue.ToString();
-    // }
+        //Update the text display - Invoke Action
+        //UIManager.Instance.MultiText.text = CurrentMultiValue.ToString();
+        OnMultiValueChanged?.Invoke(CurrentMultiValue);
+    }
 
     // public void TimeIncrease()
     // {
