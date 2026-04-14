@@ -8,11 +8,9 @@ using UnityEngine.UI;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    //Variables
+    //References
     private PlayerInput pi; //Reference to the player Input component so specific actions can be disabled
-
-    public static GameObject currentTarget; //To store the target the mouse is current hovering over
-
+    MouseHandler PlayerMH; //Reference to the MouseHandler script, so this script can access the current target (GameObject)
 
     //Actions to be invoked
     public static event Action OnPlayerMissUI;
@@ -22,6 +20,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void Start()
     {
         pi = FindObjectOfType<PlayerInput>();
+        PlayerMH = FindObjectOfType<MouseHandler>(); //Finds an object that has the mouse handler script attached to it
     }
     
     
@@ -30,16 +29,16 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.performed) //Check if the action has been performed / completed
         {
-            if (currentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
+            if (PlayerMH.CurrentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
-                TargetClass Target = currentTarget.GetComponent<TargetClass>();
+                TargetClass Target = PlayerMH.CurrentTarget.GetComponent<TargetClass>();
 
                 if (Target != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
                     Target.OnHit();
                 }
 
-                Destroy(currentTarget);
+                Destroy(PlayerMH.CurrentTarget);
             }
             else
             {
