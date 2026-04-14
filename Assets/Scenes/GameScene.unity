@@ -534,7 +534,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 609494576}
         m_TargetAssemblyTypeName: MouseInput, Assembly-CSharp
-        m_MethodName: OnPlayerPause
+        m_MethodName: OnPause
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1613,6 +1613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 609494575}
   - component: {fileID: 609494576}
+  - component: {fileID: 609494577}
   m_Layer: 0
   m_Name: MouseInput Manager
   m_TagString: Untagged
@@ -1645,6 +1646,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e26306f84399fed499a3ae74a0eec078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &609494577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609494573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a21427920ab6284ea46517c80e981b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &625568915
@@ -2038,7 +2051,7 @@ MonoBehaviour:
   SpawnTime: 3.5
   targetObjects:
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
-  - {fileID: 5752063571285583825, guid: 2856ffc113339a24392cbbade1d8096f, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}

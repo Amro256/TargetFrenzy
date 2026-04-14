@@ -20,8 +20,6 @@ public class TimeIncreaseTarget : TargetClass
     {
         //Add code here for Increasing Time
 
-        //TimeManager.Instance.TimeIncrease(TimeDeduction); //Working!!!
-
         OnTimeIncrease?.Invoke(TimeValue);
     }
 }

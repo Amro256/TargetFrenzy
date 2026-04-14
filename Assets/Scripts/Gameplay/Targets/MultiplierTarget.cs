@@ -19,8 +19,6 @@ public class MultiplierTarget : TargetClass
     public override void OnHit()
     {
         //Add Mutlivalue here -Invoke action!
-        
-        //ScoreManager.Instance.ScoreMultiplier(ScoreMultiValue); //--Current works with the new system - This is only being called in this script for testing
         OnMultiplierActive?.Invoke(ScoreMultiValue);
 
     }

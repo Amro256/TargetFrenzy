@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -13,13 +14,27 @@ public class GameManager : MonoBehaviour
 
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
+
+    //14/4/26: The variables below were moved from the player input script to the game manager 
+    private int MaxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
+    private int MissCount = 0; //Variable that will track the player's misses 
+
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
     public static event Action OnGameStart; //--Action: For disabling the pause UI on start--
     public static event Action OnGamePause;
     public static event Action OnGameResume;
 
+    void OnEnable()
+    {
+        PlayerInputHandler.OnPlayerMissedShot += PlayerMissShot;
+    }
 
+    void OnDisable()
+    {
+        PlayerInputHandler.OnPlayerMissedShot -= PlayerMissShot;
+
+    }
 
     void Awake() //Singleton pattern
     {
@@ -92,5 +107,24 @@ public class GameManager : MonoBehaviour
     public bool IsGamePaused()
     {
         return IsPaused;
+    }
+
+    private void PlayerMissShot() //Method responsible for the players' misses! 14/4/26: Moved fom the Player Input script to the Game manager
+    {
+        MissCount++;
+        Debug.Log("Missed Counts: " + MissCount);
+
+        if (MissCount >= MaxMisses)
+        {
+            //The player input map needs to be disable here, as the game still registers inputs and the "OnFire" method is still called
+
+            //Inputs.Player.Disable(); // This disables the player action map! 
+
+            Debug.Log("Game Over");
+
+            //GameManager.Instance.GameOver();
+
+            return;
+        }
     }
 }

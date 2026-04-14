@@ -19,12 +19,12 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     private void OnEnable()
     {
-        MouseInput.OnPlayerReload += Reload;
+        PlayerInputHandler.OnPlayerReload += Reload;
     }
 
     private void OnDisable()
     {
-        MouseInput.OnPlayerReload -= Reload;
+        PlayerInputHandler.OnPlayerReload -= Reload;
     }
 
     void Awake()

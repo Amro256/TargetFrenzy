@@ -5,9 +5,6 @@ using System;
 
 public class TimeManager : MonoBehaviour
 {
-
-    public static TimeManager Instance;
-
     //General variables
     public float timeRemaining = 10;
     public bool isTimerRunning;
@@ -19,28 +16,15 @@ public class TimeManager : MonoBehaviour
     {
         TimeIncreaseTarget.OnTimeIncrease += TimeIncrease;
         TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
+        Score_TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
     }
 
     void OnDisable()
     {
         TimeIncreaseTarget.OnTimeIncrease -= TimeIncrease;
         TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
-
+        Score_TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
     }
-
-
-    // void Awake() //Singleton Pattern  
-    // {
-    //     if (Instance == null)
-    //     {
-    //         Instance = this;
-    //     }
-    //     else
-    //     {
-    //         DontDestroyOnLoad(gameObject);
-    //     }
-    // }
-
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +47,6 @@ public class TimeManager : MonoBehaviour
                 timeRemaining = 0; //Sets the time remaining to 0 to prevent it from going into the negatives
                 isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
             }
-
         }
     }
 
