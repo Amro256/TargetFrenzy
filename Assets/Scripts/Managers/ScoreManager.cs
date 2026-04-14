@@ -11,9 +11,8 @@ public class ScoreManager : MonoBehaviour
 
 
     //General Variables for scoring and score multiplier
-    private int TotalScore; //General Variable to store the total score.
-    private int CurrentScore; //Variable to track and store the current score
-    private static int CurrentMultiValue; //Will be used to track and store the current multiplier value
+    private int TotalScore; //General Variable to store the score.
+    private int CurrentMultiValue; //Will be used to track and store the current multiplier value
     private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not!
 
     //Actions
@@ -35,58 +34,49 @@ public class ScoreManager : MonoBehaviour
 
     public void ScoreIncrease(int ScoreValue) //Method for handling adding score that takes in an integer as a parameter 
     {
-        TotalScore += ScoreValue;
-        CurrentScore = TotalScore;
+        int HitScore = ScoreValue;
+        
+        //Check to see if the multiplier is active, then apply it to the score
 
-        if (IsMultiActive == true)
+        if (IsMultiActive) //If the multiplier is set the true
         {
-            CurrentScore = TotalScore * CurrentMultiValue;
-            Debug.Log("Current Score: " + CurrentScore);
+            HitScore *= CurrentMultiValue;
         }
 
-        //Update UI text here
-        OnScoreChanged?.Invoke(CurrentScore);
+        TotalScore += HitScore;
+
+        //Update the score UI here
+        OnScoreChanged?.Invoke(TotalScore);
     }
 
     public void ScoreDeduction(int ScoreValue) //Method for handling deduction in score
     {
         TotalScore -= ScoreValue;
-        CurrentScore = TotalScore;
 
-        //Update UI text here
-        OnScoreChanged?.Invoke(CurrentScore);
+        //Update the score UI here
+        OnScoreChanged?.Invoke(TotalScore);
     }
 
     //Add method here to handle score Multiplier --Currently works! Call this method for targets will be use the multiplier value
 
     public void ScoreMultiplier(int MultiValue)
     {
-        CurrentMultiValue = MultiValue;
-        Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
-        IsMultiActive = true; //Set the boolean to true
+        IsMultiActive = true; //Set Multi bool to true
 
         if (IsMultiActive)
         {
-            Debug.Log("MultiActive!");
+            Debug.Log("Multi Active!");
 
-            //Apply the value to the score and update the text score
-
-            // CurrentScore = TotalScore * CurrentMultiValue;
-            // Debug.Log("Current Score: " + CurrentScore);
-
-            //Update text score -Invoke Action
-            //UIManager.Instance.ScoreText.text = CurrentScore.ToString();
-            //OnScoreChanged?.Invoke(CurrentScore);
-            OnScoreChanged?.Invoke(CurrentScore);
+            CurrentMultiValue = MultiValue;
+            Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
         }
         else
         {
-            Debug.Log("Multi currently not activated!");
             IsMultiActive = false;
+            Debug.Log("Multi currently not activated!");
         }
 
         //Update the text display - Invoke Action
-        //UIManager.Instance.MultiText.text = CurrentMultiValue.ToString();
         OnMultiValueChanged?.Invoke(CurrentMultiValue);
     }
 

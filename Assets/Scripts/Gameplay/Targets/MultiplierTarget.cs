@@ -10,7 +10,7 @@ public class MultiplierTarget : TargetClass
     //Variables for general gameplay effects
     [Header("Target Effects")]
     [SerializeField] private int ScoreValue; //Changing to this private or static causes issues when trying to isolate the system
-    [SerializeField] private int ScoreMultiValue = 4;
+    [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeDeduction;
 
     public static event Action<int> OnMultiplierActive;
