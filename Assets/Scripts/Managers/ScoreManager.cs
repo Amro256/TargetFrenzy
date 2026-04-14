@@ -80,13 +80,4 @@ public class ScoreManager : MonoBehaviour
         OnMultiValueChanged?.Invoke(CurrentMultiValue);
     }
 
-    // public void TimeIncrease()
-    // {
-    //     //Check if the timer is currently running first
-    // }
-
-    // public void TimeDeduction()
-    // {
-    //     //Check if the timer is currently running first
-    // }
 }

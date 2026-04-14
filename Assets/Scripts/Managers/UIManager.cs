@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameStart += DisablePauseMenu;
         GameManager.OnGameResume += DisablePauseMenu;
         MouseInput.OnPlayerMissUI += DisableAmmoSpriteVisibility;
-        TimeManager.OnTimerChange += UpdateTimerUI;
+        TimeManager.OnTimerUpdate += UpdateTimerUI;
 
         AmmoManager.OnPlayerReloadUI += EnableAmmoSpriteVisibility;
 
@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameStart -= DisablePauseMenu;
         GameManager.OnGameResume -= DisablePauseMenu;
         MouseInput.OnPlayerMissUI -= DisableAmmoSpriteVisibility;
-        TimeManager.OnTimerChange -= UpdateTimerUI;
+        TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
         AmmoManager.OnPlayerReloadUI -= EnableAmmoSpriteVisibility;
     }

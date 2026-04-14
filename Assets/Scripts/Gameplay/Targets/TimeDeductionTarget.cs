@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TimeDeductionTarget : TargetClass
 {
@@ -10,11 +11,16 @@ public class TimeDeductionTarget : TargetClass
     [Header("Target Effects")]
     [SerializeField] private int ScoreValue; 
     [SerializeField] private int ScoreMultiValue;
-    [SerializeField] private int TimeDeduction; //This target's purpose is to ONLY deduct time.
+    [SerializeField] private int TimeValue; //This target's purpose is to ONLY deduct time.
+
+    //Actions
+    public static event Action<int> OnTimeDeduction;
 
     public override void OnHit()
     {
         //Add code here for time Deduction
-        TimeManager.Instance.TimeDeduction(TimeDeduction); //Working!!! 
+
+        OnTimeDeduction?.Invoke(TimeValue);
+
     }
 }

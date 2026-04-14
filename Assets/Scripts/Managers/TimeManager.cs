@@ -13,7 +13,20 @@ public class TimeManager : MonoBehaviour
     public bool isTimerRunning;
 
     //Actions
-    public static event Action<float> OnTimerChange;
+    public static event Action<float> OnTimerUpdate;
+
+    void OnEnable()
+    {
+        TimeIncreaseTarget.OnTimeIncrease += TimeIncrease;
+        TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
+    }
+
+    void OnDisable()
+    {
+        TimeIncreaseTarget.OnTimeIncrease -= TimeIncrease;
+        TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
+
+    }
 
 
     // void Awake() //Singleton Pattern  
@@ -62,28 +75,27 @@ public class TimeManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60); //Modulo operator - Returns the remainder after division
 
         //display the time value
-        //UIManager.Instance.TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //Needs to be decoupled
 
-        OnTimerChange?.Invoke(timeToDisplay);
+        OnTimerUpdate?.Invoke(timeToDisplay);
     }
 
 
-    public void TimeIncrease(float timeUpValue)
+    public void TimeIncrease(int timeUpValue)
     {
         //We need to check whether the timer is running. If it is, then perform the code below
         if (isTimerRunning)
         {
             timeRemaining += timeUpValue; //Update the 'time remaining' variable to increase time
-            //DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
+            DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
         } 
     }
 
-    public void TimeDeduction(float timeDownValue) //We need to check whether the timer is running. If it is, then perform the code below 
+    public void TimeDeduction(int timeDownValue) //We need to check whether the timer is running. If it is, then perform the code below 
     {
         if (isTimerRunning)
         {
             timeRemaining -= timeDownValue; //Update the 'time remaining' variable to deduct time
-            //DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
+            DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
         }
     }
 }

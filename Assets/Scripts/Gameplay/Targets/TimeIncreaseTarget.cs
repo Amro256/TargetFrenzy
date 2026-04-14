@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TimeIncreaseTarget : TargetClass
 {
@@ -10,12 +11,17 @@ public class TimeIncreaseTarget : TargetClass
     [Header("Target Effects")]
     [SerializeField] private int ScoreValue; 
     [SerializeField] private int ScoreMultiValue;
-    [SerializeField] private int TimeDeduction = 10; //This target's purpose is to add more time 
+    [SerializeField] private int TimeValue = 10; //This target's purpose is to add more time 
+
+    //Actions
+    public static event Action<int> OnTimeIncrease;
 
     public override void OnHit()
     {
         //Add code here for Increasing Time
 
-        TimeManager.Instance.TimeIncrease(TimeDeduction); //Working!!!
+        //TimeManager.Instance.TimeIncrease(TimeDeduction); //Working!!!
+
+        OnTimeIncrease?.Invoke(TimeValue);
     }
 }
