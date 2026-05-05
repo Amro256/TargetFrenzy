@@ -11,7 +11,7 @@ public class MouseHandler : MonoBehaviour
     private Vector3 mouseWorldPos; // Stores the world space mouse position
     private GameObject currentTarget; //To store the target the mouse is current hovering over --14/4/24: This has now been moved to the new Mouse Handler script, as its more relevant to that script than the input handler
     
-    public GameObject CurrentTarget //Property 
+    public GameObject CurrentTarget //Property field so the Player Input script can access the 'current target'
     {
         get { return currentTarget;}
      }
@@ -38,13 +38,11 @@ public class MouseHandler : MonoBehaviour
 
         if (hit)
         {
-            currentTarget = hit.collider.gameObject;
-           //Debug.Log($"Hovering over: {currentTarget.name}"); 
+            currentTarget = hit.collider.gameObject; //Debug.Log($"Hovering over: {currentTarget.name}"); 
         }
         else
         {
-            currentTarget = null;
-            //Debug.Log("Nothing detected"); //for debugging
+            currentTarget = null;  //Debug.Log("Nothing detected"); //for debugging
         }
     }
 }

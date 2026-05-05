@@ -9,11 +9,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    //General variables and other things 
+    //Singleton Pattern
     public static GameManager Instance; //Static instance so other scripts can access this
 
+    //General Variables
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
-
 
     //14/4/26: The variables below were moved from the player input script to the game manager 
     private int MaxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
@@ -21,9 +21,9 @@ public class GameManager : MonoBehaviour
 
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
-    public static event Action OnGameStart; //--Action: For disabling the pause UI on start--
-    public static event Action OnGamePause;
-    public static event Action OnGameResume;
+    public static event Action OnGameStart; //--Action: For disabling the pause UI on start
+    public static event Action OnGamePause; //--Action: Enables the pause UI when the game is paused
+    public static event Action OnGameResume; //--Action: Disables the pause UI when the game resumes
 
     void OnEnable()
     {
