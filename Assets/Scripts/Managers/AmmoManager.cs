@@ -15,16 +15,18 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     private bool IsOutOfAmmo;
 
     public static event Action OnPlayerReloadUI; // For the UI Manager 
-    public static event Action OnPlayerReload; //For the Player Input UI;
+    public static event Action OnPlayerFullAmmo; //For the Player Input UI;
+    public static event Action OnPlayerOutOfAmmo; //For the Player Input UI;
+
 
     private void OnEnable()
     {
-        PlayerInputHandler.OnPlayerReload += Reload;
+        PlayerInputHandler.OnPlayerReloadInputPress += Reload;
     }
 
     private void OnDisable()
     {
-        PlayerInputHandler.OnPlayerReload -= Reload;
+        PlayerInputHandler.OnPlayerReloadInputPress -= Reload;
     }
 
     void Awake()
@@ -59,6 +61,8 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
         if (CurrentAmmoAmount <= 0)
         {
+            //Disable the Player's fire input
+            OnPlayerOutOfAmmo?.Invoke();
             Debug.LogError("Please Reload!");
             IsOutOfAmmo = true;
         }
@@ -76,6 +80,9 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
             return;
         }
         //The reload button will be mapped to the right mouse button, but first just add ammo back
+
+        //Re-Enable the Player's firing input
+        OnPlayerFullAmmo.Invoke();
 
         CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
         OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called

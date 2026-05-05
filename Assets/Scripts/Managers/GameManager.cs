@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
     //14/4/26: The variables below were moved from the player input script to the game manager 
-    private int MaxMisses = 3; //Max amount of possible clicks the player has before resulting in a game over
+    private int MaxMisses = 5; //Max amount of possible clicks the player has before resulting in a game over
     private int MissCount = 0; //Variable that will track the player's misses 
 
     //Actions 

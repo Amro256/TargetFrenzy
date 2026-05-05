@@ -14,16 +14,28 @@ public class PlayerInputHandler : MonoBehaviour
 
     //Actions to be invoked
     public static event Action OnPlayerMissUI;
-    public static event Action OnPlayerReload;
+    public static event Action OnPlayerReloadInputPress;
     public static event Action OnPlayerMissedShot;
+
+    void OnEnable()
+    {
+        AmmoManager.OnPlayerOutOfAmmo += DisableFiringFunctionality;
+        AmmoManager.OnPlayerFullAmmo += EnableFiringFunctionality;
+    }
+
+    void OnDisable()
+    {
+        AmmoManager.OnPlayerOutOfAmmo -= DisableFiringFunctionality;
+        AmmoManager.OnPlayerFullAmmo -= EnableFiringFunctionality;
+    }
 
     private void Start()
     {
         pi = FindObjectOfType<PlayerInput>();
         PlayerMH = FindObjectOfType<MouseHandler>(); //Finds an object that has the mouse handler script attached to it
     }
-    
-    
+
+
     //Method for shooting / firing - using Unity Events as the notification behaviour 
     public void OnFire(InputAction.CallbackContext context)
     {
@@ -60,12 +72,12 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (!AmmoManager.Instance.IsAmmoEmpty())
         {
-            Debug.Log("Cant reload yet bozo");
+            Debug.Log("You cant reload yet!");
             return;
         }
-        
+
         //Code here - Invoke any actions here!
-        OnPlayerReload?.Invoke();
+        OnPlayerReloadInputPress?.Invoke();
         Debug.Log("Reload performed");
     }
 
@@ -93,5 +105,19 @@ public class PlayerInputHandler : MonoBehaviour
             pi.actions.FindAction("Reload").Enable();
             return;
         }
+    }
+
+    void DisableFiringFunctionality()
+    {
+        pi.actions.FindAction("Fire").Disable();
+        return;
+        //Invoke action here
+    }
+
+    void EnableFiringFunctionality()
+    {
+        pi.actions.FindAction("Fire").Enable();
+        return;
+        //Invoke action here
     }
 }

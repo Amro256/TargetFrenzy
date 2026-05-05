@@ -24,7 +24,6 @@ public class UIManager : MonoBehaviour
     [Header("Game Objects")]
     [SerializeField] public GameObject[] ammoSprites;
 
-
     private void OnEnable()
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
