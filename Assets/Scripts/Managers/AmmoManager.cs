@@ -11,7 +11,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     //General Variables
     [SerializeField] private int MaxAmmo = 4;
-    [SerializeField] private int CurrentAmmoAmount;
+    [SerializeField] public int CurrentAmmoAmount;
     private bool IsOutOfAmmo;
 
     public static event Action OnPlayerReloadUI; // For the UI Manager 
@@ -55,7 +55,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
         CurrentAmmoAmount -= amount; //Reduce the ammo value by one
 
-        //Debug.Log("Current Ammo: " + CurrentAmmoAmount);
+        Debug.Log("Current Ammo: " + CurrentAmmoAmount);
 
         //If statement to check if the currentAmmo Amount is less than 0
 

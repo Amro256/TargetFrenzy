@@ -37,6 +37,8 @@ public class UIManager : MonoBehaviour
 
         AmmoManager.OnPlayerReloadUI += EnableAmmoSpriteVisibility;
 
+        BasicTarget.OnTargetHitTest += DisableAmmoSpriteVisibility;
+
     }
 
     private void OnDisable()
@@ -51,22 +53,25 @@ public class UIManager : MonoBehaviour
         TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
         AmmoManager.OnPlayerReloadUI -= EnableAmmoSpriteVisibility;
+
+        BasicTarget.OnTargetHitTest -= DisableAmmoSpriteVisibility;
     }
 
 
     public void DisableAmmoSpriteVisibility() //Call this method in the mouseInput script
     {
-        AmmoManager.Instance.UpdateAmmoValue(1); //Works but replace this later
-
+           
         if (ammoIndex < ammoSprites.Length)
         {
             ammoSprites[ammoIndex].SetActive(false);
             ammoIndex++;
             Debug.Log("Current Index: " + ammoIndex);
         }
+        
+         //Works but replace this later
     }
 
-    public void EnableAmmoSpriteVisibility() //Does the opposite of the code above - used for when the player has to reload (Currently not being called)
+    public void EnableAmmoSpriteVisibility() //Does the opposite of the code above - used for when the player has to reload (Currently not being called --Is working as of 5/5/26)
     {
         // Debug.Log("Sprite re-enabled!"); -- The Function is being called correctly
         

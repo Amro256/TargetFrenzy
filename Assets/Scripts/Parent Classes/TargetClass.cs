@@ -50,7 +50,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     public virtual void OnHit() //Child classes will override this method
     {
-
+        
     } 
     
 }

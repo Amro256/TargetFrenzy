@@ -56,6 +56,9 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 Debug.Log("You have clicked on nothing");
 
+                AmmoManager.Instance.UpdateAmmoValue(1);  //As of: 5/5/26 - This has been moved from the UI manager as it was overlapping with the same code 
+                 //that's responsible for updating the ammo value when the player hits a target, resulting in the ammo value decreasing by two instead of one.
+                
                 //Invoke Action
                 OnPlayerMissUI?.Invoke();
                 OnPlayerMissedShot?.Invoke();

@@ -14,12 +14,17 @@ public class BasicTarget : TargetClass
 
     //Actions
     public static event Action<int> OnTargetHit;
+    public static event Action OnTargetHitTest;
 
 
     //Create a method that will handle the score and then call it in the mouse input script
     public override void OnHit()
     {
         OnTargetHit?.Invoke(ScoreValue);
+
+        //Update the current ammo value + the UI
+        AmmoManager.Instance.UpdateAmmoValue(1);
+        OnTargetHitTest?.Invoke();
     }
 
 }

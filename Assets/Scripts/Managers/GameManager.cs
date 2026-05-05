@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
             //The player input map needs to be disable here, as the game still registers inputs and the "OnFire" method is still called
 
             //Inputs.Player.Disable(); // This disables the player action map! 
+            
 
             Debug.Log("Game Over");
 
