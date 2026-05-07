@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     //Singleton Pattern
     public static GameManager Instance; //Static instance so other scripts can access this
 
+    //References
+    PlayerInputHandler PlayerInput;
+
     //General Variables
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
 
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         //Invoke action here  
         OnGameStart?.Invoke(); //What this action does: Disables the "Pause" menu UI when the game starts
+        PlayerInput = FindObjectOfType<PlayerInputHandler>();
     }
 
 
@@ -63,7 +67,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0; //Acts as if the game is "paused"
         Debug.Log("Time Over");
 
-        //Inputs need to be disabled
+        //Disable the player's fire and reload input
+        PlayerInput.PI.actions.FindAction("Fire").Disable();
+        PlayerInput.PI.actions.FindAction("Reload").Disable();
 
         //Call method to display the "Pause menu". This will be used for testing
 

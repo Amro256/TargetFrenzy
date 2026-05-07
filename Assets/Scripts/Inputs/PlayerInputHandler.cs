@@ -18,6 +18,12 @@ public class PlayerInputHandler : MonoBehaviour
     public static event Action OnPlayerMissedShot;
     public static event Action OnConfirmedHit;
 
+    //Property so the game manager can access the PlayerInput to disable certain actions 
+    public PlayerInput PI
+    {
+        get { return pi; }
+    }
+
     void OnEnable()
     {
         AmmoManager.OnPlayerOutOfAmmo += DisableFiringFunctionality;
