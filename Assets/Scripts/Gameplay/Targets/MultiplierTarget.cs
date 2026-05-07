@@ -20,6 +20,7 @@ public class MultiplierTarget : TargetClass
     {
         //Add Mutlivalue here -Invoke action!
         OnMultiplierActive?.Invoke(ScoreMultiValue);
+        AmmoManager.Instance.UpdateAmmoValue(1);
 
     }
 }

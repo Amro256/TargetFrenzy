@@ -16,6 +16,7 @@ public class PlayerInputHandler : MonoBehaviour
     public static event Action OnPlayerMissUI;
     public static event Action OnPlayerReloadInputPress;
     public static event Action OnPlayerMissedShot;
+    public static event Action OnConfirmedHit;
 
     void OnEnable()
     {
@@ -48,6 +49,8 @@ public class PlayerInputHandler : MonoBehaviour
                 if (Target != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
                     Target.OnHit();
+                    //Invoke Action Here
+                    OnConfirmedHit?.Invoke(); //This action will consume ammo if the player hits a target and the UI will update accordingly
                 }
 
                 Destroy(PlayerMH.CurrentTarget);

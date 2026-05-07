@@ -4,8 +4,6 @@ using UnityEngine;
 using System; //NameSpace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
@@ -32,12 +30,11 @@ public class UIManager : MonoBehaviour
         GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
         GameManager.OnGameStart += DisablePauseMenu;
         GameManager.OnGameResume += DisablePauseMenu;
-        PlayerInputHandler.OnPlayerMissUI += DisableAmmoSpriteVisibility;
+        PlayerInputHandler.OnPlayerMissUI += ConsumeAmmo;
         TimeManager.OnTimerUpdate += UpdateTimerUI;
 
         AmmoManager.OnPlayerReloadUI += EnableAmmoSpriteVisibility;
-
-        BasicTarget.OnTargetHitTest += DisableAmmoSpriteVisibility;
+        PlayerInputHandler.OnConfirmedHit += ConsumeAmmo;
 
     }
 
@@ -49,16 +46,16 @@ public class UIManager : MonoBehaviour
         GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
         GameManager.OnGameStart -= DisablePauseMenu;
         GameManager.OnGameResume -= DisablePauseMenu;
-        PlayerInputHandler.OnPlayerMissUI -= DisableAmmoSpriteVisibility;
+        PlayerInputHandler.OnPlayerMissUI -= ConsumeAmmo;
         TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
         AmmoManager.OnPlayerReloadUI -= EnableAmmoSpriteVisibility;
 
-        BasicTarget.OnTargetHitTest -= DisableAmmoSpriteVisibility;
+        PlayerInputHandler.OnConfirmedHit -= ConsumeAmmo;
     }
 
 
-    public void DisableAmmoSpriteVisibility() //Call this method in the mouseInput script
+    public void ConsumeAmmo() //Call this method in the mouseInput script
     {
            
         if (ammoIndex < ammoSprites.Length)
@@ -67,20 +64,19 @@ public class UIManager : MonoBehaviour
             ammoIndex++;
             Debug.Log("Current Index: " + ammoIndex);
         }
-        
-         //Works but replace this later
     }
 
     public void EnableAmmoSpriteVisibility() //Does the opposite of the code above - used for when the player has to reload (Currently not being called --Is working as of 5/5/26)
     {
         // Debug.Log("Sprite re-enabled!"); -- The Function is being called correctly
-        
+
         foreach (GameObject sprites in ammoSprites) //Lol this worked initially, I just had to reset the ammo index back to 0 for the above function to work
         {
             sprites.SetActive(true);
-            //Reset the ammo index - so the UI can keep updating accordingly
-            ammoIndex = 0; 
+
         }
+        //Reset the ammo index - so the UI can keep updating accordingly
+        ammoIndex = 0; 
     }
 
     public void UpdateScoreUI(int score)
@@ -105,14 +101,18 @@ public class UIManager : MonoBehaviour
 
     public void DisplayPauseMenu() //Method that can be called by the game manager script to display the pause menu
     {
-        //Add code here
-        PauseMenuCanvas.enabled = true; //Now the canvas should be enabled when the player gets a game over
+        if (PauseMenuCanvas != null)
+        {
+            PauseMenuCanvas.enabled = true; //Now the canvas should be enabled when the player gets a game over    
+        }
     }
 
      public void DisablePauseMenu() 
     {
-        //Add code here
-        PauseMenuCanvas.enabled = false;
+        if (PauseMenuCanvas != null)
+        {
+            PauseMenuCanvas.enabled = false; //Now the canvas should be enabled when the player gets a game over    
+        }
     }
     
 }

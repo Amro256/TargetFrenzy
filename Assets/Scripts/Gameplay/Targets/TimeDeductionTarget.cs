@@ -20,6 +20,7 @@ public class TimeDeductionTarget : TargetClass
     {
         //Add code here for time Deduction
 
+        AmmoManager.Instance.UpdateAmmoValue(1);
         OnTimeDeduction?.Invoke(TimeValue);
 
     }

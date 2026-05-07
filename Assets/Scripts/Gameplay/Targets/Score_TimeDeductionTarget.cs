@@ -21,8 +21,8 @@ public class Score_TimeDeductionTarget : TargetClass
     public override void OnHit()
     {
         //Add code here for score and time deduction
-
-        //ScoreManager.Instance.ScoreDeduction(ScoreValue); //Working!!
+        AmmoManager.Instance.UpdateAmmoValue(1);
+        
         OnScoreDeduction?.Invoke(ScoreValue);
         OnTimeDeduction?.Invoke(TimeValue);
         //TimeManager.Instance.TimeDeduction(TimeDeduction);
