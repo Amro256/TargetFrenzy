@@ -21,7 +21,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
         Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position
 
-        moveSpeed = Random.Range(10, 17);
+        moveSpeed = Random.Range(10, 15);
     }
 
     void Update()

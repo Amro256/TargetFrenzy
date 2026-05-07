@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         PlayerInputHandler.OnPlayerMissedShot += PlayerMissShot;
+        TimeManager.OnOutOfTime += TimeOver;
     }
 
     void OnDisable()
     {
         PlayerInputHandler.OnPlayerMissedShot -= PlayerMissShot;
+        TimeManager.OnOutOfTime -= TimeOver;
 
     }
 
@@ -56,10 +58,12 @@ public class GameManager : MonoBehaviour
 
 
     //General Methods 
-    public void GameOver()
+    public void TimeOver()
     {
         Time.timeScale = 0; //Acts as if the game is "paused"
-        Debug.Log("Gg lol");
+        Debug.Log("Time Over");
+
+        //Inputs need to be disabled
 
         //Call method to display the "Pause menu". This will be used for testing
 

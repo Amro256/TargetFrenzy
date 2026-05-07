@@ -11,6 +11,7 @@ public class TimeManager : MonoBehaviour
 
     //Actions
     public static event Action<float> OnTimerUpdate;
+    public static event Action OnOutOfTime;
 
     void OnEnable()
     {
@@ -42,10 +43,12 @@ public class TimeManager : MonoBehaviour
                 DisplayTime(timeRemaining);
             }
             else
-            {
+            {  
                 Debug.Log("Time has run out bozo!");
                 timeRemaining = 0; //Sets the time remaining to 0 to prevent it from going into the negatives
+                DisplayTime(timeRemaining);
                 isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
+                OnOutOfTime?.Invoke();
             }
         }
     }
