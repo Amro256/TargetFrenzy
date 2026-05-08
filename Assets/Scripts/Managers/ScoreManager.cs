@@ -69,6 +69,8 @@ public class ScoreManager : MonoBehaviour
 
             CurrentMultiValue = MultiValue;
             Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
+             
+            //Code to handling the UI bar goes here -- Activate Bar
         }
         else
         {
@@ -77,7 +79,7 @@ public class ScoreManager : MonoBehaviour
         }
 
         //Update the text display - Invoke Action
-        OnMultiValueChanged?.Invoke(CurrentMultiValue);
+        //OnMultiValueChanged?.Invoke(CurrentMultiValue);
     }
 
 }

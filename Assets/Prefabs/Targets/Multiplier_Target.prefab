@@ -174,4 +174,5 @@ MonoBehaviour:
   moveSpeed: 10
   ScoreValue: 0
   ScoreMultiValue: 2
+  multiplierDuration: 20
   TimeDeduction: 0

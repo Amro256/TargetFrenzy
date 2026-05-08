@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] public TMP_Text ScoreText;
     [SerializeField] public TMP_Text TimerText;
-    [SerializeField] public TMP_Text MultiText;
     [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
 
     [Header("Game Objects")]
@@ -25,7 +24,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
-        ScoreManager.OnMultiValueChanged += UpdateMultiUI;
+        //ScoreManager.OnMultiValueChanged += UpdateMultiUI;
 
         GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
         GameManager.OnGameStart += DisablePauseMenu;
@@ -33,7 +32,7 @@ public class UIManager : MonoBehaviour
         PlayerInputHandler.OnPlayerMissUI += ConsumeAmmo;
         TimeManager.OnTimerUpdate += UpdateTimerUI;
 
-        AmmoManager.OnPlayerReloadUI += EnableAmmoSpriteVisibility;
+        AmmoManager.OnPlayerReloadUI += ReloadAmmoSprites;
         PlayerInputHandler.OnConfirmedHit += ConsumeAmmo;
 
     }
@@ -41,7 +40,7 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
-        ScoreManager.OnMultiValueChanged -= UpdateMultiUI;
+        //ScoreManager.OnMultiValueChanged -= UpdateMultiUI;
 
         GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
         GameManager.OnGameStart -= DisablePauseMenu;
@@ -49,7 +48,7 @@ public class UIManager : MonoBehaviour
         PlayerInputHandler.OnPlayerMissUI -= ConsumeAmmo;
         TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
-        AmmoManager.OnPlayerReloadUI -= EnableAmmoSpriteVisibility;
+        AmmoManager.OnPlayerReloadUI -= ReloadAmmoSprites;
 
         PlayerInputHandler.OnConfirmedHit -= ConsumeAmmo;
     }
@@ -66,7 +65,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void EnableAmmoSpriteVisibility() //Does the opposite of the code above - used for when the player has to reload (Currently not being called --Is working as of 5/5/26)
+    public void ReloadAmmoSprites() //Does the opposite of the code above - used for when the player has to reload (Currently not being called --Is working as of 5/5/26)
     {
         // Debug.Log("Sprite re-enabled!"); -- The Function is being called correctly
 
@@ -84,10 +83,10 @@ public class UIManager : MonoBehaviour
         ScoreText.text = score.ToString();
     }
 
-    public void UpdateMultiUI(int multiValue)
-    {
-        MultiText.text = multiValue.ToString();
-    }
+    // public void UpdateMultiUI(int multiValue)
+    // {
+    //     MultiText.text = multiValue.ToString();
+    // }
 
      public void UpdateTimerUI(float timeToDisplay)
     {
