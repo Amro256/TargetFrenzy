@@ -62,24 +62,23 @@ public class ScoreManager : MonoBehaviour
     public void ScoreMultiplier(int MultiValue)
     {
         IsMultiActive = true; //Set Multi bool to true
+        CurrentMultiValue = MultiValue;
 
-        if (IsMultiActive)
-        {
-            Debug.Log("Multi Active!");
+        Debug.Log("Multi Active!");
+        Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
 
-            CurrentMultiValue = MultiValue;
-            Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
-             
-            //Code to handling the UI bar goes here -- Activate Bar
-        }
-        else
-        {
-            IsMultiActive = false;
-            Debug.Log("Multi currently not activated!");
-        }
+        //Code to handling the UI bar goes here -- Activate Bar
+        StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
+        
+        // else
+        // {
+        //     IsMultiActive = false;
+        //     Debug.Log("Multi currently not activated!");
+        // }
 
         //Update the text display - Invoke Action
         //OnMultiValueChanged?.Invoke(CurrentMultiValue);
+
     }
 
 }

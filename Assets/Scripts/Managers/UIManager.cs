@@ -53,10 +53,9 @@ public class UIManager : MonoBehaviour
         PlayerInputHandler.OnConfirmedHit -= ConsumeAmmo;
     }
 
-
     public void ConsumeAmmo() //Call this method in the mouseInput script
     {
-           
+
         if (ammoIndex < ammoSprites.Length)
         {
             ammoSprites[ammoIndex].SetActive(false);
@@ -75,7 +74,7 @@ public class UIManager : MonoBehaviour
 
         }
         //Reset the ammo index - so the UI can keep updating accordingly
-        ammoIndex = 0; 
+        ammoIndex = 0;
     }
 
     public void UpdateScoreUI(int score)
@@ -88,7 +87,7 @@ public class UIManager : MonoBehaviour
     //     MultiText.text = multiValue.ToString();
     // }
 
-     public void UpdateTimerUI(float timeToDisplay)
+    public void UpdateTimerUI(float timeToDisplay)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60); //Modulo operator - Returns the remainder after division
@@ -106,12 +105,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-     public void DisablePauseMenu() 
+    public void DisablePauseMenu()
     {
         if (PauseMenuCanvas != null)
         {
             PauseMenuCanvas.enabled = false; //Now the canvas should be enabled when the player gets a game over    
         }
     }
+
     
 }
