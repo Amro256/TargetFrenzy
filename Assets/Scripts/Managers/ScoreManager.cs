@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -13,6 +10,8 @@ public class ScoreManager : MonoBehaviour
     private int TotalScore; //General Variable to store the score.
     private int CurrentMultiValue; //Will be used to track and store the current multiplier value
     private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not!
+    private bool isRoutineRunning;
+    private Coroutine currentCoroutine;
 
     //Actions
     public static event Action<int> OnScoreChanged;
@@ -61,15 +60,26 @@ public class ScoreManager : MonoBehaviour
     //Add method here to handle the score Multiplier --Currently works! Call this method for targets will be use the multiplier value --13/4/26: Code was refactored--
     public void ScoreMultiplier(int MultiValue)
     {
-        IsMultiActive = true; //Set Multi bool to true
-        CurrentMultiValue = MultiValue;
+        if (!IsMultiActive)
+        {
+            IsMultiActive = true; //Set Multi bool to true
+            CurrentMultiValue = MultiValue;
 
-        Debug.Log("Multi Active!");
-        Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
+            Debug.Log("Multi Active!");
+            Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
 
-        //Code to handling the UI bar goes here -- Activate Bar
-        StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
+            //Code to handling the UI bar goes here -- Activate Bar
+            currentCoroutine = StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
+
+        }
+        else
+        {
+            Debug.Log("Multi Already Active");
+            IsMultiActive = false; //This check has to be here, otherwise the Coroutine wont restart after the duration ends
+        }
+
         
+
         // else
         // {
         //     IsMultiActive = false;

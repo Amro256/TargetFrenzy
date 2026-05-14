@@ -44,11 +44,12 @@ public class MultiplierBarManager : MonoBehaviour
         while (multiplierSlider.value > 0)
         {
             multiplierSlider.value -= Time.deltaTime;
-            Debug.Log("Slider Value: " + multiplierSlider.value);
+            //Debug.Log("Slider Value: " + multiplierSlider.value);
             yield return null;
         }
-         
-         Debug.Log("Multiplier ended!");
+
+        Debug.Log("Multiplier ended!");
+        multiplierSlider.value = maxMultiplierDuration; //This resets the slider's value after the multiplier has ended
        
     }
 
