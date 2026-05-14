@@ -38,7 +38,7 @@ public class ScoreManager : MonoBehaviour
 
         //Check to see if the multiplier is active, then apply it to the score
 
-        if (IsMultiActive) //If the multiplier is set the true
+        if (IsMultiActive == true) //If the multiplier is set the true --14/5/26: Changed to is equal to true due to a bug related to the code change of the scoreMultiplier method
         {
             HitScore *= CurrentMultiValue;
         }
