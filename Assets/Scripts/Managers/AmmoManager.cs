@@ -55,7 +55,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
         CurrentAmmoAmount -= amount; //Reduce the ammo value by one
 
-        Debug.Log("Current Ammo: " + CurrentAmmoAmount);
+        //Debug.Log("Current Ammo: " + CurrentAmmoAmount); --18/5/26 Commented this debug out to debug other bugs--
 
         //If statement to check if the currentAmmo Amount is less than 0
 
@@ -88,8 +88,8 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
         IsOutOfAmmo = false;
 
-
-        Debug.Log("Ammo After reload: " + CurrentAmmoAmount);
+ 
+        //Debug.Log("Ammo After reload: " + CurrentAmmoAmount); --18/5/26 Commented this debug out to debug other bugs--
     }
 
     public bool IsAmmoEmpty()

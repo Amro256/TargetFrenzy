@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
     //General Variables
     private int TotalScore; //General Variable to store the score.
     private int CurrentMultiValue; //Will be used to track and store the current multiplier value
-    private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not!
+    private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
     private bool isRoutineRunning;
     private Coroutine currentCoroutine;
 
@@ -38,10 +38,11 @@ public class ScoreManager : MonoBehaviour
 
         //Check to see if the multiplier is active, then apply it to the score
 
-        if (IsMultiActive == true) //If the multiplier is set the true --14/5/26: Changed to is equal to true due to a bug related to the code change of the scoreMultiplier method
+        if (IsMultiActive != false) //If the multiplier is set the true --14/5/26: Changed to is equal to true due to a bug related to the code change of the scoreMultiplier method
         {
             HitScore *= CurrentMultiValue;
         }
+
 
         TotalScore += HitScore;
 
@@ -60,7 +61,7 @@ public class ScoreManager : MonoBehaviour
     //Add method here to handle the score Multiplier --Currently works! Call this method for targets will be use the multiplier value --13/4/26: Code was refactored--
     public void ScoreMultiplier(int MultiValue)
     {
-        if (!IsMultiActive)
+        if (!IsMultiActive) //the "!" is a logical not operator. THis operator reverses the state of the boolean from false to true
         {
             IsMultiActive = true; //Set Multi bool to true
             CurrentMultiValue = MultiValue;
@@ -71,24 +72,21 @@ public class ScoreManager : MonoBehaviour
             //Code to handling the UI bar goes here -- Activate Bar
             currentCoroutine = StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
 
+            //Call a new Coroutine that will reset the multi bool once the multiplier duration is up
+            StartCoroutine(MultiplierDuration());
         }
         else
         {
             Debug.Log("Multi Already Active");
-            IsMultiActive = false; //This check has to be here, otherwise the Coroutine wont restart after the duration ends
         }
-
-        
-
-        // else
-        // {
-        //     IsMultiActive = false;
-        //     Debug.Log("Multi currently not activated!");
-        // }
-
-        //Update the text display - Invoke Action
-        //OnMultiValueChanged?.Invoke(CurrentMultiValue);
-
     }
+
+    private IEnumerator MultiplierDuration() //A 2nd Coroutine 
+    {
+        yield return new WaitForSeconds(MultiplierBarManager.Instance.maxMultiplierDuration); //This will wait for the multiplier duration to be done BEFORE setting the Multi bool back to false
+        //And so it uses the max multiplier duration from the multiplier script as 'how long it should wait' before the bool is set to false
+
+        IsMultiActive = false; //Sets the multi bool back to false
+     }
 
 }

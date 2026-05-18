@@ -19,7 +19,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         //Grab a reference to the targets' initial spawn position on start 
         initialSpawnPoint = transform.position;
 
-        Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position
+        //Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position (--18/5/26 Commented this debug out to debug other bugs--)
 
         moveSpeed = Random.Range(10, 15);
     }

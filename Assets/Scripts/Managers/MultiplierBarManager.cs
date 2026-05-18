@@ -15,7 +15,7 @@ public class MultiplierBarManager : MonoBehaviour
     [SerializeField] private Slider multiplierSlider; //11/5/26 - Moved from its own script to the UI manager
 
     // //Duration (Reference the Multiplier target script)
-    [SerializeField] private float maxMultiplierDuration; //This will be used to control the duration of the Multiplier
+    [SerializeField] public float maxMultiplierDuration; //This will be used to control the duration of the Multiplier
     
      void Awake() //Singleton pattern
     {
