@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spawner1 : SpawnerClass //This class inherits from the Spawner Class (Read it like this: Spawner 1 IS A Spawner)
@@ -29,7 +27,7 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
         {
             foreach (GameObject prefabs in targetObjects)
             {
-                GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
+                GameObject instantiatedTargets = Instantiate(targetObjects[Random.Range (0,5)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
                 //Debug.Log("Spawning targets!");
 
                 TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that have the target class attached to it
