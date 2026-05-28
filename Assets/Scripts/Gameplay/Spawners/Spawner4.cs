@@ -25,7 +25,7 @@ public class Spawner4 : SpawnerClass //This class inherits from the Spawner Clas
         {
             foreach (GameObject prefabs in targetObjects)
             {
-                GameObject instantiatedTargets = Instantiate(prefabs, transform.position, transform.rotation);
+                GameObject instantiatedTargets = Instantiate(targetObjects[Random.Range(0, 6)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
                 //Debug.Log("Spawning targets!");
 
                 TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that derive from it, to it!

@@ -19,12 +19,14 @@ public class MultiplierBarManager : MonoBehaviour
     
      void Awake() //Singleton pattern
     {
-        if (Instance == null)
+        if (Instance != null)
         {
-            Instance = this;
+            Destroy(gameObject);
+            return;
         }
         else
         {
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }

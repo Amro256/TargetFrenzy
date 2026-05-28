@@ -6,6 +6,10 @@ public class ScoreManager : MonoBehaviour
 {
     //This script will be used to be track and store the player's score. It will also make it easier to implement the multiplier functionality without the code becoming a mess.
 
+    //Singleton
+
+    public static ScoreManager Instance;
+
     //General Variables
     private int TotalScore; //General Variable to store the score.
     private int CurrentMultiValue; //Will be used to track and store the current multiplier value
@@ -13,9 +17,13 @@ public class ScoreManager : MonoBehaviour
     private bool isRoutineRunning;
     private Coroutine currentCoroutine;
 
+    private int bonusRoundThreshold = 200; //If the player's score hits this threshold, it'll trigger the bonus round
+
     //Actions
     public static event Action<int> OnScoreChanged;
     public static event Action<int> OnMultiValueChanged;
+    public static event Action OnBonusRoundActive;
+    
 
     private void OnEnable()
     {
@@ -43,11 +51,34 @@ public class ScoreManager : MonoBehaviour
             HitScore *= CurrentMultiValue;
         }
 
-
         TotalScore += HitScore;
 
+
+        if (TotalScore >= bonusRoundThreshold)
+        {
+            //Code here - What do we want to do here? - 28/5/2026
+            // 0.5) Set is BonusRoundActive bool to true - DONE (UI Manager Property)
+            // 1) Disable Spawners temporarily - DONE  (Game Manager)
+            // 2) Set the timer to 30 seconds (or the time amount decided for the bonus round) - DONE
+
+            // 3) Set up an Coroutine to Flash the words "Bonus round" on screen, followed by 3,2,1, GO (UI Manager)
+            // 4) Re-enable everything (Game + UI Managers)
+
+            //IsBonusRActive = true;
+
+            GameManager.Instance.BonusRoundBool = true;
+            Debug.Log("Bonus Round has been activated!");
+            //Action here
+            OnBonusRoundActive?.Invoke();
+
+            GameManager.Instance.spawnerObjects.SetActive(false);
+            Debug.Log("Spawners disabled for now");
+
+        }
+
+
         //Update the score UI here
-        OnScoreChanged?.Invoke(TotalScore);
+        OnScoreChanged?.Invoke(TotalScore);        
     }
 
     public void ScoreDeduction(int ScoreValue) //Method for handling deduction in score
@@ -61,7 +92,7 @@ public class ScoreManager : MonoBehaviour
     //Add method here to handle the score Multiplier --Currently works! Call this method for targets will be use the multiplier value --13/4/26: Code was refactored--
     public void ScoreMultiplier(int MultiValue)
     {
-        if (!IsMultiActive) //the "!" is a logical not operator. THis operator reverses the state of the boolean from false to true
+        if (!IsMultiActive) //the "!" is a logical not operator. This operator reverses the state of the boolean from false to true
         {
             IsMultiActive = true; //Set Multi bool to true
             CurrentMultiValue = MultiValue;

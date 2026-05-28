@@ -31,13 +31,14 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     void Awake()
     {
-        if (Instance == null)
+        if (Instance != null)
         {
-            Instance = this;
-
+            Destroy(gameObject);
+            return;
         }
         else
         {
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }

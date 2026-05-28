@@ -15,9 +15,10 @@ public class GoldenTarget : TargetClass
 
      //Actions
     public static event Action<int> OnTargetHit;
-    
+
     public override void OnHit()
     {
         OnTargetHit?.Invoke(ScoreValue);
+        AmmoManager.Instance.UpdateAmmoValue(1);
     }
 }

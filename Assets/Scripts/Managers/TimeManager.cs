@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor.Experimental.GraphView;
+using System.Timers;
 
 public class TimeManager : MonoBehaviour
 {
     //General variables
-    public float timeRemaining = 10;
+    public float timeRemaining;
+    private float BonusTimeRemaining = 31;
     public bool isTimerRunning;
 
     //Actions
@@ -18,6 +21,8 @@ public class TimeManager : MonoBehaviour
         TimeIncreaseTarget.OnTimeIncrease += TimeIncrease;
         TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
         Score_TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
+
+        ScoreManager.OnBonusRoundActive += StartBonusRound;
     }
 
     void OnDisable()
@@ -25,6 +30,8 @@ public class TimeManager : MonoBehaviour
         TimeIncreaseTarget.OnTimeIncrease -= TimeIncrease;
         TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
         Score_TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
+
+        ScoreManager.OnBonusRoundActive -= StartBonusRound;
     }
 
     // Start is called before the first frame update
@@ -43,13 +50,14 @@ public class TimeManager : MonoBehaviour
                 DisplayTime(timeRemaining);
             }
             else
-            {  
+            {
                 Debug.Log("Time has run out bozo!");
                 timeRemaining = 0; //Sets the time remaining to 0 to prevent it from going into the negatives
                 DisplayTime(timeRemaining);
                 isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
                 OnOutOfTime?.Invoke();
             }
+
         }
     }
 
@@ -73,7 +81,7 @@ public class TimeManager : MonoBehaviour
         {
             timeRemaining += timeUpValue; //Update the 'time remaining' variable to increase time
             DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
-        } 
+        }
     }
 
     public void TimeDeduction(int timeDownValue) //We need to check whether the timer is running. If it is, then perform the code below 
@@ -84,4 +92,10 @@ public class TimeManager : MonoBehaviour
             DisplayTime(timeRemaining); //Calling the displayTime method to update the UI
         }
     }
+
+    void StartBonusRound() //Method that will be called when the bonus round is active
+    {
+        timeRemaining = BonusTimeRemaining; //Sets the remaining time to the bonus time
+        isTimerRunning = true;
+     }
 }

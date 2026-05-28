@@ -24,7 +24,6 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
-        //ScoreManager.OnMultiValueChanged += UpdateMultiUI;
 
         GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
         GameManager.OnGameStart += DisablePauseMenu;
@@ -40,7 +39,6 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
-        //ScoreManager.OnMultiValueChanged -= UpdateMultiUI;
 
         GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
         GameManager.OnGameStart -= DisablePauseMenu;
@@ -82,10 +80,6 @@ public class UIManager : MonoBehaviour
         ScoreText.text = score.ToString();
     }
 
-    // public void UpdateMultiUI(int multiValue)
-    // {
-    //     MultiText.text = multiValue.ToString();
-    // }
 
     public void UpdateTimerUI(float timeToDisplay)
     {

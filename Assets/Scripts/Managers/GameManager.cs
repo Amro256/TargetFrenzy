@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,7 +12,16 @@ public class GameManager : MonoBehaviour
     PlayerInputHandler PlayerInput;
 
     //General Variables
+    public GameObject spawnerObjects;
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
+    private bool IsBonusRActive = false;
+
+    public bool BonusRoundBool
+    {
+        get { return IsBonusRActive; }
+        set { IsBonusRActive = value; }
+    }
+
 
     //14/4/26: The variables below were moved from the player input script to the game manager 
     private int MaxMisses = 5; //Max amount of possible clicks the player has before resulting in a game over
@@ -43,12 +48,14 @@ public class GameManager : MonoBehaviour
 
     void Awake() //Singleton pattern
     {
-        if (Instance == null)
+        if (Instance != null)
         {
-            Instance = this;
+            Destroy(gameObject);
+            return;
         }
         else
         {
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -58,6 +65,7 @@ public class GameManager : MonoBehaviour
         //Invoke action here  
         OnGameStart?.Invoke(); //What this action does: Disables the "Pause" menu UI when the game starts
         PlayerInput = FindObjectOfType<PlayerInputHandler>();
+        IsBonusRActive = false;
     }
 
 
@@ -79,9 +87,9 @@ public class GameManager : MonoBehaviour
     }
 
     //General Functions
-    public void LoadLevel() //Function that will load the level
+    public void LoadScene(int buildIndex) //Function that will load the level
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadSceneAsync(buildIndex);
         Debug.Log("Loading Scene");
     }
 

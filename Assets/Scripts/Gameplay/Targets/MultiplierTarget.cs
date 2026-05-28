@@ -22,11 +22,6 @@ public class MultiplierTarget : TargetClass
         OnMultiplierActive?.Invoke(ScoreMultiValue);
         AmmoManager.Instance.UpdateAmmoValue(1);
     }
-
-    // public float MDuration
-    // {
-    //     get { return multiplierDuration; }
-    //  }
 }
 
 
