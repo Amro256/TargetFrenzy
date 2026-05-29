@@ -57,6 +57,8 @@ public class PlayerInputHandler : MonoBehaviour
                     Target.OnHit();
                     //Invoke Action Here
                     OnConfirmedHit?.Invoke(); //This action will consume ammo if the player hits a target and the UI will update accordingly
+                    
+                    //Change the colour of the cursor here
                 }
 
                 Destroy(PlayerMH.CurrentTarget);

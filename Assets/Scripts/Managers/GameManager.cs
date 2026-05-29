@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     //References
     PlayerInputHandler PlayerInput;
+    
+    [SerializeField] private Texture2D targetReticleTexture;
 
     //General Variables
     public GameObject spawnerObjects;
@@ -66,6 +68,12 @@ public class GameManager : MonoBehaviour
         OnGameStart?.Invoke(); //What this action does: Disables the "Pause" menu UI when the game starts
         PlayerInput = FindObjectOfType<PlayerInputHandler>();
         IsBonusRActive = false;
+    }
+
+
+    public void UpdateMouseCursor() //Call this method when the player is hovering over a target
+    {
+        Cursor.SetCursor(targetReticleTexture, Vector2.zero ,CursorMode.Auto);
     }
 
 

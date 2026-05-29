@@ -14,7 +14,7 @@ public class MouseHandler : MonoBehaviour
     public GameObject CurrentTarget //Property field so the Player Input script can access the 'current target'
     {
         get { return currentTarget;}
-     }
+    }
 
     void Start()
     {
@@ -38,11 +38,13 @@ public class MouseHandler : MonoBehaviour
 
         if (hit)
         {
-            currentTarget = hit.collider.gameObject; //Debug.Log($"Hovering over: {currentTarget.name}"); 
+            currentTarget = hit.collider.gameObject; //Debug.Log($"Hovering over: {currentTarget.name}");
+            GameManager.Instance.UpdateMouseCursor();
         }
         else
         {
             currentTarget = null;  //Debug.Log("Nothing detected"); //for debugging
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); //Resets the cursor back to the default one
         }
     }
 }
