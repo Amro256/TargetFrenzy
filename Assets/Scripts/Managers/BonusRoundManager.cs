@@ -17,7 +17,7 @@ public class BonusRoundManager : MonoBehaviour
 
         OnBonusRoundActive?.Invoke();
 
-        GameManager.Instance.spawnerObjects.SetActive(false);
+        GameManager.Instance.spawnerObjects.SetActive(false); //This disables the spawners, so no targets will spawn during the bonus round intro screen.
         Debug.Log("Spawners disabled for now");
 
         //Call the coroutine from the UI manager here
