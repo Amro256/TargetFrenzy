@@ -22,6 +22,8 @@ public class ScoreManager : MonoBehaviour
     //Actions
     public static event Action<int> OnScoreChanged;
     public static event Action<int> OnMultiValueChanged;
+
+    public static event Action OnBonusRoundActivated;
     
     
 
@@ -57,7 +59,9 @@ public class ScoreManager : MonoBehaviour
         if (TotalScore >= bonusRoundThreshold)
         {
             Debug.Log("You've met the threshold!");
-             
+
+            OnBonusRoundActivated?.Invoke();
+
             //Code here - What do we want to do here? - 28/5/2026
             // 0.5) Set is BonusRoundActive bool to true - DONE (Game Manager Property)
             // 1) Disable Spawners temporarily - DONE  (Game Manager)

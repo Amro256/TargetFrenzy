@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Texture2D targetReticleTexture;
 
     //General Variables
-    public GameObject spawnerObjects;
+    
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
 

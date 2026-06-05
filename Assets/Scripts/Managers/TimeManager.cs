@@ -22,7 +22,7 @@ public class TimeManager : MonoBehaviour
         TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
         Score_TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
 
-        BonusRoundManager.OnBonusRoundActive += StartBonusRound;
+        BonusRoundManager.OnBonusRoundStartTime += StartBonusRound;
     }
 
     void OnDisable()
@@ -31,7 +31,7 @@ public class TimeManager : MonoBehaviour
         TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
         Score_TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
 
-        BonusRoundManager.OnBonusRoundActive -= StartBonusRound;
+        BonusRoundManager.OnBonusRoundStartTime -= StartBonusRound;
     }
 
     // Start is called before the first frame update
@@ -95,7 +95,18 @@ public class TimeManager : MonoBehaviour
 
     void StartBonusRound() //Method that will be called when the bonus round is active
     {
-        timeRemaining = BonusTimeRemaining; //Sets the remaining time to the bonus time
+        StartCoroutine(BonusTimerBuffer());
+        // timeRemaining = BonusTimeRemaining; //Sets the remaining time to the bonus time
+        // isTimerRunning = true;
+    }
+
+
+    IEnumerator BonusTimerBuffer() 
+    {
+        timeRemaining = BonusTimeRemaining;
+        isTimerRunning = false;
+
+        yield return new WaitForSeconds(5f);
         isTimerRunning = true;
-     }
+    }
 }

@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
 {
     //Migrate UI functionality from the game manager here!!
 
+    public static UIManager Instance;
+
     //General variables / others
     private int ammoIndex;
     [SerializeField] private Animator anim;
@@ -23,6 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject topLeftUIGroup; //Reference to the score, time, and multiplier group
     [SerializeField] private GameObject ammoSpriteGroup; //Reference to the ammo group sitting in the bottom left of the screen
     [SerializeField] private GameObject BonusRoundGroup; //Reference to the ammo group sitting in the bottom left of the screen
+    
 
 
     [Header("Game Objects")]
@@ -58,11 +61,27 @@ public class UIManager : MonoBehaviour
         PlayerInputHandler.OnConfirmedHit -= ConsumeAmmo;
     }
 
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+
+
     void Start()
     {
         BonusRoundGroup.SetActive(false); //Disables the bonusRound Group when the game starts
 
-        StartCoroutine(BonusRoundIntroScreen()); //5/6/26: This is only being called here for testing purposes. It will called somewhere else later
+        //StartCoroutine(BonusRoundIntroScreen()); //5/6/26: This is only being called here for testing purposes. It will called somewhere else later
     }
 
     public void ConsumeAmmo() //Call this method in the mouseInput script
@@ -137,7 +156,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         //5)Re-enable the top left / ammo UI groups
-
+        BonusRoundGroup.SetActive(false);
         topLeftUIGroup.SetActive(true);
         ammoSpriteGroup.SetActive(true);
     }
