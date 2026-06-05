@@ -22,7 +22,7 @@ public class TimeManager : MonoBehaviour
         TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
         Score_TimeDeductionTarget.OnTimeDeduction += TimeDeduction;
 
-        ScoreManager.OnBonusRoundActive += StartBonusRound;
+        BonusRoundManager.OnBonusRoundActive += StartBonusRound;
     }
 
     void OnDisable()
@@ -31,7 +31,7 @@ public class TimeManager : MonoBehaviour
         TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
         Score_TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
 
-        ScoreManager.OnBonusRoundActive -= StartBonusRound;
+        BonusRoundManager.OnBonusRoundActive -= StartBonusRound;
     }
 
     // Start is called before the first frame update

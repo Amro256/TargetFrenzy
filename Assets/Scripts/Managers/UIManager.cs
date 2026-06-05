@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System; //NameSpace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,12 +11,19 @@ public class UIManager : MonoBehaviour
 
     //General variables / others
     private int ammoIndex;
+    [SerializeField] private Animator anim;
 
 
     [Header("UI References")]
     [SerializeField] public TMP_Text ScoreText;
     [SerializeField] public TMP_Text TimerText;
     [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
+
+    [Header("UI Groups")]
+    [SerializeField] private GameObject topLeftUIGroup; //Reference to the score, time, and multiplier group
+    [SerializeField] private GameObject ammoSpriteGroup; //Reference to the ammo group sitting in the bottom left of the screen
+    [SerializeField] private GameObject BonusRoundGroup; //Reference to the ammo group sitting in the bottom left of the screen
+
 
     [Header("Game Objects")]
     [SerializeField] public GameObject[] ammoSprites;
@@ -49,6 +56,13 @@ public class UIManager : MonoBehaviour
         AmmoManager.OnPlayerReloadUI -= ReloadAmmoSprites;
 
         PlayerInputHandler.OnConfirmedHit -= ConsumeAmmo;
+    }
+
+    void Start()
+    {
+        BonusRoundGroup.SetActive(false); //Disables the bonusRound Group when the game starts
+
+        StartCoroutine(BonusRoundIntroScreen()); //5/6/26: This is only being called here for testing purposes. It will called somewhere else later
     }
 
     public void ConsumeAmmo() //Call this method in the mouseInput script
@@ -105,6 +119,27 @@ public class UIManager : MonoBehaviour
         {
             PauseMenuCanvas.enabled = false; //Now the canvas should be enabled when the player gets a game over    
         }
+    }
+
+    public IEnumerator BonusRoundIntroScreen()
+    {
+        //1) Disable the top left UI group and the ammo UI group
+        topLeftUIGroup.SetActive(false);
+        ammoSpriteGroup.SetActive(false);
+
+        //2) Activate the bonus Round Group
+        BonusRoundGroup.SetActive(true);
+
+        //3) trigger the text animation
+        anim.SetBool("IsBonusActive", true);
+
+        //4) How long to wait before re-activating the other UI groups
+        yield return new WaitForSeconds(5f);
+
+        //5)Re-enable the top left / ammo UI groups
+
+        topLeftUIGroup.SetActive(true);
+        ammoSpriteGroup.SetActive(true);
     }
 
     

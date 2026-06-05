@@ -44,7 +44,6 @@ public class MouseHandler : MonoBehaviour
         else
         {
             currentTarget = null;  //Debug.Log("Nothing detected"); //for debugging
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); //Resets the cursor back to the default one
         }
     }
 }

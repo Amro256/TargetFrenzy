@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 
     //References
     PlayerInputHandler PlayerInput;
-    
     [SerializeField] private Texture2D targetReticleTexture;
 
     //General Variables
@@ -75,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.SetCursor(targetReticleTexture, Vector2.zero ,CursorMode.Auto);
     }
-
+    
 
     //General Methods 
     public void TimeOver()
