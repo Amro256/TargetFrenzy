@@ -34,8 +34,8 @@ public class CountdownManager : MonoBehaviour
     //Use a coroutine to decrement the countdown timer    
     public IEnumerator CountdownTimer()
     {
-        yield return new WaitForSeconds(2.5f);
-        
+        yield return new WaitForSeconds(2.5f); //This is here to prevent THIS coroutine starting at the same time as the "bonus round" text. Meaning this will start after the completion of the first coroutine
+
         //Check to see if the countdown timer is greater than 0 (use a while loop)
 
         while (countdownTime > 0)

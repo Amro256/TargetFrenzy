@@ -1,18 +1,28 @@
 using System.Collections;
 using UnityEngine;
-using System; //NameSpace to allow usages of actions
+using System; //Namespace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using UnityEngine.Windows;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
     //Migrate UI functionality from the game manager here!!
-
     public static UIManager Instance;
 
     //General variables / others
     private int ammoIndex;
+    private PlayerInput playerInp;
+
+    //Property
+    public int AmmoIndex
+    {
+        get { return ammoIndex; }
+        set { ammoIndex = value; }
+    }
+
     [SerializeField] private Animator anim;
 
 
@@ -29,7 +39,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject topLeftUIGroup; //Reference to the score, time, and multiplier group
     [SerializeField] private GameObject ammoSpriteGroup; //Reference to the ammo group sitting in the bottom left of the screen
     [SerializeField] private GameObject BonusRoundGroup; //Reference to the ammo group sitting in the bottom left of the screen
-
 
 
     [Header("Game Objects")]
@@ -80,12 +89,10 @@ public class UIManager : MonoBehaviour
     }
 
 
-
     void Start()
     {
         BonusRoundGroup.SetActive(false); //Disables the bonusRound Group when the game starts
-
-        //StartCoroutine(BonusRoundIntroScreen()); //5/6/26: This is only being called here for testing purposes. It will called somewhere else later
+        playerInp = FindObjectOfType<PlayerInput>();
     }
 
     public void ConsumeAmmo() //Call this method in the mouseInput script
@@ -95,8 +102,9 @@ public class UIManager : MonoBehaviour
         {
             ammoSprites[ammoIndex].SetActive(false);
             ammoIndex++;
-            Debug.Log("Current Index: " + ammoIndex);
         }
+
+        Debug.Log("Current Index: " + ammoIndex);
     }
 
     public void ReloadAmmoSprites() //Does the opposite of the code above - used for when the player has to reload (Currently not being called --Is working as of 5/5/26)
@@ -146,39 +154,49 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator BonusRoundIntroScreen()
     {
-        //1) Disable the top left UI group and the ammo UI group
+        //1) Disable the top left UI group and the ammo UI group & disable player input
+        playerInp.gameObject.SetActive(false);
+
         topLeftUIGroup.SetActive(false);
         ammoSpriteGroup.SetActive(false);
-        
+
         BonusStartText.SetActive(false);
         BonusCountdownTest.SetActive(false);
 
         //2) Activate the bonus Round Group
-        BonusRoundGroup.SetActive(true); 
-        StartCoroutine(BonusTest());
+        BonusRoundGroup.SetActive(true);
+        StartCoroutine(BonusRoundTextAnim());
 
         //3) trigger the text animation
         anim.SetBool("IsBonusActive", true);
 
         //4) How long to wait before re-activating the other UI groups
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(7f); // 9/6/26: Changed from 5 seconds to 7 seconds)
+
+        AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo;
+        ReloadAmmoSprites();
+
 
         //5)Re-enable the top left / ammo UI groups
         BonusRoundGroup.SetActive(false);
         topLeftUIGroup.SetActive(true);
         ammoSpriteGroup.SetActive(true);
+
+        //6) Re-enable player input
+        playerInp.gameObject.SetActive(true);
     }
 
 
-    IEnumerator BonusTest()
+    IEnumerator BonusRoundTextAnim() //Coroutine to control the timing of the two bonus round texts' : "Bonus Round" should play first followed by the countdown timer
     {
-        //BonusRoundGroup.SetActive(true);
         BonusStartText.SetActive(true); //Enable the "Bonus Round" text
 
-        yield return new WaitForSeconds(2.5f); //Wait 2.5 seconds before disabling the previous text and enabling the countdown
-        BonusStartText.SetActive(false);
+        yield return new WaitForSeconds(2.5f); //Wait 2.5 seconds before disabling the previous text and enabling the countdown text
+        BonusStartText.SetActive(false); //Disables the "Bonus Round text
 
-        BonusCountdownTest.SetActive(true);
+        BonusCountdownTest.SetActive(true); //Enable the countdown text
+
+        //There's no need to wait for xyz seconds to disable the countdown text, as the whole group will be disabled in the "BonusRoundIntroScreen" coroutine
 
     }
 

@@ -10,7 +10,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     public static AmmoManager Instance;
 
     //General Variables
-    [SerializeField] private int MaxAmmo = 4;
+    [SerializeField] private int maxAmmo = 4;
     [SerializeField] public int CurrentAmmoAmount;
     private bool IsOutOfAmmo;
 
@@ -18,6 +18,11 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     public static event Action OnPlayerFullAmmo; //For the Player Input UI;
     public static event Action OnPlayerOutOfAmmo; //For the Player Input UI;
 
+    //property
+    public int MaxAmmo
+    {
+        get { return maxAmmo; }
+     }
 
     private void OnEnable()
     {
@@ -46,7 +51,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     void Start()
     {
-        CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
+        CurrentAmmoAmount = maxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
         IsOutOfAmmo = false; //The player will have full ammo when they start the game
     }
 
@@ -85,7 +90,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         //Re-Enable the Player's firing input
         OnPlayerFullAmmo.Invoke();
 
-        CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
+        CurrentAmmoAmount = maxAmmo; //Set the current ammo back to the max ammo
         OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
         IsOutOfAmmo = false;
 

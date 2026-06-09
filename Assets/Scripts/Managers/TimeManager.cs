@@ -105,7 +105,7 @@ public class TimeManager : MonoBehaviour
         timeRemaining = BonusTimeRemaining; //Sets the time remaining to bonus time remaining (set to 30 seconds for now)
         isTimerRunning = false; //Setting the bool to false means the timer wont run when the bonus round is triggered, 
 
-        yield return new WaitForSeconds(5f); //Wait 5 seconds before running the timer
+        yield return new WaitForSeconds(7f); //Wait 5 seconds before running the timer (9/6/26: Changed from 5 seconds to 7 seconds)
         isTimerRunning = true; //Sets the bool back to true to start the timer
     }
 }
