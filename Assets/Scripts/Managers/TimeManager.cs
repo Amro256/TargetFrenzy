@@ -95,18 +95,17 @@ public class TimeManager : MonoBehaviour
 
     void StartBonusRound() //Method that will be called when the bonus round is active
     {
+        //Call the Coroutine here
         StartCoroutine(BonusTimerBuffer());
-        // timeRemaining = BonusTimeRemaining; //Sets the remaining time to the bonus time
-        // isTimerRunning = true;
     }
 
 
-    IEnumerator BonusTimerBuffer() 
+    IEnumerator BonusTimerBuffer() //Coroutine to temporarily freeze the timer during the bonus round intro screen
     {
-        timeRemaining = BonusTimeRemaining;
-        isTimerRunning = false;
+        timeRemaining = BonusTimeRemaining; //Sets the time remaining to bonus time remaining (set to 30 seconds for now)
+        isTimerRunning = false; //Setting the bool to false means the timer wont run when the bonus round is triggered, 
 
-        yield return new WaitForSeconds(5f);
-        isTimerRunning = true;
+        yield return new WaitForSeconds(5f); //Wait 5 seconds before running the timer
+        isTimerRunning = true; //Sets the bool back to true to start the timer
     }
 }

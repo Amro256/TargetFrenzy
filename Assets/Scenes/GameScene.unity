@@ -2260,6 +2260,8 @@ MonoBehaviour:
   topLeftUIGroup: {fileID: 80888011}
   ammoSpriteGroup: {fileID: 1618022900}
   BonusRoundGroup: {fileID: 1887686968}
+  BonusStartText: {fileID: 611326958}
+  BonusCountdownTest: {fileID: 99162027}
   ammoSprites:
   - {fileID: 466574538}
   - {fileID: 223568378}

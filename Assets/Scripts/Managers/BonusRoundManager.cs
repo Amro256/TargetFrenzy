@@ -26,8 +26,8 @@ public class BonusRoundManager : MonoBehaviour
     {
         GameManager.Instance.BonusRoundBool = true;
         Debug.Log("Bonus Round has been activated!");
-        //Action here
 
+        //Action here
         OnBonusRoundStartTime?.Invoke();
 
         spawnerObjects.SetActive(false); //This disables the spawners, so no targets will spawn during the bonus round intro screen.

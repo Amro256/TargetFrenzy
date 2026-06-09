@@ -20,12 +20,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] public TMP_Text ScoreText;
     [SerializeField] public TMP_Text TimerText;
     [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
+    [SerializeField] private GameObject BonusStartText; //Reference to the ammo group sitting in the bottom left of the screen
+    [SerializeField] private GameObject BonusCountdownTest; //Reference to the ammo group sitting in the bottom left of the screen
+
+
 
     [Header("UI Groups")]
     [SerializeField] private GameObject topLeftUIGroup; //Reference to the score, time, and multiplier group
     [SerializeField] private GameObject ammoSpriteGroup; //Reference to the ammo group sitting in the bottom left of the screen
     [SerializeField] private GameObject BonusRoundGroup; //Reference to the ammo group sitting in the bottom left of the screen
-    
+
 
 
     [Header("Game Objects")]
@@ -145,15 +149,19 @@ public class UIManager : MonoBehaviour
         //1) Disable the top left UI group and the ammo UI group
         topLeftUIGroup.SetActive(false);
         ammoSpriteGroup.SetActive(false);
+        
+        BonusStartText.SetActive(false);
+        BonusCountdownTest.SetActive(false);
 
         //2) Activate the bonus Round Group
-        BonusRoundGroup.SetActive(true);
+        BonusRoundGroup.SetActive(true); 
+        StartCoroutine(BonusTest());
 
         //3) trigger the text animation
         anim.SetBool("IsBonusActive", true);
 
         //4) How long to wait before re-activating the other UI groups
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
 
         //5)Re-enable the top left / ammo UI groups
         BonusRoundGroup.SetActive(false);
@@ -161,5 +169,17 @@ public class UIManager : MonoBehaviour
         ammoSpriteGroup.SetActive(true);
     }
 
-    
+
+    IEnumerator BonusTest()
+    {
+        //BonusRoundGroup.SetActive(true);
+        BonusStartText.SetActive(true); //Enable the "Bonus Round" text
+
+        yield return new WaitForSeconds(2.5f); //Wait 2.5 seconds before disabling the previous text and enabling the countdown
+        BonusStartText.SetActive(false);
+
+        BonusCountdownTest.SetActive(true);
+
+    }
+
 }

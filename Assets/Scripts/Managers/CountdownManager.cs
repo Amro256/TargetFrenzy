@@ -31,16 +31,11 @@ public class CountdownManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {  
-        //StartCoroutine(CountdownTimer()); //This will be called somewhere else
-    }
-
-
-    //Use a coroutine to decrement the countdown timer
-    
+    //Use a coroutine to decrement the countdown timer    
     public IEnumerator CountdownTimer()
     {
+        yield return new WaitForSeconds(2.5f);
+        
         //Check to see if the countdown timer is greater than 0 (use a while loop)
 
         while (countdownTime > 0)
@@ -48,7 +43,7 @@ public class CountdownManager : MonoBehaviour
 
             //While the timer is greater than 0, assign the timer value to the text value
             countdownText.text = countdownTime.ToString();
-            
+
             //Decrement
             countdownTime--;
 
