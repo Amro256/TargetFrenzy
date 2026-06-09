@@ -15,6 +15,7 @@ public class ScoreManager : MonoBehaviour
     private int TotalScore; //General Variable to store the score.
     private int CurrentMultiValue; //Will be used to track and store the current multiplier value
     private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
+    private bool HasBonusBeenTriggered;
     private Coroutine currentCoroutine;
 
     private int bonusRoundThreshold = 300; //If the player's score hits this threshold, it'll trigger the bonus round
@@ -54,49 +55,13 @@ public class ScoreManager : MonoBehaviour
         TotalScore += HitScore;
 
 
-        if (TotalScore >= bonusRoundThreshold)
-        {
+        if (TotalScore >= bonusRoundThreshold && !HasBonusBeenTriggered) //Bool check in place to prevent the bonus round animations from repeating
+        {  
             Debug.Log("You've met the threshold!");
-
+            HasBonusBeenTriggered = true;
+            
             OnBonusRoundActivated?.Invoke();
-
-            //Code here - What do we want to do here? - 28/5/2026
-            // 0.5) Set is BonusRoundActive bool to true - DONE (Game Manager Property)
-            // 1) Disable Spawners temporarily - DONE  (Game Manager)
-            // 2) Set the timer to 30 seconds (or the time amount decided for the bonus round) - DONE
-
-            // 3) Set up an Coroutine to Flash the words "Bonus round" on screen, followed by 3,2,1, GO (UI Manager) - 9/6/26 DONE
-            // 4) Re-enable everything (Game + UI Managers) - - 9/6/26 DONE
-
-
-            //5) Set the ammo index to 0, and current ammo to 4 --9/6/26: Moved from this script into the UI manager
-            // UIManager.Instance.AmmoIndex = 0; //working as intended
-            // AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo;
-            // UIManager.Instance.ReloadAmmoSprites();
-
-
-            Debug.Log("Bonus Round Ammo: " + AmmoManager.Instance.CurrentAmmoAmount); //Debug says its 4 but inspector says 3?
-            Debug.Log("Bonus Round Index: " + UIManager.Instance.AmmoIndex);
-            
-
-            
-            
-
-            //Needs to be updated visually
-
-
-            //Call the method from the bonus round manager here!
-
-            //29/5/26 - Moved the code below into its own Bonus Round Manager script
-
-            // GameManager.Instance.BonusRoundBool = true;
-            // Debug.Log("Bonus Round has been activated!");
-            // //Action here
-            // OnBonusRoundActive?.Invoke();
-
-            // GameManager.Instance.spawnerObjects.SetActive(false);
-            // Debug.Log("Spawners disabled for now");
-
+            return;
         }
 
 

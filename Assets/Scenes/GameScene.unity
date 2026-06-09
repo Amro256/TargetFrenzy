@@ -2257,11 +2257,11 @@ MonoBehaviour:
   ScoreText: {fileID: 1254299928}
   TimerText: {fileID: 223418915}
   PauseMenuCanvas: {fileID: 1959797049}
+  BonusStartText: {fileID: 611326958}
+  BonusCountdownTest: {fileID: 99162027}
   topLeftUIGroup: {fileID: 80888011}
   ammoSpriteGroup: {fileID: 1618022900}
   BonusRoundGroup: {fileID: 1887686968}
-  BonusStartText: {fileID: 611326958}
-  BonusCountdownTest: {fileID: 99162027}
   ammoSprites:
   - {fileID: 466574538}
   - {fileID: 223568378}
@@ -3560,7 +3560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880c8bcbf4caa4347bf9800804cec038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 4
+  maxAmmo: 4
   CurrentAmmoAmount: 0
 --- !u!1 &1770619273
 GameObject:

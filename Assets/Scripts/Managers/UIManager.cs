@@ -173,8 +173,8 @@ public class UIManager : MonoBehaviour
         //4) How long to wait before re-activating the other UI groups
         yield return new WaitForSeconds(7f); // 9/6/26: Changed from 5 seconds to 7 seconds)
 
-        AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo;
-        ReloadAmmoSprites();
+        AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo; //The player will be given max ammo when the round starts
+        ReloadAmmoSprites(); //This is being called to update the ammo amount (visually)
 
 
         //5)Re-enable the top left / ammo UI groups
