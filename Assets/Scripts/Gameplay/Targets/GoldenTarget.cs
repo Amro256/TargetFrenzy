@@ -11,7 +11,7 @@ public class GoldenTarget : TargetClass
     [Header("Target Effects")]
     [SerializeField] private int ScoreValue = 5; //Changing to this private or static causes issues when trying to isolate the system
     [SerializeField] private int ScoreMultiValue;
-    [SerializeField] private int TimeDeduction = 100;
+    [SerializeField] private int TimeDeduction;
 
      //Actions
     public static event Action<int> OnTargetHit;
@@ -19,6 +19,8 @@ public class GoldenTarget : TargetClass
     public override void OnHit()
     {
         OnTargetHit?.Invoke(ScoreValue);
+
+        //Update ammo value
         AmmoManager.Instance.UpdateAmmoValue(1);
     }
 }

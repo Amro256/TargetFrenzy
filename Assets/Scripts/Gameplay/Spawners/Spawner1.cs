@@ -6,7 +6,9 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
 {
 
     //Variables & Lists
-    private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
+
+    //11/6/26: Most of the code in this script (and the other spawner scripts) has been moved to the spawner class. They are inherit the same behaviour, so why copy them into their individual scripts.
+    // It'll also make debugging easier, as I only have to go through one centralised script. 
 
     void Start()
     {
@@ -21,31 +23,5 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
         StartCoroutine(InstantiateTargets());
     }
 
-    public IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
-    {
-        while (true) //Using a while loop so the spawning continues
-        {
-            foreach (GameObject prefabs in targetObjects)
-            {
-                GameObject instantiatedTargets = Instantiate(targetObjects[Random.Range (0,6)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
-                //Debug.Log("Spawning targets!");
-
-                TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that have the target class attached to it
-
-                if (target != null) //Checks if the Instantiated targets have the target script attached to it, and if so, run the code below
-                {
-                    target.initialisePoints(lerpPoints); //Assigns the lerp points to the targets by calling the initialisePoints from the target class
-                }
-                else
-                {
-                    Debug.LogError("No Target script found on the Instantiated target!"); //Error handling 
-                }
-
-                spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
-                //Debug.Log("Waiting!");
-                yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class
-            }
-        }
-        
-    }
+    
 }

@@ -29,6 +29,7 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()
     {
         BasicTarget.OnTargetHit += ScoreIncrease;
+        GoldenTarget.OnTargetHit += ScoreIncrease;
         MultiplierTarget.OnMultiplierActive += ScoreMultiplier;
         Score_TimeDeductionTarget.OnScoreDeduction += ScoreDeduction;
     }
@@ -36,6 +37,7 @@ public class ScoreManager : MonoBehaviour
     private void OnDisable()
     {
         BasicTarget.OnTargetHit -= ScoreIncrease;
+        GoldenTarget.OnTargetHit -= ScoreIncrease;
         MultiplierTarget.OnMultiplierActive -= ScoreMultiplier;
         Score_TimeDeductionTarget.OnScoreDeduction -= ScoreDeduction;
     }
@@ -58,6 +60,7 @@ public class ScoreManager : MonoBehaviour
         if (TotalScore >= bonusRoundThreshold && !HasBonusBeenTriggered) //Bool check in place to prevent the bonus round animations from repeating
         {  
             OnScoreChanged?.Invoke(TotalScore);
+            Debug.Log("Current Score: " + TotalScore);
             
             Debug.Log("You've met the threshold!");
             HasBonusBeenTriggered = true;
@@ -66,6 +69,7 @@ public class ScoreManager : MonoBehaviour
             return;
         }
 
+         Debug.Log("Current Score: " + TotalScore);
 
         //Update the score UI here
         OnScoreChanged?.Invoke(TotalScore);        

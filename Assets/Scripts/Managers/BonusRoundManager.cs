@@ -6,7 +6,7 @@ public class BonusRoundManager : MonoBehaviour
 {
     //General variables
     [SerializeField] private GameObject[] spawnerObjects;
-    private Spawner1 spawn01;
+    [SerializeField ]private SpawnerClass[] spawners;
 
     //Actions
     public static event Action OnBonusRoundStartTime;
@@ -25,7 +25,7 @@ public class BonusRoundManager : MonoBehaviour
 
     void Start()
     {
-        spawn01 = FindObjectOfType<Spawner1>();
+        //spawn01 = FindObjectOfType<Spawner1>();
     }
 
     public void ActivateBonusRound()
@@ -70,6 +70,13 @@ public class BonusRoundManager : MonoBehaviour
             spawners.SetActive(true);
         }
 
-        spawn01.SpawnTargets();
+        yield return new WaitForSeconds(2f);
+
+        foreach (var spawner in spawners)
+        {
+            //Call the spawn target script
+            spawner.SpawnTargets();
+            Debug.Log("Spawning: " + spawner);
+        }
     }
 }
