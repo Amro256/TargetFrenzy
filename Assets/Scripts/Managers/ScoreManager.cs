@@ -57,6 +57,8 @@ public class ScoreManager : MonoBehaviour
 
         if (TotalScore >= bonusRoundThreshold && !HasBonusBeenTriggered) //Bool check in place to prevent the bonus round animations from repeating
         {  
+            OnScoreChanged?.Invoke(TotalScore);
+            
             Debug.Log("You've met the threshold!");
             HasBonusBeenTriggered = true;
             

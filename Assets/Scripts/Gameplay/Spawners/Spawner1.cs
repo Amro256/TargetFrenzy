@@ -21,7 +21,7 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
         StartCoroutine(InstantiateTargets());
     }
 
-    IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
+    public IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
     {
         while (true) //Using a while loop so the spawning continues
         {

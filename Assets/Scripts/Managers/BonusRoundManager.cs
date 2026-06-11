@@ -5,8 +5,8 @@ using System.Collections;
 public class BonusRoundManager : MonoBehaviour
 {
     //General variables
-
     [SerializeField] private GameObject[] spawnerObjects;
+    private Spawner1 spawn01;
 
     //Actions
     public static event Action OnBonusRoundStartTime;
@@ -21,6 +21,11 @@ public class BonusRoundManager : MonoBehaviour
     void OnDisable()
     {
         ScoreManager.OnBonusRoundActivated -= ActivateBonusRound;
+    }
+
+    void Start()
+    {
+        spawn01 = FindObjectOfType<Spawner1>();
     }
 
     public void ActivateBonusRound()
@@ -49,8 +54,10 @@ public class BonusRoundManager : MonoBehaviour
 
         // 3) Re-enable the spawners objects
         StartCoroutine(ReEnableSpawners());
-
         Debug.Log("Spawners re-enabled");
+
+        // 4) Call the method that instantiates the targets from the spawners
+       
 
     }
 
@@ -62,5 +69,7 @@ public class BonusRoundManager : MonoBehaviour
         {
             spawners.SetActive(true);
         }
+
+        spawn01.SpawnTargets();
     }
 }
