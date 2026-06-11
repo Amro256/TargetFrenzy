@@ -1,11 +1,12 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class BonusRoundManager : MonoBehaviour
 {
     //General variables
-    private int preBonusRoundCountdown; //A private int to give time for UI text to flash on screen before the bonus round starts
-[SerializeField] private GameObject spawnerObjects;
+
+    [SerializeField] private GameObject[] spawnerObjects;
 
     //Actions
     public static event Action OnBonusRoundStartTime;
@@ -30,7 +31,14 @@ public class BonusRoundManager : MonoBehaviour
         //Action here
         OnBonusRoundStartTime?.Invoke();
 
-        spawnerObjects.SetActive(false); //This disables the spawners, so no targets will spawn during the bonus round intro screen.
+        //spawnerObjects.gameObject.SetActive(false); //This disables the spawners, so no targets will spawn during the bonus round intro screen.
+
+        foreach (GameObject spawners in spawnerObjects)
+        {
+            spawners.SetActive(false);
+        }
+
+
         Debug.Log("Spawners disabled for now");
 
         // 1) Call the coroutine from the UI manager here
@@ -39,11 +47,20 @@ public class BonusRoundManager : MonoBehaviour
         // 2) Call the coroutine from the countdown manager here
         StartCoroutine(CountdownManager.Instance.CountdownTimer());
 
+        // 3) Re-enable the spawners objects
+        StartCoroutine(ReEnableSpawners());
 
-
-        // 3) Re-enable the spanwer objects
-        spawnerObjects.SetActive(true);
         Debug.Log("Spawners re-enabled");
 
+    }
+
+    private IEnumerator ReEnableSpawners() //This has to be an Ienumerator because by placed a second foreach loop in the method above, the second loop would overwrite the first. 
+    {
+        yield return new WaitForSeconds(7f);
+
+        foreach (GameObject spawners in spawnerObjects)
+        {
+            spawners.SetActive(true);
+        }
     }
 }
