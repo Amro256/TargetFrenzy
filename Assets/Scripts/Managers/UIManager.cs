@@ -16,13 +16,8 @@ public class UIManager : MonoBehaviour
     private int ammoIndex;
     private PlayerInput playerInp;
 
-    //Property
-    public int AmmoIndex
-    {
-        get { return ammoIndex; }
-        set { ammoIndex = value; }
-    }
 
+    [Header("Animator Reference")]
     [SerializeField] private Animator anim;
 
 
@@ -36,12 +31,11 @@ public class UIManager : MonoBehaviour
 
 
     [Header("UI Groups")]
-    [SerializeField] private GameObject topLeftUIGroup; //Reference to the score, time, and multiplier group
-    [SerializeField] private GameObject ammoSpriteGroup; //Reference to the ammo group sitting in the bottom left of the screen
+    [SerializeField] private GameObject[] gameHUD; //Reference to the score, time, and multiplier group //11/6/26: Changed to an array for refactoring purposes
     [SerializeField] private GameObject BonusRoundGroup; //Reference to the ammo group sitting in the bottom left of the screen
 
 
-    [Header("Game Objects")]
+    [Header("Ammo Sprite Objects")]
     [SerializeField] public GameObject[] ammoSprites;
 
     private void OnEnable()
@@ -155,10 +149,13 @@ public class UIManager : MonoBehaviour
     public IEnumerator BonusRoundIntroScreen()
     {
         //1) Disable the top left UI group and the ammo UI group & disable player input
-        playerInp.gameObject.SetActive(false);
 
-        topLeftUIGroup.SetActive(false);
-        ammoSpriteGroup.SetActive(false);
+        foreach (GameObject hudElements in gameHUD)
+        {
+            hudElements.SetActive(false); 
+        }
+
+        playerInp.gameObject.SetActive(false); //Disables player input
 
         BonusStartText.SetActive(false);
         BonusCountdownTest.SetActive(false);
@@ -179,8 +176,11 @@ public class UIManager : MonoBehaviour
 
         //5)Re-enable the top left / ammo UI groups
         BonusRoundGroup.SetActive(false);
-        topLeftUIGroup.SetActive(true);
-        ammoSpriteGroup.SetActive(true);
+
+        foreach (GameObject hudElements in gameHUD)
+        {
+            hudElements.SetActive(true);  
+        }
 
         //6) Re-enable player input
         playerInp.gameObject.SetActive(true);
@@ -197,7 +197,6 @@ public class UIManager : MonoBehaviour
         BonusCountdownTest.SetActive(true); //Enable the countdown text
 
         //There's no need to wait for xyz seconds to disable the countdown text, as the whole group will be disabled in the "BonusRoundIntroScreen" coroutine
-
     }
 
 }
