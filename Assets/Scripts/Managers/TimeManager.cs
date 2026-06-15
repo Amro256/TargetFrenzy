@@ -51,7 +51,7 @@ public class TimeManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Time has run out bozo!");
+                Debug.Log("Out of time!");
                 timeRemaining = 0; //Sets the time remaining to 0 to prevent it from going into the negatives
                 DisplayTime(timeRemaining);
                 isTimerRunning = false; //Sets the bool to false as the timmer is no longer running
@@ -97,6 +97,7 @@ public class TimeManager : MonoBehaviour
     {
         //Call the Coroutine here
         StartCoroutine(BonusTimerBuffer());
+
     }
 
 

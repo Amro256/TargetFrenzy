@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,9 +31,9 @@ public class GameManager : MonoBehaviour
 
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
-    public static event Action OnGameStart; //--Action: For disabling the pause UI on start
-    public static event Action OnGamePause; //--Action: Enables the pause UI when the game is paused
-    public static event Action OnGameResume; //--Action: Disables the pause UI when the game resumes
+    public static event Action <Canvas> OnGameStart; //--Action: For disabling the pause UI on start
+    public static event Action <Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
+    public static event Action <Canvas>OnGameResume; //--Action: Disables the pause UI when the game resumes
 
     void OnEnable()
     {
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Invoke action here  
-        OnGameStart?.Invoke(); //What this action does: Disables the "Pause" menu UI when the game starts
+        OnGameStart?.Invoke(UIManager.Instance.PauseMenuCanvas); //What this action does: Disables the "Pause" menu UI when the game starts
         PlayerInput = FindObjectOfType<PlayerInputHandler>();
         IsBonusRActive = false;
     }
@@ -74,23 +75,20 @@ public class GameManager : MonoBehaviour
     {
         Cursor.SetCursor(targetReticleTexture, Vector2.zero ,CursorMode.Auto);
     }
-    
+
 
     //General Methods 
     public void TimeOver()
     {
         Time.timeScale = 0; //Acts as if the game is "paused"
-        Debug.Log("Time Over");
 
         //Disable the player's fire and reload input
         PlayerInput.PI.actions.FindAction("Fire").Disable();
         PlayerInput.PI.actions.FindAction("Reload").Disable();
 
-        //Call method to display the "Pause menu". This will be used for testing
-
-        //Invoke action here  
-        //OnOutOfAmmo?.Invoke(); //Working!!
-
+        //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
+        
+        // 1) Display the game over panel here
     }
 
     //General Functions
@@ -117,7 +115,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             Debug.Log("Game Currently Paused!");
             //Invoke action here to display pause UI
-            OnGamePause?.Invoke();
+            OnGamePause?.Invoke(UIManager.Instance.PauseMenuCanvas);
         }
         else
         {
@@ -125,7 +123,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
             Debug.Log("Game Resumed!");
             //Invoke action here to hide the pause UI
-            OnGameResume?.Invoke();
+            OnGameResume?.Invoke(UIManager.Instance.PauseMenuCanvas);
         }
     }
 

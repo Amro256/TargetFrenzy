@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine.Windows;
 using UnityEngine.InputSystem;
+using UnityEditor;
 
 public class UIManager : MonoBehaviour
 {
@@ -24,7 +25,8 @@ public class UIManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] public TMP_Text ScoreText;
     [SerializeField] public TMP_Text TimerText;
-    [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
+    [SerializeField] public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
+    [SerializeField] private Canvas GameOverCanvas; //Reference to the Game Over Canvas
     [SerializeField] private GameObject BonusStartText; //Reference to the ammo group sitting in the bottom left of the screen
     [SerializeField] private GameObject BonusCountdownTest; //Reference to the ammo group sitting in the bottom left of the screen
 
@@ -42,9 +44,9 @@ public class UIManager : MonoBehaviour
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
 
-        GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
-        GameManager.OnGameStart += DisablePauseMenu;
-        GameManager.OnGameResume += DisablePauseMenu;
+        GameManager.OnGamePause += DisplayMenu; //-Might Change this
+        GameManager.OnGameStart += DisableMenu;
+        GameManager.OnGameResume += DisableMenu;
         PlayerInputHandler.OnPlayerMissUI += ConsumeAmmo;
         TimeManager.OnTimerUpdate += UpdateTimerUI;
 
@@ -57,9 +59,9 @@ public class UIManager : MonoBehaviour
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
 
-        GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
-        GameManager.OnGameStart -= DisablePauseMenu;
-        GameManager.OnGameResume -= DisablePauseMenu;
+        GameManager.OnGamePause -= DisplayMenu; //-- Might change this
+        GameManager.OnGameStart -= DisableMenu;
+        GameManager.OnGameResume -= DisableMenu;
         PlayerInputHandler.OnPlayerMissUI -= ConsumeAmmo;
         TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
@@ -86,6 +88,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         BonusRoundGroup.SetActive(false); //Disables the bonusRound Group when the game starts
+        GameOverCanvas.gameObject.SetActive(false); //Disable the game over canvas on start
         playerInp = FindObjectOfType<PlayerInput>();
     }
 
@@ -130,19 +133,19 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void DisplayPauseMenu() //Method that can be called by the game manager script to display the pause menu
+    public void DisplayMenu(Canvas UIMenu) //Method that can be called by the game manager script to display the pause menu
     {
-        if (PauseMenuCanvas != null)
+        if (UIMenu != null)
         {
-            PauseMenuCanvas.enabled = true; //Now the canvas should be enabled when the player gets a game over    
+            UIMenu.enabled = true; //Now the canvas should be enabled when the player gets a game over    
         }
     }
 
-    public void DisablePauseMenu()
+    public void DisableMenu(Canvas UIMenu)
     {
-        if (PauseMenuCanvas != null)
+        if (UIMenu != null)
         {
-            PauseMenuCanvas.enabled = false; //Now the canvas should be enabled when the player gets a game over    
+            UIMenu.enabled = false; //Now the canvas should be enabled when the player gets a game over    
         }
     }
 
