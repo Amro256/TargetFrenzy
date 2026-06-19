@@ -22,23 +22,29 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator anim;
 
 
-    [Header("UI References")]
-    [SerializeField] public TMP_Text ScoreText;
-    [SerializeField] public TMP_Text TimerText;
-    [SerializeField] public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
-    [SerializeField] private Canvas GameOverCanvas; //Reference to the Game Over Canvas
-    [SerializeField] private GameObject BonusStartText; //Reference to the ammo group sitting in the bottom left of the screen
-    [SerializeField] private GameObject BonusCountdownTest; //Reference to the ammo group sitting in the bottom left of the screen
+    [Header("UI Text References")]
+    [SerializeField] private TMP_Text ScoreText;
+    [SerializeField] private TMP_Text TimerText;
 
+    [SerializeField] private TMP_Text FinalScoreText;
+
+    [Header("UI Canvas References")]
+    [SerializeField] public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
+    [SerializeField] public Canvas GameOverCanvas; //Reference to the Game Over Canvas
+    [SerializeField] public Canvas GameHudCanvas; //Reference to the Game Over Canvas
+
+    [Header("UI Bonus Round References")]
+    [SerializeField] private GameObject BonusStartText; //Reference to gameobject containing the text for the start of the bonus round
+    [SerializeField] private GameObject BonusCountdownTest; //Reference to gameobject containing the countdown text for the bonus round
 
 
     [Header("UI Groups")]
     [SerializeField] private GameObject[] gameHUD; //Reference to the score, time, and multiplier group //11/6/26: Changed to an array for refactoring purposes
-    [SerializeField] private GameObject BonusRoundGroup; //Reference to the ammo group sitting in the bottom left of the screen
+    [SerializeField] private GameObject BonusRoundGroup; //Reference to the bonus round UI group
 
 
     [Header("Ammo Sprite Objects")]
-    [SerializeField] public GameObject[] ammoSprites;
+    [SerializeField] public GameObject[] ammoSprites; //Reference to the ammo group sitting in the bottom left of the screen
 
     private void OnEnable()
     {
@@ -47,6 +53,8 @@ public class UIManager : MonoBehaviour
         GameManager.OnGamePause += DisplayMenu; //-Might Change this
         GameManager.OnGameStart += DisableMenu;
         GameManager.OnGameResume += DisableMenu;
+        GameManager.OnTimeOver += DisplayMenu;
+
         PlayerInputHandler.OnPlayerMissUI += ConsumeAmmo;
         TimeManager.OnTimerUpdate += UpdateTimerUI;
 
@@ -62,6 +70,8 @@ public class UIManager : MonoBehaviour
         GameManager.OnGamePause -= DisplayMenu; //-- Might change this
         GameManager.OnGameStart -= DisableMenu;
         GameManager.OnGameResume -= DisableMenu;
+        GameManager.OnTimeOver -= DisplayMenu;
+        
         PlayerInputHandler.OnPlayerMissUI -= ConsumeAmmo;
         TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
@@ -89,6 +99,7 @@ public class UIManager : MonoBehaviour
     {
         BonusRoundGroup.SetActive(false); //Disables the bonusRound Group when the game starts
         GameOverCanvas.gameObject.SetActive(false); //Disable the game over canvas on start
+        PauseMenuCanvas.gameObject.SetActive(false);
         playerInp = FindObjectOfType<PlayerInput>();
     }
 
@@ -120,6 +131,11 @@ public class UIManager : MonoBehaviour
     public void UpdateScoreUI(int score)
     {
         ScoreText.text = score.ToString();
+    }
+
+    public void UpdateFinalScoreUI(int finalScore)
+    {
+        FinalScoreText.text = finalScore.ToString();
     }
 
 
@@ -173,9 +189,8 @@ public class UIManager : MonoBehaviour
         //4) How long to wait before re-activating the other UI groups
         yield return new WaitForSeconds(7f); // 9/6/26: Changed from 5 seconds to 7 seconds)
 
-        AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo; //The player will be given max ammo when the round starts
+        AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo; //The player will be given max ammo when the round starts -- 16/6/26: Moved from the UI manager to here --
         ReloadAmmoSprites(); //This is being called to update the ammo amount (visually)
-
 
         //5)Re-enable the top left / ammo UI groups
         BonusRoundGroup.SetActive(false);

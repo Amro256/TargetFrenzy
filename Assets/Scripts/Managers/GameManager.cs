@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,7 +34,8 @@ public class GameManager : MonoBehaviour
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
     public static event Action <Canvas> OnGameStart; //--Action: For disabling the pause UI on start
     public static event Action <Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
-    public static event Action <Canvas>OnGameResume; //--Action: Disables the pause UI when the game resumes
+    public static event Action <Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
+    public static event Action <Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
 
     void OnEnable()
     {
@@ -65,7 +67,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Invoke action here  
-        OnGameStart?.Invoke(UIManager.Instance.PauseMenuCanvas); //What this action does: Disables the "Pause" menu UI when the game starts
+        //OnGameStart?.Invoke(UIManager.Instance.PauseMenuCanvas); //What this action does: Disables the "Pause" menu UI when the game starts
+
         PlayerInput = FindObjectOfType<PlayerInputHandler>();
         IsBonusRActive = false;
     }
@@ -73,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateMouseCursor() //Call this method when the player is hovering over a target
     {
-        Cursor.SetCursor(targetReticleTexture, Vector2.zero ,CursorMode.Auto);
+        Cursor.SetCursor(targetReticleTexture, Vector2.zero, CursorMode.Auto);
     }
 
 
@@ -87,8 +90,16 @@ public class GameManager : MonoBehaviour
         PlayerInput.PI.actions.FindAction("Reload").Disable();
 
         //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
-        
+
         // 1) Display the game over panel here
+        UIManager.Instance.GameOverCanvas.gameObject.SetActive(true);
+        OnTimeOver?.Invoke(UIManager.Instance.GameOverCanvas);
+
+        // 2) Disable the main game hud
+        UIManager.Instance.DisableMenu(UIManager.Instance.GameHudCanvas);
+        
+        // 2) Update the "final score" field displayed on the game over panel
+        UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
     }
 
     //General Functions
@@ -115,6 +126,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             Debug.Log("Game Currently Paused!");
             //Invoke action here to display pause UI
+            UIManager.Instance.PauseMenuCanvas.gameObject.SetActive(true);
             OnGamePause?.Invoke(UIManager.Instance.PauseMenuCanvas);
         }
         else

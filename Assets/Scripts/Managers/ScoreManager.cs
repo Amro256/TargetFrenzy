@@ -12,7 +12,13 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
 
     //General Variables
-    private int TotalScore; //General Variable to store the score.
+    private int totalScore; //General Variable to store the score.
+    
+    public int TotalScore
+    {
+        get { return totalScore; }
+    }
+
     private int CurrentMultiValue; //Will be used to track and store the current multiplier value
     private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
     private bool HasBonusBeenTriggered;
@@ -25,6 +31,24 @@ public class ScoreManager : MonoBehaviour
     public static event Action<int> OnMultiValueChanged;
 
     public static event Action OnBonusRoundActivated;
+
+
+    void Awake() //Singleton pattern
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+
+    
 
     private void OnEnable()
     {
@@ -54,7 +78,7 @@ public class ScoreManager : MonoBehaviour
             HitScore *= CurrentMultiValue;
         }
 
-        TotalScore += HitScore;
+        totalScore += HitScore;
 
 
         if (TotalScore >= bonusRoundThreshold && !HasBonusBeenTriggered) //Bool check in place to prevent the bonus round animations from repeating
@@ -77,7 +101,7 @@ public class ScoreManager : MonoBehaviour
 
     public void ScoreDeduction(int ScoreValue) //Method for handling deduction in score
     {
-        TotalScore -= ScoreValue;
+        totalScore -= ScoreValue;
 
         //Update the score UI here
         OnScoreChanged?.Invoke(TotalScore);

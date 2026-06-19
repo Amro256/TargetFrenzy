@@ -72,6 +72,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
             Debug.LogError("Please Reload!");
             IsOutOfAmmo = true;
         }
+
     }
 
 
