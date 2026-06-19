@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class BonusRoundManager : MonoBehaviour
 {
@@ -68,6 +69,7 @@ public class BonusRoundManager : MonoBehaviour
             //Call the spawn target script
             spawner.SpawnTargets();
             Debug.Log("Spawning: " + spawner);
+            break;
         }
     }
 }
