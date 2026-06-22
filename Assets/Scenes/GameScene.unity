@@ -4934,6 +4934,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetReticleTexture: {fileID: 2800000, guid: c7e0dead9005b064290b52f17ae21656, type: 3}
+  spawners:
+  - {fileID: 777882535}
+  - {fileID: 1808147572}
+  - {fileID: 547356825}
+  - {fileID: 256553238}
 --- !u!4 &2101860352
 Transform:
   m_ObjectHideFlags: 0

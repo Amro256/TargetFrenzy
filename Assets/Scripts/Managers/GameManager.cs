@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
     //References
     PlayerInputHandler PlayerInput;
     [SerializeField] private Texture2D targetReticleTexture;
+    [SerializeField] private SpawnerClass[] spawners;
 
     //General Variables
-    
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
 
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
-    public static event Action <Canvas> OnGameStart; //--Action: For disabling the pause UI on start
+    public static event Action<Canvas> OnGameStart; //--Action: For disabling the pause UI on start
     public static event Action <Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
     public static event Action <Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
     public static event Action <Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
@@ -89,14 +89,20 @@ public class GameManager : MonoBehaviour
 
         //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
 
-        // 1) Display the game over panel here
+        // 1) Destroy any targets currently on screen
+        foreach (var spawner in spawners)
+        {
+            spawner.DestroyTargets();
+        }
+
+        // 2) Display the game over panel here
         UIManager.Instance.GameOverCanvas.gameObject.SetActive(true);
         OnTimeOver?.Invoke(UIManager.Instance.GameOverCanvas);
 
-        // 2) Disable the main game hud
+        // 3) Disable the main game hud
         UIManager.Instance.DisableMenu(UIManager.Instance.GameHudCanvas);
 
-        // 2) Update the "final score" field displayed on the game over panel
+        // 4) Update the "final score" field displayed on the game over panel
         UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
     }
 
