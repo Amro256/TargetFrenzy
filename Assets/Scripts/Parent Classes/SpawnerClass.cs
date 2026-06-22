@@ -33,6 +33,19 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         //Method will be overridden by derived classes
     }
 
+    public void DestroyTargets() //Method that will handle destroying targets
+    {
+        foreach (GameObject target in spawnedTargets)
+        {
+            if (spawnedTargets != null) //If the spawned targets ARE NOT empty then destroy the targets on screen
+            {
+                Destroy(target);
+            }
+        }
+        
+        spawnedTargets.Clear(); //Removes all spawned targets from the list
+    }
+
 
     public IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
     {
@@ -45,7 +58,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         {
             activeTargets = targetObjects; //else set the active targets to the regular gameplay targets
         }
-        
+
 
         while (true) //Using a while loop so the spawning continues
         {
@@ -65,12 +78,14 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
                     Debug.LogError("No Target script found on the Instantiated target!"); //Error handling 
                 }
 
-                spawnedTargets.Add(instantiatedTargets); //Add the instantiatedTargets to the spawned Targets list
+                spawnedTargets.Add(instantiatedTargets); //Add the instantiated Targets to the spawned Targets list
                 //Debug.Log("Waiting!");
                 yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class
             }
         }
-        
+
+
     }
+    
     
 }

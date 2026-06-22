@@ -39,6 +39,12 @@ public class BonusRoundManager : MonoBehaviour
             Debug.Log("Spawners disabled");
         }
 
+
+        foreach (var spawner in spawners) //Destroys any target(s) that are currently on screen before the bonus round intro animation plays
+        {
+            spawner.DestroyTargets();
+        }
+
         // 1) Call the coroutine from the UI manager here
         StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
         

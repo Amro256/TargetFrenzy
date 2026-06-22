@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour
     {
         PlayerInputHandler.OnPlayerMissedShot -= PlayerMissShot;
         TimeManager.OnOutOfTime -= TimeOver;
-
     }
 
     void Awake() //Singleton pattern
@@ -79,7 +78,6 @@ public class GameManager : MonoBehaviour
         Cursor.SetCursor(targetReticleTexture, Vector2.zero, CursorMode.Auto);
     }
 
-
     //General Methods 
     public void TimeOver()
     {
@@ -97,7 +95,7 @@ public class GameManager : MonoBehaviour
 
         // 2) Disable the main game hud
         UIManager.Instance.DisableMenu(UIManager.Instance.GameHudCanvas);
-        
+
         // 2) Update the "final score" field displayed on the game over panel
         UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
     }
