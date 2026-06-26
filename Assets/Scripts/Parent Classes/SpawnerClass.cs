@@ -33,7 +33,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         //Method will be overridden by derived classes
     }
 
-    public void DestroyTargets() //Method that will handle destroying targets
+    public void DestroyTargets() //Method that will handle destroying targets BEFORE the bonus round into plays
     {
         foreach (GameObject target in spawnedTargets)
         {
