@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class SpawnerClass : MonoBehaviour //This is the base class that the spawner scripts will inherit from
@@ -64,7 +65,14 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         {
             foreach (GameObject prefabs in targetObjects)
             {
-                GameObject instantiatedTargets = Instantiate(activeTargets[Random.Range(0, activeTargets.Count)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
+                GameObject instantiatedTargets = PoolManager.Instance.GetPooledObject();
+                instantiatedTargets.transform.position = transform.position;
+                instantiatedTargets.transform.rotation = transform.rotation;
+                instantiatedTargets.SetActive(true);
+
+
+                //Instantiate(activeTargets[Random.Range(0, activeTargets.Count)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
+
                 //Debug.Log("Spawning targets!");
 
                 TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that have the target class attached to it

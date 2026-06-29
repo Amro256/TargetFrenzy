@@ -59,15 +59,16 @@ public class PlayerInputHandler : MonoBehaviour
                     OnConfirmedHit?.Invoke(); //This action will consume ammo if the player hits a target and the UI will update accordingly
                 }
 
-                Destroy(PlayerMH.CurrentTarget);
+                //Destroy(PlayerMH.CurrentTarget);
+                PoolManager.Instance.ReturnPooledObject(PlayerMH.CurrentTarget);
             }
             else
             {
                 //Debug.Log("You have clicked on nothing"); --18/5/26 Commented this debug out to debug other bugs--
 
                 AmmoManager.Instance.UpdateAmmoValue(1);  //As of: 5/5/26 - This has been moved from the UI manager as it was overlapping with the same code 
-                 //that's responsible for updating the ammo value when the player hits a target, resulting in the ammo value decreasing by two instead of one.
-                
+                //that's responsible for updating the ammo value when the player hits a target, resulting in the ammo value decreasing by two instead of one.
+
                 //Invoke Action
                 OnPlayerMissUI?.Invoke();
                 OnPlayerMissedShot?.Invoke();
