@@ -2361,8 +2361,8 @@ MonoBehaviour:
   SpawnTime: 3.5
   targetObjects:
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
-  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
-  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
+  - {fileID: 6085200119235597379, guid: 6929d2725a2df5a40a4292b2a4948e55, type: 3}
+  - {fileID: 3340514635316450671, guid: f26684c5ecafb254eb5d0a870fee64c2, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
@@ -4387,12 +4387,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
   targetPrefabs:
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
-  - {fileID: 1401802516157928131, guid: 6f60d3692f854de4c9981213e96d1f6a, type: 3}
   - {fileID: 6085200119235597379, guid: 6929d2725a2df5a40a4292b2a4948e55, type: 3}
   - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
   - {fileID: 3340514635316450671, guid: f26684c5ecafb254eb5d0a870fee64c2, type: 3}
   - {fileID: 5752063571285583825, guid: 2856ffc113339a24392cbbade1d8096f, type: 3}
-  poolSize: 10
+  - {fileID: 1401802516157928131, guid: 6f60d3692f854de4c9981213e96d1f6a, type: 3}
+  poolSize: 5
 --- !u!4 &1819054326
 Transform:
   m_ObjectHideFlags: 0

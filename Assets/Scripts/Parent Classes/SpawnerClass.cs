@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEditor.Timeline;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     [SerializeField] protected float SpawnTime; //Variable to control the spawn rate of the targets
     private protected List<GameObject> activeTargets;  //Will be used to determine which targets to spawn 
     private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
+    
 
 
     //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
@@ -63,15 +65,18 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
 
         while (true) //Using a while loop so the spawning continues
         {
-            foreach (GameObject prefabs in targetObjects)
+            foreach (GameObject prefabs in activeTargets)
             {
-                GameObject instantiatedTargets = PoolManager.Instance.GetPooledObject();
+                GameObject prefab = activeTargets[Random.Range(0, activeTargets.Count)];
+
+                GameObject instantiatedTargets = PoolManager.Instance.GetPooledObject(prefab);
+                
                 instantiatedTargets.transform.position = transform.position;
                 instantiatedTargets.transform.rotation = transform.rotation;
-                instantiatedTargets.SetActive(true);
+                
 
 
-                //Instantiate(activeTargets[Random.Range(0, activeTargets.Count)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
+                //(activeTargets[Random.Range(0, activeTargets.Count)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
 
                 //Debug.Log("Spawning targets!");
 
@@ -85,6 +90,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
                 {
                     Debug.LogError("No Target script found on the Instantiated target!"); //Error handling 
                 }
+
 
                 spawnedTargets.Add(instantiatedTargets); //Add the instantiated Targets to the spawned Targets list
                 //Debug.Log("Waiting!");
