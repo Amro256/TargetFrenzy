@@ -24,7 +24,7 @@ public class ScoreManager : MonoBehaviour
     private bool HasBonusBeenTriggered;
     private Coroutine currentCoroutine;
 
-    private int bonusRoundThreshold = 300; //If the player's score hits this threshold, it'll trigger the bonus round
+    private int bonusRoundThreshold = 1555; //If the player's score hits this threshold, it'll trigger the bonus round
 
     //Actions
     public static event Action<int> OnScoreChanged;
@@ -102,6 +102,12 @@ public class ScoreManager : MonoBehaviour
     public void ScoreDeduction(int ScoreValue) //Method for handling deduction in score
     {
         totalScore -= ScoreValue;
+
+        if (totalScore <= 0)
+        {
+            totalScore = 0;    
+            OnScoreChanged?.Invoke(TotalScore);
+        }
 
         //Update the score UI here
         OnScoreChanged?.Invoke(TotalScore);

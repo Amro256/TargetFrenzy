@@ -180,6 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  ScoreValue: 20
+  ScoreValue: 200
   ScoreMultiValue: 0
   TimeDeduction: 0
