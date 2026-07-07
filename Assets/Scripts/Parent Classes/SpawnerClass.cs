@@ -62,7 +62,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
 
         while (true) //Using a while loop so the spawning continues
         {
-             Debug.Log($"ObjectsOnScreen = {PoolManager.Instance.objectsOnScreen}");
             if (PoolManager.Instance.HasReachedMaxOnScreen)
             {
                 Debug.Log("There are enough targets on screen");

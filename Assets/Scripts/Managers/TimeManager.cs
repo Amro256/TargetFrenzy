@@ -58,6 +58,15 @@ public class TimeManager : MonoBehaviour
                 OnOutOfTime?.Invoke();
             }
 
+            if (timeRemaining <= 15) //Check to see if timer remaining is less than 15 seconds, if so, then play the warning animation
+            {
+                Debug.Log("Less than 15 seconds remaining. Play Animation"); //Works as intended
+                AnimationManager.Instance.StartAnimation("HasReachThreshold");
+                AnimationManager.Instance.StartAnimation("ValueHasReachedThreshold");
+                
+            }
+
+
         }
     }
 
