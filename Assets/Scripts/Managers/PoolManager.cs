@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEditor.Search;
+using Unity.VisualScripting;
+using System.Collections;
 
 public class PoolManager : MonoBehaviour //Script for object pooling 
 {
@@ -15,11 +17,21 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     public static PoolManager Instance;
 
     //General Variables
+    public int objectsOnScreen; //To track how many objects are currently on screen
+    public int maxObjectsOnScreen = 5; //The maximum objects that can be on screen 
+
     [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
     [SerializeField] private int poolSize; //To control the size of the pool
+    private bool hasReachedMaxOnScreen;
+
+    public bool HasReachedMaxOnScreen
+    { 
+        get { return objectsOnScreen >= maxObjectsOnScreen; }
+    }
+
 
     //30/6/26: Refactoring to use a dictionary
-    
+
     // 1) Create a dictionary with the key of "Game Object" and a queue that will store (a collection of) objects of type "GameObject"
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary;
 
@@ -93,6 +105,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
         // 11) Remove an object from the queue for use in game
         GameObject targetObj = pool.Dequeue();
+        IncrementTargetsOnScreen(); //To track how many objects are currently on screen
         targetObj.SetActive(true); //Set the object to true so it becomes visible 
 
         return targetObj;
@@ -111,6 +124,20 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         // 15) Set the gameobject back to false as it no longer is being used
         targetObj.SetActive(false);
 
+        DecrementTargetsOnScreen();
+
     }
+
+
+    public void IncrementTargetsOnScreen()
+    {
+        objectsOnScreen++;
+    }
+
+    public void DecrementTargetsOnScreen()
+    {
+        objectsOnScreen--;
+    }
+
 
 }
