@@ -12,10 +12,11 @@ public class GameManager : MonoBehaviour
 
     //References
     PlayerInputHandler PlayerInput;
+    public int targetsHitInARow; //To track the targets hit
     [SerializeField] private Texture2D targetReticleTexture;
     [SerializeField] private SpawnerClass[] spawners;
 
-    //General Variables
+    //General Variables    
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
 
@@ -25,17 +26,17 @@ public class GameManager : MonoBehaviour
         set { IsBonusRActive = value; }
     }
 
-
     //14/4/26: The variables below were moved from the player input script to the game manager 
     private int MaxMisses = 5; //Max amount of possible clicks the player has before resulting in a game over
     private int MissCount = 0; //Variable that will track the player's misses 
 
+
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
     public static event Action<Canvas> OnGameStart; //--Action: For disabling the pause UI on start
-    public static event Action <Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
-    public static event Action <Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
-    public static event Action <Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
+    public static event Action<Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
+    public static event Action<Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
+    public static event Action<Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
 
     void OnEnable()
     {
@@ -153,12 +154,16 @@ public class GameManager : MonoBehaviour
         MissCount++;
         Debug.Log("Missed Counts: " + MissCount);
 
+        //Call the player
+        PlayerHitRowCheck();
+       
+
         if (MissCount >= MaxMisses)
         {
             //The player input map needs to be disable here, as the game still registers inputs and the "OnFire" method is still called
 
             //Inputs.Player.Disable(); // This disables the player action map! 
-            
+
 
             Debug.Log("Game Over");
 
@@ -166,5 +171,15 @@ public class GameManager : MonoBehaviour
 
             return;
         }
+    }
+
+    //Method to track how many targets the player as hit in a row
+    public void PlayerHitRowCheck()
+    {
+         if (targetsHitInARow > 0) //Check to see if the targets hit is greater than 0 before decrementing the value
+        {
+            targetsHitInARow--; //This also prevents the value from going into the negatives
+        }
+
     }
 }

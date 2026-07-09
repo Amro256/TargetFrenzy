@@ -18,6 +18,8 @@ public class MultiplierTarget : TargetClass
 
     public override void OnHit()
     {
+        GameManager.Instance.targetsHitInARow++;
+        
         //Add Mutlivalue here -Invoke action!
         OnMultiplierActive?.Invoke(ScoreMultiValue);
         AmmoManager.Instance.UpdateAmmoValue(1);

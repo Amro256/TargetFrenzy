@@ -18,6 +18,7 @@ public class TimeDeductionTarget : TargetClass
 
     public override void OnHit()
     {
+        GameManager.Instance.PlayerHitRowCheck();
         //Add code here for time Deduction
 
         AmmoManager.Instance.UpdateAmmoValue(1);

@@ -18,8 +18,9 @@ public class TimeIncreaseTarget : TargetClass
 
     public override void OnHit()
     {
+        GameManager.Instance.PlayerHitRowCheck();
         //Add code here for Increasing Time
-        
+
         AmmoManager.Instance.UpdateAmmoValue(1);
         OnTimeIncrease?.Invoke(TimeValue);
     }
