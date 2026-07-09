@@ -2383,9 +2383,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnTime: 3.5
   targetObjects:
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
-  - {fileID: 5004156872212290216, guid: b93a697eb7f70074f91f7f7f1ee98c81, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
+  - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
   - {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
@@ -5081,6 +5081,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be1ee33a3f4f13458868c713238e028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetsHitInARow: 0
+  maxTargetsToHit: 10
   targetReticleTexture: {fileID: 2800000, guid: c7e0dead9005b064290b52f17ae21656, type: 3}
   spawners:
   - {fileID: 777882535}

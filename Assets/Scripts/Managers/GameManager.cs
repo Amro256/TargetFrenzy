@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     //References
     PlayerInputHandler PlayerInput;
     public int targetsHitInARow; //To track the targets hit
+    [SerializeField] private int maxTargetsToHit = 10;
     [SerializeField] private Texture2D targetReticleTexture;
     [SerializeField] private SpawnerClass[] spawners;
 
@@ -33,10 +34,12 @@ public class GameManager : MonoBehaviour
 
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
+     public static event Action OnMaxTargetsRowHit;
     public static event Action<Canvas> OnGameStart; //--Action: For disabling the pause UI on start
     public static event Action<Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
     public static event Action<Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
     public static event Action<Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
+   
 
     void OnEnable()
     {
@@ -155,7 +158,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Missed Counts: " + MissCount);
 
         //Call the player
-        PlayerHitRowCheck();
+        PlayerHitRowDecrement();
        
 
         if (MissCount >= MaxMisses)
@@ -167,19 +170,30 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("Game Over");
 
-            //GameManager.Instance.GameOver();
+            TimeOver();
 
             return;
         }
     }
 
-    //Method to track how many targets the player as hit in a row
-    public void PlayerHitRowCheck()
+    public void PlayerHitRowIncrement()
     {
-         if (targetsHitInARow > 0) //Check to see if the targets hit is greater than 0 before decrementing the value
+        targetsHitInARow++;
+
+        if (targetsHitInARow == maxTargetsToHit)
+        {
+            Debug.Log("Entering Bonus Round!");
+            OnMaxTargetsRowHit?.Invoke();
+               
+        }
+    }
+
+    //Method to track how many targets the player as hit in a row
+    public void PlayerHitRowDecrement()
+    {
+        if (targetsHitInARow > 0) //Check to see if the targets hit is greater than 0 before decrementing the value
         {
             targetsHitInARow--; //This also prevents the value from going into the negatives
         }
-
     }
 }

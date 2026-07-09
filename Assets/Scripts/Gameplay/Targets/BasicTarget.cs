@@ -19,7 +19,7 @@ public class BasicTarget : TargetClass
     //Create a method that will handle the score and then call it in the mouse input script
     public override void OnHit()
     {
-        GameManager.Instance.targetsHitInARow++;
+        GameManager.Instance.PlayerHitRowIncrement();
         
         OnTargetHit?.Invoke(ScoreValue);
 

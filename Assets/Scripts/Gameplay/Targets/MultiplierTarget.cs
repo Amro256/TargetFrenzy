@@ -18,7 +18,7 @@ public class MultiplierTarget : TargetClass
 
     public override void OnHit()
     {
-        GameManager.Instance.targetsHitInARow++;
+        GameManager.Instance.PlayerHitRowIncrement();
         
         //Add Mutlivalue here -Invoke action!
         OnMultiplierActive?.Invoke(ScoreMultiValue);

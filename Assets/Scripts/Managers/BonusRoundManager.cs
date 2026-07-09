@@ -16,12 +16,14 @@ public class BonusRoundManager : MonoBehaviour
     void OnEnable()
     {
         ScoreManager.OnBonusRoundActivated += ActivateBonusRound;
+        GameManager.OnMaxTargetsRowHit += ActivateBonusRound;
     }
 
 
     void OnDisable()
     {
         ScoreManager.OnBonusRoundActivated -= ActivateBonusRound;
+        GameManager.OnMaxTargetsRowHit -= ActivateBonusRound;
     }
 
     public void ActivateBonusRound()
