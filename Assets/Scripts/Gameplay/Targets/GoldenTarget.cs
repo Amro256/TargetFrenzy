@@ -18,6 +18,12 @@ public class GoldenTarget : TargetClass
 
     public override void OnHit()
     {
+        if (GameManager.Instance.BonusRoundBool) //Check to see if its true first
+        {
+            GameManager.Instance.PlayerHitRowIncrement();
+
+        }
+
         OnTargetHit?.Invoke(ScoreValue);
 
         //Update ammo value

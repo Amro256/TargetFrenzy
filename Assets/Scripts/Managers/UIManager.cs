@@ -33,9 +33,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] public Canvas GameOverCanvas; //Reference to the Game Over Canvas
     [SerializeField] public Canvas GameHudCanvas; //Reference to the Game Over Canvas
 
-    [Header("UI Bonus Round References")]
+    [Header("UI Game Objects References")]
     [SerializeField] private GameObject BonusStartText; //Reference to gameobject containing the text for the start of the bonus round
     [SerializeField] private GameObject BonusCountdownTest; //Reference to gameobject containing the countdown text for the bonus round
+    [SerializeField] public GameObject ReloadWarningText;
 
 
     [Header("UI Groups")]
@@ -101,6 +102,8 @@ public class UIManager : MonoBehaviour
         GameOverCanvas.gameObject.SetActive(false); //Disable the game over canvas on start
         PauseMenuCanvas.gameObject.SetActive(false);
         playerInp = FindObjectOfType<PlayerInput>();
+
+        ReloadWarningText.SetActive(false);
     }
 
     public void ConsumeAmmo() //Call this method in the mouseInput script

@@ -71,6 +71,10 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
             OnPlayerOutOfAmmo?.Invoke();
             Debug.LogError("Please Reload!");
             IsOutOfAmmo = true;
+
+            UIManager.Instance.ReloadWarningText.SetActive(true);
+            //Play animation here
+            AnimationManager.Instance.StartAnimation("IsLowOnAmmo");
         }
 
     }
@@ -94,6 +98,10 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         CurrentAmmoAmount = maxAmmo; //Set the current ammo back to the max ammo
         OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
         IsOutOfAmmo = false;
+
+        UIManager.Instance.ReloadWarningText.SetActive(false);
+        //Play animation here
+        AnimationManager.Instance.StopAnimation("IsLowOnAmmo");
 
  
         //Debug.Log("Ammo After reload: " + CurrentAmmoAmount); --18/5/26 Commented this debug out to debug other bugs--

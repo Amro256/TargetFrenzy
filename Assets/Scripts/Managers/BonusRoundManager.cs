@@ -49,14 +49,17 @@ public class BonusRoundManager : MonoBehaviour
         // 1) Call the coroutine from the UI manager here
         StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
         PoolManager.Instance.objectsOnScreen = 1;
-        
-        
+
+
         // 2) Call the coroutine from the countdown manager here
         StartCoroutine(CountdownManager.Instance.CountdownTimer());
 
         // 3) Re-enable the spawners objects
         StartCoroutine(ReEnableSpawners());
         Debug.Log("Spawners re-enabled");
+
+        //Reset the targetsHitInARow Value to 0
+        GameManager.Instance.targetHitInARow = 0;
 
         // 4) Call the method that instantiates the targets from the spawners
     }

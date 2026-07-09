@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     //References
     PlayerInputHandler PlayerInput;
-    public int targetsHitInARow; //To track the targets hit
+    public int targetHitInARow; //To track the targets hit
     [SerializeField] private int maxTargetsToHit = 10;
     [SerializeField] private Texture2D targetReticleTexture;
     [SerializeField] private SpawnerClass[] spawners;
@@ -69,9 +69,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //Invoke action here  
-        //OnGameStart?.Invoke(UIManager.Instance.PauseMenuCanvas); //What this action does: Disables the "Pause" menu UI when the game starts
-
         PlayerInput = FindObjectOfType<PlayerInputHandler>();
         IsBonusRActive = false;
     }
@@ -117,8 +114,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Loading Scene");
     }
 
-    //void OptionsMenu() //Will be responsible for opening and closing the options menu
-
     public void QuitGame() //Will quit the game
     {
         Application.Quit();
@@ -157,32 +152,23 @@ public class GameManager : MonoBehaviour
         MissCount++;
         Debug.Log("Missed Counts: " + MissCount);
 
-        //Call the player
+        //Call the player row decrement method
         PlayerHitRowDecrement();
-       
 
-        if (MissCount >= MaxMisses)
-        {
-            //The player input map needs to be disable here, as the game still registers inputs and the "OnFire" method is still called
-
-            //Inputs.Player.Disable(); // This disables the player action map! 
-
-
-            Debug.Log("Game Over");
-
-            TimeOver();
-
-            return;
-        }
+        // if (MissCount >= MaxMisses)
+        // {
+        //     Debug.Log("Game Over");
+        //     TimeOver();            
+        // }
     }
 
     public void PlayerHitRowIncrement()
     {
-        targetsHitInARow++;
+        targetHitInARow++;
 
-        if (targetsHitInARow == maxTargetsToHit)
+        if (targetHitInARow == maxTargetsToHit && !IsBonusRActive) //Additional check to prevent targets hit in the bonus round triggering another bonus round
         {
-            Debug.Log("Entering Bonus Round!");
+            Debug.Log("You hit: " + targetHitInARow + " In a row! Entering Bonus Round");
             OnMaxTargetsRowHit?.Invoke();
                
         }
@@ -191,9 +177,9 @@ public class GameManager : MonoBehaviour
     //Method to track how many targets the player as hit in a row
     public void PlayerHitRowDecrement()
     {
-        if (targetsHitInARow > 0) //Check to see if the targets hit is greater than 0 before decrementing the value
+        if (targetHitInARow > 0) //Check to see if the targets hit is greater than 0 before decrementing the value
         {
-            targetsHitInARow--; //This also prevents the value from going into the negatives
+            targetHitInARow--; //This also prevents the value from going into the negatives
         }
     }
 }
