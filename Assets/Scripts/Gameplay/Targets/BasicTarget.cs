@@ -26,7 +26,7 @@ public class BasicTarget : TargetClass
         //Update the ammo value
         AmmoManager.Instance.UpdateAmmoValue(1);
 
-        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position);
+        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, Color.green);
     }
 
 }
