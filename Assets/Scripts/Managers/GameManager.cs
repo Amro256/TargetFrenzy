@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
-     public static event Action OnMaxTargetsRowHit;
+    public static event Action OnMaxTargetsRowHit;
     public static event Action<Canvas> OnGameStart; //--Action: For disabling the pause UI on start
     public static event Action<Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
     public static event Action<Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
@@ -152,8 +152,8 @@ public class GameManager : MonoBehaviour
         MissCount++;
         Debug.Log("Missed Counts: " + MissCount);
 
-        //Call the player row decrement method
-        PlayerHitRowDecrement();
+        //Call the player row decrement method -- 21/7/26: Changed from calling the Decrement method to resetting the value
+        targetHitInARow = 0;
 
         // if (MissCount >= MaxMisses)
         // {

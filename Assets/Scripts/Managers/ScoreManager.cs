@@ -13,6 +13,12 @@ public class ScoreManager : MonoBehaviour
 
     //General Variables
     private int totalScore; //General Variable to store the score.
+    private int hitScore;
+
+    public int HitScore
+    {
+        get{ return hitScore; }
+    }
     
     public int TotalScore
     {
@@ -69,13 +75,13 @@ public class ScoreManager : MonoBehaviour
 
     public void ScoreIncrease(int ScoreValue) //Method for handling adding score that takes in an integer as a parameter 
     {
-        int HitScore = ScoreValue;
+        hitScore = ScoreValue;
 
         //Check to see if the multiplier is active, then apply it to the score
 
         if (IsMultiActive != false) //If the multiplier is set the true --14/5/26: Changed to is equal to true due to a bug related to the code change of the scoreMultiplier method
         {
-            HitScore *= CurrentMultiValue;
+            hitScore *= CurrentMultiValue;
         }
 
         totalScore += HitScore;
