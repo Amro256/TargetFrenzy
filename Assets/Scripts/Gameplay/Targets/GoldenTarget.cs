@@ -28,5 +28,7 @@ public class GoldenTarget : TargetClass
 
         //Update ammo value
         AmmoManager.Instance.UpdateAmmoValue(1);
+
+        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position);
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using Mono.Cecil.Cil;
+using NUnit.Framework.Internal;
 
 public class ScorePopUpManager : MonoBehaviour //This script will be responsible for floating / pop up score values when a target is hit
 {
@@ -26,10 +27,15 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
     }
 
 
-    public void DisplayPopUp(Vector3 position)
+    public void DisplayScorePopUp(Vector3 position)
     {
-        GameObject obj = Instantiate(popUpPrefab, position, Quaternion.identity);
-        obj.GetComponent<TextMeshPro>().text = ScoreManager.Instance.HitScore.ToString();
+        //offset
+        Vector3 offset = new Vector3(0, 0.7f, 0);
+        GameObject obj = Instantiate(popUpPrefab, position + offset , Quaternion.identity);
+        obj.transform.GetChild(0).GetComponent<TextMeshPro>().text = ScoreManager.Instance.HitScore.ToString();
+        
+        
+        Destroy(obj, 3f); //Destroy the game object after 3 seconds
     }
 
 }

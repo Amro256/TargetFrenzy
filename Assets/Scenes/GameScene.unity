@@ -1561,7 +1561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c294f3d1bfa094ca5c1d8d8e0ad629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScorePopUpManager
-  popUpPrefab: {fileID: 6659484503826345829, guid: edf7c570a45e18c42b214c5a0b729154, type: 3}
+  popUpPrefab: {fileID: 6120869669636683272, guid: 7c052b1e8989c234db5911ef6444f84c, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
