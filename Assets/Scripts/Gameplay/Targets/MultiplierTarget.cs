@@ -13,16 +13,22 @@ public class MultiplierTarget : TargetClass
     [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeDeduction;
 
+    //Actions
+    public static event Action<int> OnTargetHit;
     public static event Action<int> OnMultiplierActive;
 
 
     public override void OnHit()
     {
         GameManager.Instance.PlayerHitRowIncrement();
-        
+
         //Add Mutlivalue here -Invoke action!
         OnMultiplierActive?.Invoke(ScoreMultiValue);
+        OnTargetHit?.Invoke(ScoreValue);
         AmmoManager.Instance.UpdateAmmoValue(1);
+        
+
+        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, "+", Color.green);
     }
 }
 

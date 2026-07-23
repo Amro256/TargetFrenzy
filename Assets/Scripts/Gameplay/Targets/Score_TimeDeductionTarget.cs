@@ -24,9 +24,13 @@ public class Score_TimeDeductionTarget : TargetClass
 
         //Add code here for score and time deduction
         AmmoManager.Instance.UpdateAmmoValue(1);
-        
+
         OnScoreDeduction?.Invoke(ScoreValue);
         OnTimeDeduction?.Invoke(TimeValue);
         //TimeManager.Instance.TimeDeduction(TimeDeduction);
+
+        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, "-", Color.red);
+        ScorePopUpManager.Instance.DisplayTimerPopUp(TimeValue, "-", "s", Color.red);
+        
     }
 }

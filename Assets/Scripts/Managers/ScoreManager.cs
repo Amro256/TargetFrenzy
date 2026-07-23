@@ -127,6 +127,7 @@ public class ScoreManager : MonoBehaviour
             IsMultiActive = true; //Set Multi bool to true
             CurrentMultiValue = MultiValue;
 
+
             Debug.Log("Multi Active!");
             Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
 
@@ -135,11 +136,15 @@ public class ScoreManager : MonoBehaviour
 
             //Call a new Coroutine that will reset the multi bool once the multiplier duration is up
             StartCoroutine(MultiplierDuration());
+
+            ScorePopUpManager.Instance.DisplayMultiplierPopUp(MultiValue, "x", Color.blue);
         }
         else
         {
             Debug.Log("Multi Already Active");
         }
+        
+        
     }
 
     private IEnumerator MultiplierDuration() //A 2nd Coroutine 
