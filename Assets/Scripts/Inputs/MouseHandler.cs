@@ -40,6 +40,7 @@ public class MouseHandler : MonoBehaviour
         {
             currentTarget = hit.collider.gameObject; //Debug.Log($"Hovering over: {currentTarget.name}");
             GameManager.Instance.UpdateMouseCursor();
+
         }
         else
         {

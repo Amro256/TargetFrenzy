@@ -155,6 +155,8 @@ public class GameManager : MonoBehaviour
         //Call the player row decrement method -- 21/7/26: Changed from calling the Decrement method to resetting the value
         targetHitInARow = 0;
 
+        StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
+
         // if (MissCount >= MaxMisses)
         // {
         //     Debug.Log("Game Over");

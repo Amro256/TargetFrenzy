@@ -23,5 +23,7 @@ public class TimeIncreaseTarget : TargetClass
 
         AmmoManager.Instance.UpdateAmmoValue(1);
         OnTimeIncrease?.Invoke(TimeValue);
+
+        ScorePopUpManager.Instance.DisplayTimerPopUp(TimeValue, "+", "s", Color.green);
     }
 }

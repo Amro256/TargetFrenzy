@@ -27,6 +27,8 @@ public class BasicTarget : TargetClass
         AmmoManager.Instance.UpdateAmmoValue(1);
 
         ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, "+", Color.green);
+
+        StartCoroutine(CameraShake.Instance.BeginScreenShake(5f, 5f));
     }
 
 }

@@ -24,5 +24,7 @@ public class TimeDeductionTarget : TargetClass
         AmmoManager.Instance.UpdateAmmoValue(1);
         OnTimeDeduction?.Invoke(TimeValue);
 
+        ScorePopUpManager.Instance.DisplayTimerPopUp(TimeValue, "-", "s", Color.brown);
+
     }
 }

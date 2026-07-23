@@ -51,12 +51,16 @@ public class PlayerInputHandler : MonoBehaviour
             if (PlayerMH.CurrentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
                 TargetClass Target = PlayerMH.CurrentTarget.GetComponent<TargetClass>();
+                
+                //Screen Shake 
+                StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
 
                 if (Target != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
                     Target.OnHit();
                     //Invoke Action Here
                     OnConfirmedHit?.Invoke(); //This action will consume ammo if the player hits a target and the UI will update accordingly
+
                 }
 
                 //Destroy(PlayerMH.CurrentTarget);
