@@ -69,32 +69,31 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
                 continue;
             }
 
-        
-                GameObject prefab = activeTargets[Random.Range(0, activeTargets.Count)];
+            GameObject prefab = activeTargets[Random.Range(0, activeTargets.Count)];
 
-                GameObject instantiatedTargets = PoolManager.Instance.GetPooledObject(prefab);
+            GameObject instantiatedTargets = PoolManager.Instance.GetPooledObject(prefab);
 
-                instantiatedTargets.transform.position = transform.position;
-                instantiatedTargets.transform.rotation = transform.rotation;
+            instantiatedTargets.transform.position = transform.position;
+            instantiatedTargets.transform.rotation = transform.rotation;
 
-                //(activeTargets[Random.Range(0, activeTargets.Count)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
-
-
-                TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that have the target class attached to it
-
-                if (target != null) //Checks if the Instantiated targets have the target script attached to it, and if so, run the code below
-                {
-                    target.initialisePoints(lerpPoints); //Assigns the lerp points to the targets by calling the initialisePoints from the target class
-                }
-                else
-                {
-                    Debug.LogError("No Target script found on the Instantiated target!"); //Error handling 
-                }
+            //(activeTargets[Random.Range(0, activeTargets.Count)], transform.position, transform.rotation); //28/5/26: Changed from "prefabs" to "targetObjects" so that the targets can be randomised on start
 
 
+            TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that have the target class attached to it
 
-                spawnedTargets.Add(instantiatedTargets); //Add the instantiated Targets to the spawned Targets list
-                yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class
+            if (target != null) //Checks if the Instantiated targets have the target script attached to it, and if so, run the code below
+            {
+                target.initialisePoints(lerpPoints); //Assigns the lerp points to the targets by calling the initialisePoints from the target class
+            }
+            else
+            {
+                Debug.LogError("No Target script found on the Instantiated target!"); //Error handling 
+            }
+
+
+
+            spawnedTargets.Add(instantiatedTargets); //Add the instantiated Targets to the spawned Targets list
+            yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class
 
         }
 

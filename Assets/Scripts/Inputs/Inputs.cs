@@ -776,6 +776,11 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
     }
 
+    ~@TargetFrenzy()
+    {
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, TargetFrenzy.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, TargetFrenzy.UI.Disable() has not been called.");
+    }
 
     /// <summary>
     /// Destroys this asset and all associated <see cref="InputAction"/> instances.
