@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour //This script will hold and manage animations
 {
-    public static AnimationManager Instance; //Singleton Pattern
+    public static AnimationManager Instance { get; private set; } //Singleton Pattern
 
 
     //General Variables
@@ -12,15 +12,13 @@ public class AnimationManager : MonoBehaviour //This script will hold and manage
 
     void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

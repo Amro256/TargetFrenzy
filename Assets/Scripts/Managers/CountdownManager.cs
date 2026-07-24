@@ -10,7 +10,7 @@ public class CountdownManager : MonoBehaviour
     //Decided to isolate this from the UI manager to prevent it from becoming too bloated
 
     //Singleton
-    public static CountdownManager Instance;
+    public static CountdownManager Instance {get; private set;}
 
     //General variables
     [SerializeField] private int countdownTime;
@@ -19,15 +19,13 @@ public class CountdownManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

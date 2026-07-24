@@ -7,7 +7,7 @@ public class MultiplierBarManager : MonoBehaviour
 {
 
     //Singleton Pattern
-    public static MultiplierBarManager Instance;
+    public static MultiplierBarManager Instance {get; private set;}
 
     
 
@@ -17,17 +17,15 @@ public class MultiplierBarManager : MonoBehaviour
     // //Duration (Reference the Multiplier target script)
     [SerializeField] public float maxMultiplierDuration; //This will be used to control the duration of the Multiplier
     
-     void Awake() //Singleton pattern
+    void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

@@ -5,22 +5,20 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
 
-    public static AudioManager Instance; //Make the audioManager static so it can accessed by other scripts
+    public static AudioManager Instance {get; private set;} //Make the audioManager static so it can accessed by other scripts
     private AudioSource audioSource; //Private reference to the audio source component
 
     [SerializeField] private AudioClip[] audioClips;
 
-    void Awake()
+   void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

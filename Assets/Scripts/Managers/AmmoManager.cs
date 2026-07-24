@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate the ammo system and make it modular for future use!
 {
 
-    public static AmmoManager Instance;
+    public static AmmoManager Instance { get; private set; }
 
     //General Variables
     [SerializeField] private int maxAmmo = 4;
@@ -36,15 +36,13 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

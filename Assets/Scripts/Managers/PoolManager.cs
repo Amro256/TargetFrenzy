@@ -14,7 +14,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     }
 
     //Singleton
-    public static PoolManager Instance;
+    public static PoolManager Instance {get; private set;}
 
     //General Variables
     public int objectsOnScreen; //To track how many objects are currently on screen
@@ -41,15 +41,13 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     //2) Initialise objects on awake / Singleton pattern
     void Awake()
     {
-        if (Instance != null)
+       if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         // 2) Initialise the dictionary, which create an empty dictionary waiting to be populated

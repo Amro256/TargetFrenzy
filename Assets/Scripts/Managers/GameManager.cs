@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
 
     //Singleton Pattern
-    public static GameManager Instance; //Static instance so other scripts can access this
+    public static GameManager Instance {get; private set;} //Static instance so other scripts can access this
 
     //References
     PlayerInputHandler PlayerInput;
@@ -53,17 +53,15 @@ public class GameManager : MonoBehaviour
         TimeManager.OnOutOfTime -= TimeOver;
     }
 
-    void Awake() //Singleton pattern
+    void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

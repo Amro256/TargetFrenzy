@@ -4,27 +4,17 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour //Call this script whenever there's a need for camera shake
 {
     //Singleton
-    public static CameraShake Instance;
-
-
-    //Variables
-    //private Camera mainCam;
+    public static CameraShake Instance { get; private set; }
 
     void Awake()
     {
-        //Initialise the main camera
-        //mainCam = GetComponent<Camera>();
-
-
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -38,8 +28,8 @@ public class CameraShake : MonoBehaviour //Call this script whenever there's a n
         // 2) Use a while loop to shake the screen as long as elapsed time is less than the duration
         while (elapsedTime < duration)
         {
-            float offsetX = Random.Range(-0.5f, 0.5f) * intensity;
-            float offsetY = Random.Range(-0.5f, 0.5f) * intensity;
+            float offsetX = Random.Range(-0.4f, 0.4f) * intensity;
+            float offsetY = Random.Range(-0.4f, 0.4f) * intensity;
             //Vector3 camOffSet = new 
 
             //3) use the offsets above to set the local position of the camera
