@@ -8,6 +8,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
 {
     public static ScorePopUpManager Instance;
 
+    #region Variables
     //General Variables
     [SerializeField] private GameObject popUpPrefab; //The Game object that has the text component attached to it
     [SerializeField] private GameObject MultiTextPrefab;
@@ -15,7 +16,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
     
     [SerializeField] private GameObject multiPosition;
     [SerializeField] private GameObject timerInstantiatePosition;
-
+    #endregion Variables
 
     void Awake() //Singleton pattern
     {
@@ -44,7 +45,15 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
         //3) Get the text mesh pro component attached to the child object. The 0 refers to the index, so 0 = the first child object
         TextMeshPro scoreText = obj.transform.GetChild(0).GetComponent<TextMeshPro>();
 
-        scoreText.text = text + score.ToString(); //Converts the int score to a string
+        if (ScoreManager.Instance.IsMultiActive)
+        {
+            scoreText.text = text + ScoreManager.Instance.HitScore.ToString();
+        }
+        else
+        {
+            scoreText.text = text + score.ToString(); //Converts the int score to a string
+        }
+        
         scoreText.color = textColour; //Sets the colour of the text
 
         Destroy(obj, 1.5f); //Destroy the game object after 1.5 seconds

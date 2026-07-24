@@ -26,10 +26,15 @@ public class ScoreManager : MonoBehaviour
     }
 
     private int CurrentMultiValue; //Will be used to track and store the current multiplier value
-    private bool IsMultiActive; //This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
-    private bool HasBonusBeenTriggered;
-    private Coroutine currentCoroutine;
+    private bool isMultiActive;//This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
 
+    public bool IsMultiActive
+    {
+        get { return isMultiActive; }
+        set { isMultiActive = value; }
+    }
+
+    private bool HasBonusBeenTriggered;
     private int bonusRoundThreshold = 1555; //If the player's score hits this threshold, it'll trigger the bonus round
 
     //Actions
@@ -54,11 +59,10 @@ public class ScoreManager : MonoBehaviour
     }
 
 
-    
-
     private void OnEnable()
     {
         BasicTarget.OnTargetHit += ScoreIncrease;
+        MultiplierTarget.OnTargetHit += ScoreIncrease;
         GoldenTarget.OnTargetHit += ScoreIncrease;
         MultiplierTarget.OnMultiplierActive += ScoreMultiplier;
         Score_TimeDeductionTarget.OnScoreDeduction += ScoreDeduction;
@@ -67,6 +71,7 @@ public class ScoreManager : MonoBehaviour
     private void OnDisable()
     {
         BasicTarget.OnTargetHit -= ScoreIncrease;
+        MultiplierTarget.OnTargetHit -= ScoreIncrease;
         GoldenTarget.OnTargetHit -= ScoreIncrease;
         MultiplierTarget.OnMultiplierActive -= ScoreMultiplier;
         Score_TimeDeductionTarget.OnScoreDeduction -= ScoreDeduction;
@@ -76,14 +81,15 @@ public class ScoreManager : MonoBehaviour
     public void ScoreIncrease(int ScoreValue) //Method for handling adding score that takes in an integer as a parameter 
     {
         hitScore = ScoreValue;
+        
 
         //Check to see if the multiplier is active, then apply it to the score
 
-        if (IsMultiActive != false) //If the multiplier is set the true --14/5/26: Changed to is equal to true due to a bug related to the code change of the scoreMultiplier method
+        if (isMultiActive != false) //If the multiplier is set the true --14/5/26: Changed to is equal to true due to a bug related to the code change of the scoreMultiplier method
         {
             hitScore *= CurrentMultiValue;
         }
-
+        
         totalScore += HitScore;
 
 
@@ -132,7 +138,7 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("Current Multi value: " + CurrentMultiValue); //Ok. This is working! Just need to apply the multiplier value to the score itself now and update the score text
 
             //Code to handling the UI bar goes here -- Activate Bar
-            currentCoroutine = StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
+            StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
 
             //Call a new Coroutine that will reset the multi bool once the multiplier duration is up
             StartCoroutine(MultiplierDuration());

@@ -11,11 +11,13 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     private protected List<GameObject> activeTargets;  //Will be used to determine which targets to spawn 
     private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
 
-
+    #region unused code
     //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
     // [Header("Lerp Positions")]  //Start and end points for lerping
     // [SerializeField] protected GameObject startPos;
     // [SerializeField] protected GameObject EndPos;
+    //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
+    #endregion unused code
 
     [Header("Regular Target List")] //List of targets to Instantiate
     [SerializeField] protected List<GameObject> targetObjects = new List<GameObject>();
@@ -34,7 +36,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         //Method will be overridden by derived classes
     }
 
-
     public void DestroyTargets() //Method that will handle destroying targets BEFORE the bonus round into plays
     {
         foreach (GameObject target in spawnedTargets)
@@ -45,7 +46,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
             }
         }
     }
-
 
     public IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
     {
@@ -70,6 +70,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
             }
 
             GameObject prefab = activeTargets[Random.Range(0, activeTargets.Count)];
+            
 
             GameObject instantiatedTargets = PoolManager.Instance.GetPooledObject(prefab);
 

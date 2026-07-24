@@ -19,15 +19,12 @@ public class MultiplierTarget : TargetClass
 
 
     public override void OnHit()
-    {
+    {   
         GameManager.Instance.PlayerHitRowIncrement();
-
-        //Add Mutlivalue here -Invoke action!
-        OnMultiplierActive?.Invoke(ScoreMultiValue);
-        OnTargetHit?.Invoke(ScoreValue);
         AmmoManager.Instance.UpdateAmmoValue(1);
-        
-
+        //Add Mutlivalue here -Invoke action!
+        OnTargetHit?.Invoke(ScoreValue);
+        OnMultiplierActive?.Invoke(ScoreMultiValue);
         ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, "+", Color.green);
     }
 }
