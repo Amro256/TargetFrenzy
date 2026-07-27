@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class SpawnerClass : MonoBehaviour //This is the base class that the spawner scripts will inherit from
 {
+    #region test
+    [System.Serializable]
+    public class SpawnEntry
+    {
+        public GameObject targetPrefab;
+        public float targetWeight;
+    }
+    #endregion
+
 
     [Header("General Variables")]
     [SerializeField] protected float SpawnTime; //Variable to control the spawn rate of the targets
-    private protected List<GameObject> activeTargets;  //Will be used to determine which targets to spawn 
+    private protected List<SpawnEntry> activeTargets;  //Will be used to determine which targets to spawn 
     private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
 
     #region unused code
@@ -20,10 +29,10 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     #endregion unused code
 
     [Header("Regular Target List")] //List of targets to Instantiate
-    [SerializeField] protected List<GameObject> targetObjects = new List<GameObject>();
+    [SerializeField] protected List<SpawnEntry> targetObjects = new List<SpawnEntry>();
 
     [Header("Bonus Round Target List")]
-    [SerializeField] protected List<GameObject> bonusTargetObjects = new List<GameObject>();
+    [SerializeField] protected List<SpawnEntry> bonusTargetObjects = new List<SpawnEntry>();
 
     [Header("Movement Points")]
     [SerializeField] protected Transform[] lerpPoints; //The spawner itself will hold the lerp points' transform, as this will allow me to drag and drop them into the inspector with no issue!
@@ -47,9 +56,35 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         }
     }
 
+    //Method to handle selecting a target based on weighting
+
+    private GameObject SelectRandomTarget()
+    {
+        float totalWeight = 0f;
+
+        foreach (SpawnEntry entry in activeTargets)
+        {
+            totalWeight += entry.targetWeight;
+        }
+
+        float randomPoint = Random.value * totalWeight;
+
+        foreach (SpawnEntry entry in activeTargets)
+        {
+            randomPoint -= entry.targetWeight;
+
+            if (randomPoint <= 0)
+            {
+                return entry.targetPrefab;
+            }
+        }
+        
+        return activeTargets[activeTargets.Count - 1].targetPrefab;
+    }
+
     public IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
     {
-       
+
         if (GameManager.Instance.BonusRoundBool) //if the bonus round is active, set the active targets to the bonus round targets (golden target)
         {
             activeTargets = bonusTargetObjects;
@@ -69,8 +104,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
                 continue;
             }
 
-            GameObject prefab = activeTargets[Random.Range(0, activeTargets.Count)];
-            
+            GameObject prefab = SelectRandomTarget();
 
             GameObject instantiatedTargets = PoolManager.Instance.GetPooledObject(prefab);
 
@@ -99,5 +133,5 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         }
 
     }
-    
+
 }
