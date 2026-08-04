@@ -17,7 +17,9 @@ public class TimeIncreaseTarget : TargetClass
     public static event Action<int> OnTimeIncrease;
 
     public override void OnHit()
-    {
+    {   
+        base.OnHit();
+        
         GameManager.Instance.PlayerHitRowDecrement();
         //Add code here for Increasing Time
 

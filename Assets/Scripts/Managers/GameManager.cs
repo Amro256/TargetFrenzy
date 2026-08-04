@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("You hit: " + targetHitInARow + " In a row! Entering Bonus Round");
             OnMaxTargetsRowHit?.Invoke();
-               
+
         }
     }
 

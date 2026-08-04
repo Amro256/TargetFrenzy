@@ -150,7 +150,6 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("Multi Already Active");
         }
         
-        
     }
 
     private IEnumerator MultiplierDuration() //A 2nd Coroutine 

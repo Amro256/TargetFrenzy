@@ -7,28 +7,41 @@ using System.Collections;
 
 public class PoolManager : MonoBehaviour //Script for object pooling 
 {
-
+    //Singleton
+    public static PoolManager Instance { get; private set; }
+    
+    #region PoolMember Class
     public class PoolMember : MonoBehaviour // 30/6/26: Added a class that acts as a data container 
     {
         public GameObject prefab;
     }
-
-    //Singleton
-    public static PoolManager Instance {get; private set;}
-
+    #endregion
+    
+    
     //General Variables
     public int objectsOnScreen; //To track how many objects are currently on screen
-    public int maxObjectsOnScreen = 5; //The maximum objects that can be on screen 
+    public int maxObjectsOnScreen = 5; //The maximum objects that can be on screen
+
+    //test
+    private float targetMoveSpeed;
+
+    public float CurrentMoveSpeed
+    {
+        get { return defaultTargetMoveSpeed; }
+    }
+
+    private float defaultTargetMoveSpeed = 8f;
+    private float MaxTargetMoveSpeed = 12f;
+    private List<TargetClass> activeTargets = new List<TargetClass>();  
 
     [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
     [SerializeField] private int poolSize; //To control the size of the pool
     private bool hasReachedMaxOnScreen;
 
     public bool HasReachedMaxOnScreen
-    { 
+    {
         get { return objectsOnScreen >= maxObjectsOnScreen; }
     }
-
 
     //30/6/26: Refactoring to use a dictionary
 
@@ -54,6 +67,20 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
 
         GenerateObjectsToPool();
+    }
+
+
+    //Create a method to Increase the targets' move speed
+
+    public void IncreaseTargetMoveSpeed()
+    {   
+        defaultTargetMoveSpeed = Mathf.Clamp(defaultTargetMoveSpeed + 0.25f, 0f, MaxTargetMoveSpeed); //A 0.25 increase to all targets' move speed when the player hits a target
+
+        foreach (TargetClass target in activeTargets)
+        {
+            target.MoveSpeed = defaultTargetMoveSpeed;
+        }
+
     }
 
     private void GenerateObjectsToPool()
@@ -100,9 +127,14 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         {
             GenerateObjectsToPool();
         }
-
         // 11) Remove an object from the queue for use in game
         GameObject targetObj = pool.Dequeue();
+
+        //Commented out for testing
+        TargetClass target = targetObj.GetComponent<TargetClass>();
+        activeTargets.Add(target);
+
+
         IncrementTargetsOnScreen(); //To track how many objects are currently on screen
         targetObj.SetActive(true); //Set the object to true so it becomes visible 
 
@@ -118,6 +150,10 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
         // 14) Return the correct objects to the queue based on the store prefab reference 
         poolDictionary[member.prefab].Enqueue(targetObj);
+
+        //Commented Out for testing    
+        TargetClass target = targetObj.GetComponent<TargetClass>();
+        activeTargets.Remove(target);
 
         // 15) Set the gameobject back to false as it no longer is being used
         targetObj.SetActive(false);

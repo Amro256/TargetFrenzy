@@ -14,6 +14,16 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     [Header("Movement Speed")]
     [SerializeField] private float moveSpeed; //To control the speed of the targets
 
+    public float MoveSpeed
+    {
+        set { moveSpeed = value; }
+    }
+
+    private void OnEnable()
+    {
+        moveSpeed = PoolManager.Instance.CurrentMoveSpeed;
+    }
+
     void Start()
     {
         //Grab a reference to the targets' initial spawn position on start 
@@ -21,14 +31,14 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
         //Debug.Log(gameObject.transform.position); //Used for debugging to check the targets' position (--18/5/26 Commented this debug out to debug other bugs--)
 
-        moveSpeed = Random.Range(10, 15);
+        //moveSpeed = Random.Range(10, 15); //3/8/26: This will go unused now to make way for incremental speed boosts
     }
 
     void Update()
     {
         if (currentPointIndex < lerp_Points.Length)
         {
-            transform.position = Vector3.MoveTowards(transform.position, lerp_Points[currentPointIndex].position, Time.deltaTime * moveSpeed); //This current moves the target to point 1
+            transform.position = Vector3.MoveTowards(transform.position, lerp_Points[currentPointIndex].position, moveSpeed * Time.deltaTime); //This current moves the target to point 1
 
             if (Vector3.Distance(transform.position, lerp_Points[currentPointIndex].position) < 0.5f)
             {
@@ -50,7 +60,15 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     public virtual void OnHit() //Child classes will override this method
     {
-        
-    } 
+        Debug.Log("Target hit");
+        PoolManager.Instance.IncreaseTargetMoveSpeed();
+    }
+
+    //Create a method to handle increasing the move speed of targets
+    public void IncreaseTargetSpeed()
+    {
+        //moveSpeed = Mathf.Clamp(moveSpeed + 0.25f, 0f, maxMoveSpeed); //A 0.25 increase to all targets' move speed when the player hits a target
+    }
+
     
 }

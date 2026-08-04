@@ -17,7 +17,9 @@ public class TimeDeductionTarget : TargetClass
     public static event Action<int> OnTimeDeduction;
 
     public override void OnHit()
-    {
+    {    
+        base.OnHit();
+        
         GameManager.Instance.PlayerHitRowDecrement();
         //Add code here for time Deduction
 

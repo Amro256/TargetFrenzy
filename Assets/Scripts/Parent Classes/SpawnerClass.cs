@@ -5,29 +5,21 @@ using UnityEngine;
 
 public class SpawnerClass : MonoBehaviour //This is the base class that the spawner scripts will inherit from
 {
-    #region test
-    [System.Serializable]
+    #region Custom Class for target weighting
+    [System.Serializable] //This exposes the variables below in the inspector 
     public class SpawnEntry
     {
-        public GameObject targetPrefab;
-        public float targetWeight;
+        public GameObject targetPrefab; // The target prefab
+        public float targetWeight; // The associated prefab weighting 
     }
     #endregion
-
-
+    
     [Header("General Variables")]
     [SerializeField] protected float SpawnTime; //Variable to control the spawn rate of the targets
-    private protected List<SpawnEntry> activeTargets;  //Will be used to determine which targets to spawn 
+    private protected List<SpawnEntry> activeTargets;  //Will be used to determine which targets to spawn (regular gameplay targets or bonus rounds targets, if the bonus round is active) 
     private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
 
-    #region unused code
-    //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
-    // [Header("Lerp Positions")]  //Start and end points for lerping
-    // [SerializeField] protected GameObject startPos;
-    // [SerializeField] protected GameObject EndPos;
-    //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
-    #endregion unused code
-
+   
     [Header("Regular Target List")] //List of targets to Instantiate
     [SerializeField] protected List<SpawnEntry> targetObjects = new List<SpawnEntry>();
 
@@ -37,6 +29,14 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     [Header("Movement Points")]
     [SerializeField] protected Transform[] lerpPoints; //The spawner itself will hold the lerp points' transform, as this will allow me to drag and drop them into the inspector with no issue!
     //NOTE: This is also using a protected access modifier, so each of the spawner classes will be able to access this variable.
+    
+    #region unused code
+    //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
+    // [Header("Lerp Positions")]  //Start and end points for lerping
+    // [SerializeField] protected GameObject startPos;
+    // [SerializeField] protected GameObject EndPos;
+    //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
+    #endregion unused code
 
 
     //Method to Instantiate target game objects
@@ -57,7 +57,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
     }
 
     //Method to handle selecting a target based on weighting
-
     private GameObject SelectRandomTarget()
     {
         float totalWeight = 0f;
@@ -99,10 +98,13 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         {
             if (PoolManager.Instance.HasReachedMaxOnScreen)
             {
-                Debug.Log("There are enough targets on screen");
-                yield return null;
-                continue;
+                Debug.Log("There are enough targets on screen. Pause Spawning");
+                yield return new WaitUntil(() => PoolManager.Instance.objectsOnScreen <= 0);
+
+                Debug.Log("Resume Spawning");
             }
+
+            
 
             GameObject prefab = SelectRandomTarget();
 
@@ -116,7 +118,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
 
             TargetClass target = instantiatedTargets.GetComponent<TargetClass>(); //Grabs a reference to the Target (Parent) class and assigns the Instantiated targets that have the target class attached to it
 
-            if (target != null) //Checks if the Instantiated targets have the target script attached to it, and if so, run the code below
+            if (target != null) //Checks if the Instantiated targets have the target script attached to it, and if so run the code below
             {
                 target.initialisePoints(lerpPoints); //Assigns the lerp points to the targets by calling the initialisePoints from the target class
             }
@@ -124,8 +126,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
             {
                 Debug.LogError("No Target script found on the Instantiated target!"); //Error handling 
             }
-
-
 
             spawnedTargets.Add(instantiatedTargets); //Add the instantiated Targets to the spawned Targets list
             yield return new WaitForSeconds(SpawnTime); //Uses the SpawnTime float variable declared in the Parent Class

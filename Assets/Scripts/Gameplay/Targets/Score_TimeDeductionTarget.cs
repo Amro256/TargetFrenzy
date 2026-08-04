@@ -19,7 +19,9 @@ public class Score_TimeDeductionTarget : TargetClass
 
 
     public override void OnHit()
-    {
+    {   
+        base.OnHit();
+        
         GameManager.Instance.PlayerHitRowDecrement();
 
         //Add code here for score and time deduction
