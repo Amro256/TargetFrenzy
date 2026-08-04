@@ -2877,6 +2877,7 @@ MonoBehaviour:
   ScoreText: {fileID: 1254299928}
   TimerText: {fileID: 223418915}
   FinalScoreText: {fileID: 574168415}
+  TargetCounterText: {fileID: 1082363169}
   PauseMenuCanvas: {fileID: 1959797049}
   GameOverCanvas: {fileID: 708779066}
   GameHudCanvas: {fileID: 1215868182}

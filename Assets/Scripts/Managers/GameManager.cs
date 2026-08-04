@@ -152,6 +152,7 @@ public class GameManager : MonoBehaviour
 
         //Call the player row decrement method -- 21/7/26: Changed from calling the Decrement method to resetting the value
         targetHitInARow = 0;
+        UIManager.Instance.UpdateCouterUI(targetHitInARow);
 
         StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
 
@@ -172,6 +173,8 @@ public class GameManager : MonoBehaviour
             OnMaxTargetsRowHit?.Invoke();
 
         }
+
+        UIManager.Instance.UpdateCouterUI(targetHitInARow);
     }
 
     //Method to track how many targets the player as hit in a row
@@ -181,5 +184,7 @@ public class GameManager : MonoBehaviour
         {
             targetHitInARow--; //This also prevents the value from going into the negatives
         }
+
+        UIManager.Instance.UpdateCouterUI(targetHitInARow);
     }
 }

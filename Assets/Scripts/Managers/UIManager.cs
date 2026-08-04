@@ -25,8 +25,8 @@ public class UIManager : MonoBehaviour
     [Header("UI Text References")]
     [SerializeField] private TMP_Text ScoreText;
     [SerializeField] private TMP_Text TimerText;
-
     [SerializeField] private TMP_Text FinalScoreText;
+    [SerializeField] private TMP_Text TargetCounterText;
 
     [Header("UI Canvas References")]
     [SerializeField] public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
@@ -149,6 +149,12 @@ public class UIManager : MonoBehaviour
 
 
         TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+
+    public void UpdateCouterUI(int value)
+    {
+        TargetCounterText.text = value.ToString();
     }
 
 
