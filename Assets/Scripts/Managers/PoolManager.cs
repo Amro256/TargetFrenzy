@@ -9,18 +9,19 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 {
     //Singleton
     public static PoolManager Instance { get; private set; }
-    
+
     #region PoolMember Class
     public class PoolMember : MonoBehaviour // 30/6/26: Added a class that acts as a data container 
     {
         public GameObject prefab;
     }
     #endregion
-    
-    
+
+
     //General Variables
     public int objectsOnScreen; //To track how many objects are currently on screen
     public int maxObjectsOnScreen = 5; //The maximum objects that can be on screen
+
 
     //test
     private float targetMoveSpeed;
@@ -32,7 +33,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
     private float defaultTargetMoveSpeed = 8f;
     private float MaxTargetMoveSpeed = 12f;
-    private List<TargetClass> activeTargets = new List<TargetClass>();  
+    private List<TargetClass> activeTargets = new List<TargetClass>();
 
     [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
     [SerializeField] private int poolSize; //To control the size of the pool
@@ -54,7 +55,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     //2) Initialise objects on awake / Singleton pattern
     void Awake()
     {
-       if (Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
@@ -73,7 +74,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     //Create a method to Increase the targets' move speed
 
     public void IncreaseTargetMoveSpeed()
-    {   
+    {
         defaultTargetMoveSpeed = Mathf.Clamp(defaultTargetMoveSpeed + 0.25f, 0f, MaxTargetMoveSpeed); //A 0.25 increase to all targets' move speed when the player hits a target
 
         foreach (TargetClass target in activeTargets)
@@ -130,13 +131,17 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         // 11) Remove an object from the queue for use in game
         GameObject targetObj = pool.Dequeue();
 
+
         //Commented out for testing
         TargetClass target = targetObj.GetComponent<TargetClass>();
         activeTargets.Add(target);
 
 
         IncrementTargetsOnScreen(); //To track how many objects are currently on screen
-        targetObj.SetActive(true); //Set the object to true so it becomes visible 
+        targetObj.SetActive(true); //Set the object to true so it becomes visible
+
+        StartCoroutine(ReturnObjectAfterTime(targetObj, 10f));
+
 
         return targetObj;
     }
@@ -172,6 +177,17 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     {
         objectsOnScreen--;
     }
+
+    //
+    private IEnumerator ReturnObjectAfterTime(GameObject targetObj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (targetObj.activeSelf)
+        {
+            ReturnPooledObject(targetObj);
+         }
+     }
 
 
 }

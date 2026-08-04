@@ -35,7 +35,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     private bool HasBonusBeenTriggered;
-    private int bonusRoundThreshold = 1555; //If the player's score hits this threshold, it'll trigger the bonus round
+    private int bonusRoundThreshold = 3500; //If the player's score hits this threshold, it'll trigger the bonus round
 
     //Actions
     public static event Action<int> OnScoreChanged;
