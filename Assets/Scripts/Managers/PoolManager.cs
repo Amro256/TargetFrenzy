@@ -33,7 +33,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
     private float defaultTargetMoveSpeed = 8f;
     private float MaxTargetMoveSpeed = 12f;
-    private List<TargetClass> activeTargets = new List<TargetClass>();
+    private List<TargetClass> activeTargets = new List<TargetClass>(); //A new list to hold targets with the target class (or derived) script attached to it
 
     [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
     [SerializeField] private int poolSize; //To control the size of the pool
@@ -133,14 +133,15 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
 
         //Commented out for testing
-        TargetClass target = targetObj.GetComponent<TargetClass>();
-        activeTargets.Add(target);
+        TargetClass target = targetObj.GetComponent<TargetClass>(); //Here we get the targets in the pool that have the target class script (or derived) script attached to it
+        activeTargets.Add(target); //Add it the active targets list
 
 
         IncrementTargetsOnScreen(); //To track how many objects are currently on screen
         targetObj.SetActive(true); //Set the object to true so it becomes visible
 
-        StartCoroutine(ReturnObjectAfterTime(targetObj, 10f));
+        //Call the coroutine to return the object to the pool after xyz (set to 10 currently) seconds
+        StartCoroutine(target.ReturnObjectAfterTime());
 
 
         return targetObj;
@@ -157,8 +158,8 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         poolDictionary[member.prefab].Enqueue(targetObj);
 
         //Commented Out for testing    
-        TargetClass target = targetObj.GetComponent<TargetClass>();
-        activeTargets.Remove(target);
+        TargetClass target = targetObj.GetComponent<TargetClass>(); //Here we get the targets in the pool that have the target class script (or derived) script attached to it
+        activeTargets.Remove(target); //Removing it from the active targets list
 
         // 15) Set the gameobject back to false as it no longer is being used
         targetObj.SetActive(false);
@@ -166,7 +167,6 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         DecrementTargetsOnScreen();
 
     }
-
 
     public void IncrementTargetsOnScreen()
     {
@@ -178,16 +178,8 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         objectsOnScreen--;
     }
 
-    //
-    private IEnumerator ReturnObjectAfterTime(GameObject targetObj, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (targetObj.activeSelf)
-        {
-            ReturnPooledObject(targetObj);
-         }
-     }
+    
+    
 
 
 }

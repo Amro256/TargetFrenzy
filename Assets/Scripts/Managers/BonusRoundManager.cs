@@ -48,7 +48,8 @@ public class BonusRoundManager : MonoBehaviour
 
         // 1) Call the coroutine from the UI manager here
         StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
-        PoolManager.Instance.objectsOnScreen = 1;
+        GameManager.Instance.targetHitInARow = 0; //Reset the counter
+        PoolManager.Instance.objectsOnScreen = 1; //Without this, the object on screen value will display -2 in the inspector
 
 
         // 2) Call the coroutine from the countdown manager here

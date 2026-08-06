@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using System.Collections;
+
 
 public class TargetClass : MonoBehaviour //Parent class that all the target scripts will inherit from
 {
@@ -10,14 +9,16 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     private Vector3 initialSpawnPoint; //Private vector 3 storing the initial spawn position of the target from the spawner
     private int currentPointIndex = 0; //Variable that will be used to store the current point the target is moving to
 
-    //General Variables
+    //Movement variables
     [Header("Movement Speed")]
     [SerializeField] private float moveSpeed; //To control the speed of the targets
-
     public float MoveSpeed
     {
         set { moveSpeed = value; }
     }
+    
+    //General variables
+    private float targetTimer = 10f; //How long targets are able to stay on screen for before returning to the pool
 
     private void OnEnable()
     {
@@ -36,6 +37,8 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     void Update()
     {
+        targetTimer -= Time.deltaTime;
+
         if (currentPointIndex < lerp_Points.Length)
         {
             transform.position = Vector3.MoveTowards(transform.position, lerp_Points[currentPointIndex].position, moveSpeed * Time.deltaTime); //This current moves the target to point 1
@@ -45,6 +48,11 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
                 currentPointIndex = Random.Range(0, lerp_Points.Length);
             }
         }
+
+        if (targetTimer <= 0)
+        {
+            Debug.Log("Targets should head off screen now!"); //Working
+         }
     }
 
     public void initialisePoints(Transform[] points) //As gameObjects can not be assigned to a prefab in the inspector, I will need to assign the lerp points to the targets during runtime
@@ -64,10 +72,15 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         PoolManager.Instance.IncreaseTargetMoveSpeed();
     }
 
-    //Create a method to handle increasing the move speed of targets
-    public void IncreaseTargetSpeed()
+    //6/8/26: Moved from the Pool manager to this script, as it has no relevant to the behaviour of that script
+    public IEnumerator ReturnObjectAfterTime() //This will return targets to the pool after a certain amount of time. Here to prevent players from just waiting on "positive targets" the whole game
     {
-        //moveSpeed = Mathf.Clamp(moveSpeed + 0.25f, 0f, maxMoveSpeed); //A 0.25 increase to all targets' move speed when the player hits a target
+        yield return new WaitForSeconds(targetTimer);
+
+        if (gameObject.activeSelf) //Checks to see if the game object is active or not. If it is, return it to the pool
+        {
+            PoolManager.Instance.ReturnPooledObject(gameObject);
+        }
     }
 
     

@@ -13,13 +13,13 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         public float targetWeight; // The associated prefab weighting 
     }
     #endregion
-    
+
     [Header("General Variables")]
     [SerializeField] protected float SpawnTime; //Variable to control the spawn rate of the targets
     private protected List<SpawnEntry> activeTargets;  //Will be used to determine which targets to spawn (regular gameplay targets or bonus rounds targets, if the bonus round is active) 
     private List<GameObject> spawnedTargets = new List<GameObject>(); //Tracks and stores the current instantiated targets
+    
 
-   
     [Header("Regular Target List")] //List of targets to Instantiate
     [SerializeField] protected List<SpawnEntry> targetObjects = new List<SpawnEntry>();
 
@@ -28,8 +28,8 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
 
     [Header("Movement Points")]
     [SerializeField] protected Transform[] lerpPoints; //The spawner itself will hold the lerp points' transform, as this will allow me to drag and drop them into the inspector with no issue!
-    //NOTE: This is also using a protected access modifier, so each of the spawner classes will be able to access this variable.
-    
+                                                       //NOTE: This is also using a protected access modifier, so each of the spawner classes will be able to access this variable.
+
     #region unused code
     //-----------------------------------------------------------------------UNUSED---------------------------------------------------------------------------------------------------------
     // [Header("Lerp Positions")]  //Start and end points for lerping
@@ -77,7 +77,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
                 return entry.targetPrefab;
             }
         }
-        
+
         return activeTargets[activeTargets.Count - 1].targetPrefab;
     }
 
@@ -104,7 +104,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
                 Debug.Log("Resume Spawning");
             }
 
-            
 
             GameObject prefab = SelectRandomTarget();
 
@@ -133,5 +132,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         }
 
     }
+    
+   
 
 }
