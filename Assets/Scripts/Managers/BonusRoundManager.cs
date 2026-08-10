@@ -28,10 +28,14 @@ public class BonusRoundManager : MonoBehaviour
 
     public void ActivateBonusRound()
     {
-        //Put a check in place to check if the bonus round is not currently active
+        //Put a check in place to check if the bonus round is not currently active, AND if the multiplier is currently active
         if (GameManager.Instance.BonusRoundBool != true)
-        {
+        {   
             GameManager.Instance.BonusRoundBool = true;
+
+            AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo; //The player will be given max ammo when the round starts -- 16/6/26: Moved from the UI manager to here -- 
+            // 10/8/26: Moved here to prevent the reload warning animation from playing during the into sequence 
+
             Debug.Log("Bonus Round has been activated!");
 
         //Action here
