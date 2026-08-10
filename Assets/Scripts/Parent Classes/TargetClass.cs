@@ -37,7 +37,6 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     void Update()
     {
-        targetTimer -= Time.deltaTime;
 
         if (currentPointIndex < lerp_Points.Length)
         {
@@ -49,10 +48,6 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
             }
         }
 
-        if (targetTimer <= 0)
-        {
-            Debug.Log("Targets should head off screen now!"); //Working
-         }
     }
 
     public void initialisePoints(Transform[] points) //As gameObjects can not be assigned to a prefab in the inspector, I will need to assign the lerp points to the targets during runtime
@@ -77,10 +72,9 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     {
         yield return new WaitForSeconds(targetTimer);
 
-        if (gameObject.activeSelf) //Checks to see if the game object is active or not. If it is, return it to the pool
-        {
+       
             PoolManager.Instance.ReturnPooledObject(gameObject);
-        }
+        
     }
 
     
