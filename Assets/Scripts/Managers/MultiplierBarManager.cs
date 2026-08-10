@@ -7,9 +7,7 @@ public class MultiplierBarManager : MonoBehaviour
 {
 
     //Singleton Pattern
-    public static MultiplierBarManager Instance {get; private set;}
-
-    
+    public static MultiplierBarManager Instance { get; private set; }
 
     // //Variables / References
     [SerializeField] private Slider multiplierSlider; //11/5/26 - Moved from its own script to the UI manager
@@ -17,7 +15,7 @@ public class MultiplierBarManager : MonoBehaviour
 
     // //Duration (Reference the Multiplier target script)
     [SerializeField] public float maxMultiplierDuration; //This will be used to control the duration of the Multiplier
-    
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -35,7 +33,7 @@ public class MultiplierBarManager : MonoBehaviour
     {
         multiplierSlider.maxValue = maxMultiplierDuration; //This sets the slider's max value to multiplier duration value, which is set to 10
         multiplierSlider.value = maxMultiplierDuration; //Sets the bars value to the multiplier duration. Without assigning a value to the slider's value, it will default to 1.
-        
+
     }
 
 
@@ -56,7 +54,12 @@ public class MultiplierBarManager : MonoBehaviour
 
         //Reset the slider colour
         sliderFill.color = default;
-       
+    }
+
+    public void ResetMultiBar() //This method will be called in the bonus round script
+    {
+        multiplierSlider.value = maxMultiplierDuration;
+        sliderFill.color = default;
     }
 
 }

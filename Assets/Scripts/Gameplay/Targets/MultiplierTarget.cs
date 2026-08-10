@@ -26,7 +26,15 @@ public class MultiplierTarget : TargetClass
         AmmoManager.Instance.UpdateAmmoValue(1);
         //Add Mutlivalue here -Invoke action!
         OnTargetHit?.Invoke(ScoreValue);
-        OnMultiplierActive?.Invoke(ScoreMultiValue);
+
+        if (GameManager.Instance.BonusRoundBool != false) // To prevent the multiplier being triggered during the bonus round intro
+        {
+            return;
+        }
+        else
+        {
+             OnMultiplierActive?.Invoke(ScoreMultiValue);
+        }
         ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, "+", Color.green);
     }
 }
