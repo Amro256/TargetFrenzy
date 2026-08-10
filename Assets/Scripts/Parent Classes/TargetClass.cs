@@ -71,9 +71,11 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     public IEnumerator ReturnObjectAfterTime() //This will return targets to the pool after a certain amount of time. Here to prevent players from just waiting on "positive targets" the whole game
     {
         yield return new WaitForSeconds(targetTimer);
-
-       
+        if (gameObject.activeSelf)
+        {
             PoolManager.Instance.ReturnPooledObject(gameObject);
+        }
+            
         
     }
 

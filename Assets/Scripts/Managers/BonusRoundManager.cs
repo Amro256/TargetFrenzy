@@ -28,8 +28,11 @@ public class BonusRoundManager : MonoBehaviour
 
     public void ActivateBonusRound()
     {
-        GameManager.Instance.BonusRoundBool = true;
-        Debug.Log("Bonus Round has been activated!");
+        //Put a check in place to check if the bonus round is not currently active
+        if (GameManager.Instance.BonusRoundBool != true)
+        {
+            GameManager.Instance.BonusRoundBool = true;
+            Debug.Log("Bonus Round has been activated!");
 
         //Action here
         OnBonusRoundStartTime?.Invoke();
@@ -63,6 +66,8 @@ public class BonusRoundManager : MonoBehaviour
         GameManager.Instance.targetHitInARow = 0;
 
         // 4) Call the method that instantiates the targets from the spawners
+        }
+        
     }
 
     private IEnumerator ReEnableSpawners() //This has to be an Ienumerator because by placed a second foreach loop in the method above, the second loop would overwrite the first. 
@@ -81,7 +86,6 @@ public class BonusRoundManager : MonoBehaviour
             //Call the spawn target script
             spawner.SpawnTargets();
             Debug.Log("Spawning: " + spawner);
-            break;
         }
     }
 }
