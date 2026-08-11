@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEditor.Experimental.GraphView;
-using System.Timers;
 
 public class TimeManager : MonoBehaviour
 {

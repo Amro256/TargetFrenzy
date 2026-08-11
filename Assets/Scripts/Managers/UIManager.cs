@@ -104,6 +104,8 @@ public class UIManager : MonoBehaviour
         playerInp = FindObjectOfType<PlayerInput>();
 
         ReloadWarningText.SetActive(false);
+
+        StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
     }
 
     public void ConsumeAmmo() //Call this method in the mouseInput script
@@ -178,10 +180,10 @@ public class UIManager : MonoBehaviour
     {
         //1) Disable the top left UI group and the ammo UI group & disable player input
 
-        // foreach (GameObject hudElements in gameHUD) //Re-enable this after fixing bugs
-        // {
-        //     hudElements.SetActive(false); 
-        // }
+        foreach (GameObject hudElements in gameHUD)
+        {
+            hudElements.SetActive(false); 
+        }
 
         playerInp.gameObject.SetActive(false); //Disables player input
 

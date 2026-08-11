@@ -17,21 +17,29 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Texture2D targetReticleTexture;
     [SerializeField] private SpawnerClass[] spawners;
 
-    //General Variables    
+    //General Variables - Bool   
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
+    public bool IsIntroSeqPlaying{ get; private set; }
 
     public bool BonusRoundBool
     {
         get { return IsBonusRActive; }
         set { IsBonusRActive = value; }
+
     }
+
+    public bool IsGamePaused()
+    {
+        return IsPaused;
+    }
+
 
     //14/4/26: The variables below were moved from the player input script to the game manager 
     private int MaxMisses = 5; //Max amount of possible clicks the player has before resulting in a game over
     private int MissCount = 0; //Variable that will track the player's misses 
 
-
+    #region Actions
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
     public static event Action OnMaxTargetsRowHit;
@@ -39,7 +47,9 @@ public class GameManager : MonoBehaviour
     public static event Action<Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
     public static event Action<Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
     public static event Action<Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
-   
+    #endregion
+    
+
 
     void OnEnable()
     {
@@ -69,6 +79,8 @@ public class GameManager : MonoBehaviour
     {
         PlayerInput = FindObjectOfType<PlayerInputHandler>();
         IsBonusRActive = false;
+        IsIntroSeqPlaying = false;
+        
     }
 
 
@@ -140,10 +152,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool IsGamePaused()
-    {
-        return IsPaused;
-    }
+   
 
     private void PlayerMissShot() //Method responsible for the players' misses! 14/4/26: Moved fom the Player Input script to the Game manager
     {

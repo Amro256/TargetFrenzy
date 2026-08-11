@@ -1,8 +1,6 @@
 using UnityEngine;
 using TMPro;
 using System;
-using Mono.Cecil.Cil;
-using NUnit.Framework.Internal;
 
 public class ScorePopUpManager : MonoBehaviour //This script will be responsible for floating / pop up score values when a target is hit
 {
