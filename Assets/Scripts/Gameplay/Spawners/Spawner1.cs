@@ -11,15 +11,17 @@ public class Spawner1 : SpawnerClass //This class inherits from the Spawner Clas
     // It'll also make debugging easier, as I only have to go through one centralised script. 
 
     void Start()
-    {
-        //Call the SpawnTargets method here
+    {   
+        
         SpawnTargets();
+        //Call the SpawnTargets method here
+        
     }
 
 
     //Override the Instantiation code here
     public override void SpawnTargets()
-    {
+    {   
         StartCoroutine(InstantiateTargets());
     }
 

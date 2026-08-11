@@ -20,7 +20,13 @@ public class GameManager : MonoBehaviour
     //General Variables - Bool   
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
-    public bool IsIntroSeqPlaying{ get; private set; }
+    private bool isIntroSeqPlaying{ get; set; }
+
+    public bool IsIntroSeqPlaying
+    {
+        get { return isIntroSeqPlaying; }
+        set { isIntroSeqPlaying = value; }
+     }
 
     public bool BonusRoundBool
     {
@@ -79,7 +85,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerInput = FindObjectOfType<PlayerInputHandler>();
         IsBonusRActive = false;
-        IsIntroSeqPlaying = false;
+        IsIntroSeqPlaying = true;
         
     }
 

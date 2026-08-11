@@ -40,7 +40,7 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
-        if (isTimerRunning)
+        if (isTimerRunning && GameManager.Instance.IsIntroSeqPlaying != true)
         {
             if (timeRemaining > 0)
             {
@@ -66,8 +66,6 @@ public class TimeManager : MonoBehaviour
             {
                 AnimationManager.Instance.StopAnimation("ValueHasReachedThreshold"); //24/7/26: Forgot to add this initially to prevent the timer text remaining red if the timer is greater than 15 seconds
             }
-
-
         }
     }
 

@@ -12,12 +12,13 @@ public class Spawner4 : SpawnerClass //This class inherits from the Spawner Clas
 
     void Start()
     {
-        SpawnTargets(); //Call the SpawnTargets method here
+       SpawnTargets();
+        //Call the SpawnTargets method here
     }
 
     //Override the Instantiation code here
     public override void SpawnTargets()
     {
-        StartCoroutine(InstantiateTargets());
+       StartCoroutine(InstantiateTargets());
     }
 }
