@@ -7,9 +7,6 @@ using System.Collections;
 
 public class PoolManager : MonoBehaviour //Script for object pooling 
 {
-    //Singleton
-    public static PoolManager Instance { get; private set; }
-
     #region PoolMember Class
     public class PoolMember : MonoBehaviour // 30/6/26: Added a class that acts as a data container 
     {
@@ -17,32 +14,31 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     }
     #endregion
 
+    //Singleton
+    public static PoolManager Instance { get; private set; }
 
+    #region Variables
     //General Variables
     public int objectsOnScreen; //To track how many objects are currently on screen
     public int maxObjectsOnScreen = 5; //The maximum objects that can be on screen
+    private float defaultTargetMoveSpeed = 8f;
+    private float MaxTargetMoveSpeed = 12f;
+    [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
+    [SerializeField] private int poolSize; //To control the size of the pool
+    private List<TargetClass> activeTargets = new List<TargetClass>(); //A new list to hold targets with the target class (or derived) script attached to it
+    private bool hasReachedMaxOnScreen; //Bool to check if the objects on screen has reached it's maximum amount
+    #endregion
 
-
-    //test
-    private float targetMoveSpeed;
-
+    #region Properties
     public float CurrentMoveSpeed
     {
         get { return defaultTargetMoveSpeed; }
     }
-
-    private float defaultTargetMoveSpeed = 8f;
-    private float MaxTargetMoveSpeed = 12f;
-    private List<TargetClass> activeTargets = new List<TargetClass>(); //A new list to hold targets with the target class (or derived) script attached to it
-
-    [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
-    [SerializeField] private int poolSize; //To control the size of the pool
-    private bool hasReachedMaxOnScreen;
-
-    public bool HasReachedMaxOnScreen
+    public bool HasReachedMaxOnScreen 
     {
         get { return objectsOnScreen >= maxObjectsOnScreen; }
     }
+    #endregion
 
     //30/6/26: Refactoring to use a dictionary
 
@@ -50,7 +46,6 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary;
 
     //) Create a collection (list or array) to store the objects in. And create a collection for free objects -- 30:6:26: The lists were removed and refactored to use a dictionary instead
-
 
     //2) Initialise objects on awake / Singleton pattern
     void Awake()
@@ -72,7 +67,6 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
 
     //Create a method to Increase the targets' move speed
-
     public void IncreaseTargetMoveSpeed()
     {
         defaultTargetMoveSpeed = Mathf.Clamp(defaultTargetMoveSpeed + 0.25f, 0f, MaxTargetMoveSpeed); //A 0.25 increase to all targets' move speed when the player hits a target
@@ -141,9 +135,8 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         targetObj.SetActive(true); //Set the object to true so it becomes visible
 
 
-        //Call the coroutine to return the object to the pool after xyz (set to 10 currently) seconds
+        //Call the coroutine to return the object to the pool after a set amount of time
         target.StartCoroutine();
-
 
         return targetObj;
     }
@@ -159,12 +152,11 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         // 14) Return the correct objects to the queue based on the store prefab reference 
         poolDictionary[member.prefab].Enqueue(targetObj);
 
-        if (target != null)
+        if (target != null) //Check whether a target has been hit or not (manually)
         {
-            target.StopCoroutine();
+            target.StopCoroutine(); //Stop the coroutine to prevent any issues with the "current objects on screen" value
             activeTargets.Remove(target); //Removing it from the active targets list
-         }
-        //Commented Out for testing    
+        }   
         
         // 15) Set the gameobject back to false as it no longer is being used
         targetObj.SetActive(false);
@@ -182,9 +174,4 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     {
         objectsOnScreen--;
     }
-
-    
-    
-
-
 }

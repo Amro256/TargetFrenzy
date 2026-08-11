@@ -33,6 +33,7 @@ public class BonusRoundManager : MonoBehaviour
         {   
             GameManager.Instance.BonusRoundBool = true;
             MultiplierBarManager.Instance.ResetMultiBar();
+            
             AmmoManager.Instance.CurrentAmmoAmount = 4; //The player will be given max ammo when the round starts -- 16/6/26: Moved from the UI manager to here -- 
             // 10/8/26: Moved here to prevent the reload warning animation from playing during the into sequence 
 

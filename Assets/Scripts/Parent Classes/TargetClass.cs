@@ -4,15 +4,16 @@ using System.Collections;
 
 public class TargetClass : MonoBehaviour //Parent class that all the target scripts will inherit from
 {
+    #region References
     [Header("References")]
     protected Transform[] lerp_Points; //Array to store the lerpPoints' transform (the lerp points are empty game Objects) - ACCESS MODIFIER: Protected (This will give the derived class access to this variable)
     private Vector3 initialSpawnPoint; //Private vector 3 storing the initial spawn position of the target from the spawner
-    [SerializeField ]private Transform offScreenPoint;
-    [SerializeField ]private Transform offScreenMidPoint;
-    private BoxCollider2D targetCollider;
-    private Coroutine returnCoroutine;
+    [SerializeField] private Transform offScreenPoint;
+    [SerializeField] private Transform offScreenMidPoint;
     private int currentPointIndex = 0; //Variable that will be used to store the current point the target is moving to
+    #endregion
 
+    #region Movement Variables
     //Movement variables
     [Header("Movement Speed")]
     [SerializeField] private float moveSpeed; //To control the speed of the targets
@@ -20,31 +21,22 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     {
         set { moveSpeed = value; }
     }
-    
+    #endregion
+
+    #region Variables
     //General variables
+    private BoxCollider2D targetCollider;
     private float targetTimer = 10f; //How long targets are able to stay on screen for before returning to the pool
     private bool isMovingOffScreen = false;
+    private Coroutine returnCoroutine;
+
+    #endregion
 
     private void OnEnable()
     {
         moveSpeed = PoolManager.Instance.CurrentMoveSpeed;
-        isMovingOffScreen = false;
-        
+        isMovingOffScreen = false; //Reset the bool
     }
-
-    public void StartCoroutine()
-    {
-        returnCoroutine = StartCoroutine(ReturnObjectAfterTime());
-     }
-
-    public void StopCoroutine()
-    {
-        if (returnCoroutine != null)
-        {
-            StopCoroutine(returnCoroutine);
-            returnCoroutine = null;
-         }
-     }
 
     void Start()
     {
@@ -58,7 +50,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     void Update()
     {
-        if (isMovingOffScreen) return;
+        if (isMovingOffScreen) return; //Check if bool is true, and if not, execute regular movement below
 
         if (currentPointIndex < lerp_Points.Length)
         {
@@ -88,10 +80,26 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         PoolManager.Instance.IncreaseTargetMoveSpeed();
     }
 
+    //Methods to start and stop the return object coroutine
+    public void StartCoroutine() //Can be called in the pool manager
+    {
+        returnCoroutine = StartCoroutine(ReturnObjectAfterTime());
+    }
+
+    public void StopCoroutine() //Can also be called in the pool manager
+    {
+        if (returnCoroutine != null) //Checks if the coroutine is currently running
+        {
+            StopCoroutine(returnCoroutine); // Stops the coroutine 
+            returnCoroutine = null; //Sets the return coroutine to null
+        }
+    }
+
+    #region Return object Coroutine
     //6/8/26: Moved from the Pool manager to this script, as it has no relevant to the behaviour of that script
     public IEnumerator ReturnObjectAfterTime() //This will return targets to the pool after a certain amount of time. Here to prevent players from just waiting on "positive targets" the whole game
     {
-        yield return new WaitForSeconds(targetTimer);
+        yield return new WaitForSeconds(targetTimer); //Wait for 10 seconds 
 
         isMovingOffScreen = true;
 
@@ -99,6 +107,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         targetCollider = GetComponent<BoxCollider2D>();
         targetCollider.enabled = false;
 
+        //Move the target to the middle point
         while (Vector3.Distance(transform.position, offScreenMidPoint.position) > 0.1f)
         {
             Debug.Log("Move targets off screen");
@@ -107,6 +116,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
             yield return null;
         }
 
+        //Afterwards move the target to the off screen position, where it will then return to the pool
         while (Vector3.Distance(transform.position, offScreenPoint.position) > 0.1f)
         {
             Debug.Log("Move targets off screen");
@@ -117,10 +127,10 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
         //Re-enable the box collider
         targetCollider.enabled = true;
-        PoolManager.Instance.ReturnPooledObject(gameObject);
-        Debug.Log("Object Returned to Pool");
-                    
-    }
 
-    
+        //Return the target to the object pool
+        PoolManager.Instance.ReturnPooledObject(gameObject);
+        Debug.Log(gameObject + " Returned to the pool");
+    }
+    #endregion
 }
