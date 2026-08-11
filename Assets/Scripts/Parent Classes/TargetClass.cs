@@ -7,6 +7,9 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     [Header("References")]
     protected Transform[] lerp_Points; //Array to store the lerpPoints' transform (the lerp points are empty game Objects) - ACCESS MODIFIER: Protected (This will give the derived class access to this variable)
     private Vector3 initialSpawnPoint; //Private vector 3 storing the initial spawn position of the target from the spawner
+    [SerializeField ]private Transform offScreenPoint;
+    [SerializeField ]private Transform offScreenMidPoint;
+    private BoxCollider2D targetCollider;
     private int currentPointIndex = 0; //Variable that will be used to store the current point the target is moving to
 
     //Movement variables
@@ -19,10 +22,13 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     
     //General variables
     private float targetTimer = 10f; //How long targets are able to stay on screen for before returning to the pool
+    private bool isMovingOffScreen = false;
 
     private void OnEnable()
     {
         moveSpeed = PoolManager.Instance.CurrentMoveSpeed;
+        isMovingOffScreen = false;
+        
     }
 
     void Start()
@@ -37,6 +43,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     void Update()
     {
+        if (isMovingOffScreen) return;
 
         if (currentPointIndex < lerp_Points.Length)
         {
@@ -47,7 +54,6 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
                 currentPointIndex = Random.Range(0, lerp_Points.Length);
             }
         }
-
     }
 
     public void initialisePoints(Transform[] points) //As gameObjects can not be assigned to a prefab in the inspector, I will need to assign the lerp points to the targets during runtime
@@ -71,12 +77,33 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     public IEnumerator ReturnObjectAfterTime() //This will return targets to the pool after a certain amount of time. Here to prevent players from just waiting on "positive targets" the whole game
     {
         yield return new WaitForSeconds(targetTimer);
-        if (gameObject.activeSelf)
+
+        isMovingOffScreen = true;
+
+        //Disable the box collider
+        targetCollider = GetComponent<BoxCollider2D>();
+        targetCollider.enabled = false;
+
+        while (Vector3.Distance(transform.position, offScreenMidPoint.position) > 0.1f)
         {
-            PoolManager.Instance.ReturnPooledObject(gameObject);
+            Debug.Log("Move targets off screen");
+            transform.position = Vector3.MoveTowards(transform.position, offScreenMidPoint.position, 10f * Time.deltaTime);
+
+            yield return null;
         }
-            
-        
+
+        while (Vector3.Distance(transform.position, offScreenPoint.position) > 0.1f)
+        {
+            Debug.Log("Move targets off screen");
+            transform.position = Vector3.MoveTowards(transform.position, offScreenPoint.position, 10f * Time.deltaTime);
+
+            yield return null;
+        }
+
+        PoolManager.Instance.ReturnPooledObject(gameObject);
+        targetCollider.enabled = true;
+        Debug.Log("Object Returned to Pool");
+                    
     }
 
     

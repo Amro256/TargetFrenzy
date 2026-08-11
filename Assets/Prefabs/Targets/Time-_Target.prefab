@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8560046856683221299}
   - component: {fileID: 950264583662433602}
   - component: {fileID: 727891569867211039}
-  - component: {fileID: 3888319847066835669}
   - component: {fileID: 8950118856883762190}
   m_Layer: 0
   m_Name: Time-_Target
@@ -140,33 +139,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &3888319847066835669
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5752063571285583825}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &8950118856883762190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6256e4797c3458a4e8cd677580459de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offScreenPoint: {fileID: 8970116377287971844, guid: 5d23179cec348ad41b51c879d3cca908, type: 3}
+  offScreenMidPoint: {fileID: 7827864461251312141, guid: dc988eeb17aaeba43a2b810a00666518, type: 3}
   moveSpeed: 8
   ScoreValue: 0
   ScoreMultiValue: 0

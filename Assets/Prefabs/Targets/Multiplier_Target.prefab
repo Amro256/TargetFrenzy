@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 467139498148146446}
   - component: {fileID: 4960658256727804275}
   - component: {fileID: 439279850746723234}
-  - component: {fileID: 2193534146524870659}
   - component: {fileID: -2664226318923393681}
   m_Layer: 0
   m_Name: Multiplier_Target
@@ -140,33 +139,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &2193534146524870659
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6085200119235597379}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &-2664226318923393681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d7aef42cfde1d47bd11dda22bb8dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offScreenPoint: {fileID: 8970116377287971844, guid: 5d23179cec348ad41b51c879d3cca908, type: 3}
+  offScreenMidPoint: {fileID: 7827864461251312141, guid: dc988eeb17aaeba43a2b810a00666518, type: 3}
   moveSpeed: 8
   ScoreValue: 10
   ScoreMultiValue: 2

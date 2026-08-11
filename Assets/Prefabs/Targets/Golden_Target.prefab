@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6698003827886301337}
   - component: {fileID: 4866076484213016062}
   - component: {fileID: 2295072788614450560}
-  - component: {fileID: 7407244742973550859}
   - component: {fileID: 7475595806191541309}
   m_Layer: 0
   m_Name: Golden_Target
@@ -140,33 +139,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &7407244742973550859
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1401802516157928131}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &7475595806191541309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec36a3ccb8a8a5340b6970c1f3960fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offScreenPoint: {fileID: 0}
+  offScreenMidPoint: {fileID: 0}
   moveSpeed: 8
   ScoreValue: 200
   ScoreMultiValue: 0

@@ -58,6 +58,7 @@ public class MultiplierBarManager : MonoBehaviour
 
     public void ResetMultiBar() //This method will be called in the bonus round script
     {
+        ScoreManager.Instance.IsMultiActive = false;
         multiplierSlider.value = maxMultiplierDuration;
         sliderFill.color = default;
     }
