@@ -10,6 +10,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     [SerializeField ]private Transform offScreenPoint;
     [SerializeField ]private Transform offScreenMidPoint;
     private BoxCollider2D targetCollider;
+    private Coroutine returnCoroutine;
     private int currentPointIndex = 0; //Variable that will be used to store the current point the target is moving to
 
     //Movement variables
@@ -30,6 +31,20 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         isMovingOffScreen = false;
         
     }
+
+    public void StartCoroutine()
+    {
+        returnCoroutine = StartCoroutine(ReturnObjectAfterTime());
+     }
+
+    public void StopCoroutine()
+    {
+        if (returnCoroutine != null)
+        {
+            StopCoroutine(returnCoroutine);
+            returnCoroutine = null;
+         }
+     }
 
     void Start()
     {
@@ -100,8 +115,9 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
             yield return null;
         }
 
-        PoolManager.Instance.ReturnPooledObject(gameObject);
+        //Re-enable the box collider
         targetCollider.enabled = true;
+        PoolManager.Instance.ReturnPooledObject(gameObject);
         Debug.Log("Object Returned to Pool");
                     
     }

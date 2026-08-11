@@ -140,8 +140,9 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         IncrementTargetsOnScreen(); //To track how many objects are currently on screen
         targetObj.SetActive(true); //Set the object to true so it becomes visible
 
+
         //Call the coroutine to return the object to the pool after xyz (set to 10 currently) seconds
-        StartCoroutine(target.ReturnObjectAfterTime());
+        target.StartCoroutine();
 
 
         return targetObj;
@@ -153,14 +154,18 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     {
         // 13) Fetch the "PoolMember" component that is attached to the current object
         PoolMember member = targetObj.GetComponent<PoolMember>();
+        TargetClass target = targetObj.GetComponent<TargetClass>(); //Here we get the targets in the pool that have the target class script (or derived) script attached to it
 
         // 14) Return the correct objects to the queue based on the store prefab reference 
         poolDictionary[member.prefab].Enqueue(targetObj);
 
+        if (target != null)
+        {
+            target.StopCoroutine();
+            activeTargets.Remove(target); //Removing it from the active targets list
+         }
         //Commented Out for testing    
-        TargetClass target = targetObj.GetComponent<TargetClass>(); //Here we get the targets in the pool that have the target class script (or derived) script attached to it
-        activeTargets.Remove(target); //Removing it from the active targets list
-
+        
         // 15) Set the gameobject back to false as it no longer is being used
         targetObj.SetActive(false);
 
