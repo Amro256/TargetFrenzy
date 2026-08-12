@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {get; private set;} //Static instance so other scripts can access this
 
     //References
-    PlayerInputHandler PlayerInput;
+    PlayerInput playerInput;
     public int targetHitInARow; //To track the targets hit
     [SerializeField] private int maxTargetsToHit = 10;
     [SerializeField] private Texture2D targetReticleTexture;
@@ -20,7 +21,8 @@ public class GameManager : MonoBehaviour
     //General Variables - Bool   
     private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
-    private bool isIntroSeqPlaying{ get; set; }
+    private bool isGameOver;
+    private bool isIntroSeqPlaying { get; set; }
 
     public bool IsIntroSeqPlaying
     {
@@ -32,7 +34,6 @@ public class GameManager : MonoBehaviour
     {
         get { return IsBonusRActive; }
         set { IsBonusRActive = value; }
-
     }
 
     public bool IsGamePaused()
@@ -83,9 +84,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PlayerInput = FindObjectOfType<PlayerInputHandler>();
+        playerInput = FindObjectOfType<PlayerInput>();
         IsBonusRActive = false;
         IsIntroSeqPlaying = true;
+        isGameOver = false;
         
     }
 
@@ -98,17 +100,19 @@ public class GameManager : MonoBehaviour
     //General Methods 
     public void TimeOver()
     {
-        Time.timeScale = 0; //Acts as if the game is "paused"
+        isGameOver = true;
 
         //Disable the player's fire and reload input
-        PlayerInput.PI.actions.FindAction("Fire").Disable();
-        PlayerInput.PI.actions.FindAction("Reload").Disable();
+        playerInput.actions.FindAction("Fire").Disable();
+        playerInput.actions.FindAction("Reload").Disable();
+        playerInput.actions.FindAction("Pause").Disable();
 
         //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
 
-        // 1) Destroy any targets currently on screen
+        // 1) Destroy any targets currently on screen --12/8/26: Changed to disabling the spawners
         foreach (var spawner in spawners)
         {
+            spawner.gameObject.SetActive(false); //Disables the spawners
             spawner.DestroyTargets();
         }
 
@@ -167,7 +171,7 @@ public class GameManager : MonoBehaviour
 
         //Call the player row decrement method -- 21/7/26: Changed from calling the Decrement method to resetting the value
         targetHitInARow = 0;
-        UIManager.Instance.UpdateCouterUI(targetHitInARow);
+        UIManager.Instance.UpdateCounterUI(targetHitInARow);
 
         StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
 
@@ -189,7 +193,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        UIManager.Instance.UpdateCouterUI(targetHitInARow);
+        UIManager.Instance.UpdateCounterUI(targetHitInARow);
     }
 
     //Method to track how many targets the player as hit in a row
@@ -200,6 +204,6 @@ public class GameManager : MonoBehaviour
             targetHitInARow--; //This also prevents the value from going into the negatives
         }
 
-        UIManager.Instance.UpdateCouterUI(targetHitInARow);
+        UIManager.Instance.UpdateCounterUI(targetHitInARow);
     }
 }

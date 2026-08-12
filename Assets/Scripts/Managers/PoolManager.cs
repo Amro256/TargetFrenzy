@@ -20,8 +20,8 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     //General Variables
     public int objectsOnScreen; //To track how many objects are currently on screen
     public int maxObjectsOnScreen = 5; //The maximum objects that can be on screen
-    private float defaultTargetMoveSpeed = 8f;
-    private float MaxTargetMoveSpeed = 12f;
+    private float defaultTargetMoveSpeed = 6f;
+    private float MaxTargetMoveSpeed = 10f;
     [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
     [SerializeField] private int poolSize; //To control the size of the pool
     private List<TargetClass> activeTargets = new List<TargetClass>(); //A new list to hold targets with the target class (or derived) script attached to it

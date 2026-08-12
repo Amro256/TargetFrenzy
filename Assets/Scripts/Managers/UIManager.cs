@@ -3,10 +3,7 @@ using UnityEngine;
 using System; //Namespace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using UnityEngine.Windows;
 using UnityEngine.InputSystem;
-using UnityEditor;
 
 public class UIManager : MonoBehaviour
 {
@@ -29,9 +26,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text TargetCounterText;
 
     [Header("UI Canvas References")]
-    [SerializeField] public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
-    [SerializeField] public Canvas GameOverCanvas; //Reference to the Game Over Canvas
-    [SerializeField] public Canvas GameHudCanvas; //Reference to the Game Over Canvas
+    public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
+    public Canvas GameOverCanvas; //Reference to the Game Over Canvas
+    public Canvas GameHudCanvas; //Reference to the Game Over Canvas
 
     [Header("UI Game Objects References")]
     [SerializeField] private GameObject BonusStartText; //Reference to gameobject containing the text for the start of the bonus round
@@ -83,15 +80,13 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -154,7 +149,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void UpdateCouterUI(int value)
+    public void UpdateCounterUI(int value)
     {
         TargetCounterText.text = value.ToString();
     }
