@@ -27,12 +27,13 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
 
         pi = FindObjectOfType<PlayerInput>();
     }
-    
+
 
     public IEnumerator BeginStartUpSequence()
     {
-        if (GameManager.Instance.IsIntroSeqPlaying != true) //Check with the bool first to see if the sequence has not been played
+        if (GameManager.Instance.IsIntroSeqPlaying) //Check with the bool first to see if the sequence has not been played
         {
+            Debug.Log("Bool Value On Start: " + GameManager.Instance.IsIntroSeqPlaying); //Displays true in the console
             //Disable Player Input
             pi.enabled = false;
             yield return new WaitForSeconds(2f);
@@ -46,9 +47,12 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
             pi.enabled = true;
             //Disable the gameObject that the countdown text is attached to
             this.StartUpText.transform.parent.gameObject.SetActive(false);
+
+            //Reset the value back to false to resume 
+            GameManager.Instance.IsIntroSeqPlaying = false;
+            Debug.Log("Bool Value After: " + GameManager.Instance.IsIntroSeqPlaying);
         }
-        //Reset the value back to false to resume 
-        GameManager.Instance.IsIntroSeqPlaying = false;
+        
     }
     
 }

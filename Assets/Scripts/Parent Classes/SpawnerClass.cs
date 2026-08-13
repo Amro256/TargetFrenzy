@@ -83,7 +83,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
 
     public IEnumerator InstantiateTargets() //IEnumerator responsible for instantiating and spawning targets
     {
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitUntil(() => GameManager.Instance.IsIntroSeqPlaying == false);
 
         if (GameManager.Instance.BonusRoundBool) //if the bonus round is active, set the active targets to the bonus round targets (golden target)
         {
@@ -133,7 +133,6 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
         }
 
     }
-    
-   
+        
 
 }

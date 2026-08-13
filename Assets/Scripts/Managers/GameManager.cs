@@ -80,15 +80,17 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        isIntroSeqPlaying = true;
     }
 
     void Start()
     {
         playerInput = FindObjectOfType<PlayerInput>();
         IsBonusRActive = false;
-        IsIntroSeqPlaying = true;
+        //Start to coroutine for the startup sequence
+        StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
         isGameOver = false;
-        
     }
 
 
