@@ -21,11 +21,10 @@ public class Score_TimeDeductionTarget : TargetClass
     public override void OnHit()
     {   
         base.OnHit();
-        
-        GameManager.Instance.PlayerHitRowDecrement();
-
+    
         //Add code here for score and time deduction
         AmmoManager.Instance.UpdateAmmoValue(1);
+        GameManager.Instance.PlayerHitRowDecrement();
 
         OnScoreDeduction?.Invoke(ScoreValue);
         OnTimeDeduction?.Invoke(TimeValue);

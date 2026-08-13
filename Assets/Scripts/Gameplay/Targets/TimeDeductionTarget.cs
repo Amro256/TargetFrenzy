@@ -20,10 +20,11 @@ public class TimeDeductionTarget : TargetClass
     {    
         base.OnHit();
         
+        AmmoManager.Instance.UpdateAmmoValue(1);
         GameManager.Instance.PlayerHitRowDecrement();
         //Add code here for time Deduction
 
-        AmmoManager.Instance.UpdateAmmoValue(1);
+        
         OnTimeDeduction?.Invoke(TimeValue);
 
         ScorePopUpManager.Instance.DisplayTimerPopUp(TimeValue, "-", "s", Color.brown);

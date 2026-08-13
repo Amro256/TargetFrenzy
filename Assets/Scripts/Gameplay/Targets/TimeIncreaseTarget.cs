@@ -20,10 +20,11 @@ public class TimeIncreaseTarget : TargetClass
     {   
         base.OnHit();
         
+        AmmoManager.Instance.UpdateAmmoValue(1);
         GameManager.Instance.PlayerHitRowDecrement();
         //Add code here for Increasing Time
 
-        AmmoManager.Instance.UpdateAmmoValue(1);
+        
         OnTimeIncrease?.Invoke(TimeValue);
 
         ScorePopUpManager.Instance.DisplayTimerPopUp(TimeValue, "+", "s", Color.green);

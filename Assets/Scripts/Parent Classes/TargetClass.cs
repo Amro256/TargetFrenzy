@@ -111,7 +111,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         while (Vector3.Distance(transform.position, offScreenMidPoint.position) > 0.1f)
         {
             Debug.Log("Move targets off screen");
-            transform.position = Vector3.MoveTowards(transform.position, offScreenMidPoint.position, 10f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, offScreenMidPoint.position, moveSpeed * Time.deltaTime);
 
             yield return null;
         }
@@ -120,7 +120,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         while (Vector3.Distance(transform.position, offScreenPoint.position) > 0.1f)
         {
             Debug.Log("Move targets off screen");
-            transform.position = Vector3.MoveTowards(transform.position, offScreenPoint.position, 10f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, offScreenPoint.position, moveSpeed * Time.deltaTime);
 
             yield return null;
         }

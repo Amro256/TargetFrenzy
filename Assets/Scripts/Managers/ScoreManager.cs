@@ -35,7 +35,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     private bool HasBonusBeenTriggered;
-    private int bonusRoundThreshold = 3500; //If the player's score hits this threshold, it'll trigger the bonus round
+    private int bonusRoundThreshold = 3500; //If the player's score hits this threshold, it'll trigger the bonus round (Old Value: 3500)
 
     //Actions
     public static event Action<int> OnScoreChanged;
@@ -92,17 +92,14 @@ public class ScoreManager : MonoBehaviour
         
         totalScore += HitScore;
 
-
-        if (TotalScore >= bonusRoundThreshold && !HasBonusBeenTriggered) //Bool check in place to prevent the bonus round animations from repeating
+        if (TotalScore >= bonusRoundThreshold && !GameManager.Instance.BonusRoundBool) //Bool check in place to prevent the bonus round animations from repeating
         {  
             OnScoreChanged?.Invoke(TotalScore);
             Debug.Log("Current Score: " + TotalScore);
             
             Debug.Log("You've met the threshold!");
-            HasBonusBeenTriggered = true;
             
             OnBonusRoundActivated?.Invoke();
-            return;
         }
 
          Debug.Log("Current Score: " + TotalScore);

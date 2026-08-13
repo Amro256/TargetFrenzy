@@ -19,7 +19,10 @@ public class GoldenTarget : TargetClass
     public override void OnHit()
     {
         base.OnHit();
-        
+
+        //Update ammo value
+        AmmoManager.Instance.UpdateAmmoValue(1);
+
         if (GameManager.Instance.BonusRoundBool) //Check to see if its true first
         {
             GameManager.Instance.PlayerHitRowIncrement();
@@ -27,10 +30,7 @@ public class GoldenTarget : TargetClass
         }
 
         OnTargetHit?.Invoke(ScoreValue);
-
-        //Update ammo value
-        AmmoManager.Instance.UpdateAmmoValue(1);
-
+        
         ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, "+", Color.gold);
     }
 }

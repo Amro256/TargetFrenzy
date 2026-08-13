@@ -22,8 +22,10 @@ public class MultiplierTarget : TargetClass
     {   
         base.OnHit();
         
-        GameManager.Instance.PlayerHitRowIncrement();
         AmmoManager.Instance.UpdateAmmoValue(1);
+
+        GameManager.Instance.PlayerHitRowIncrement();
+       
         //Add Mutlivalue here -Invoke action!
         OnTargetHit?.Invoke(ScoreValue);
 

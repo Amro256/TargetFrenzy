@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,15 +15,24 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     [SerializeField] public int CurrentAmmoAmount;
     private bool IsOutOfAmmo;
 
+    #region actions
     public static event Action OnPlayerReloadUI; // For the UI Manager 
     public static event Action OnPlayerFullAmmo; //For the Player Input UI;
     public static event Action OnPlayerOutOfAmmo; //For the Player Input UI;
+    #endregion
 
-    //property
+    #region Properties
+    //Properties
     public int MaxAmmo
     {
         get { return maxAmmo; }
-     }
+    }
+
+     public bool IsAmmoEmpty()
+    {
+        return IsOutOfAmmo;
+    }
+    #endregion
 
     private void OnEnable()
     {
@@ -49,7 +59,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     void Start()
     {
-        CurrentAmmoAmount = maxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
+        CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
         IsOutOfAmmo = false; //The player will have full ammo when they start the game
     }
 
@@ -93,7 +103,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         //Re-Enable the Player's firing input
         OnPlayerFullAmmo.Invoke();
 
-        CurrentAmmoAmount = maxAmmo; //Set the current ammo back to the max ammo
+        CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
         OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
         IsOutOfAmmo = false;
 
@@ -105,9 +115,6 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         //Debug.Log("Ammo After reload: " + CurrentAmmoAmount); --18/5/26 Commented this debug out to debug other bugs--
     }
 
-    public bool IsAmmoEmpty()
-    {
-        return IsOutOfAmmo;
-    }
+    
 
 }

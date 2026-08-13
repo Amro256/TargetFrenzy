@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
+        //Set the intro sequence bool to true BEFORE start
         isIntroSeqPlaying = true;
     }
 
@@ -188,7 +189,7 @@ public class GameManager : MonoBehaviour
     {
         targetHitInARow++;
 
-        if (targetHitInARow == maxTargetsToHit && !IsBonusRActive) //Additional check to prevent targets hit in the bonus round triggering another bonus round
+        if (targetHitInARow == maxTargetsToHit && !BonusRoundBool) //Additional check to prevent targets hit in the bonus round triggering another bonus round
         {
             Debug.Log("You hit: " + targetHitInARow + " In a row! Entering Bonus Round");
             OnMaxTargetsRowHit?.Invoke();

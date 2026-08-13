@@ -29,19 +29,24 @@ public class BonusRoundManager : MonoBehaviour
     public void ActivateBonusRound()
     {
         //Put a check in place to check if the bonus round is not currently active, AND if the multiplier is currently active
-        if (GameManager.Instance.BonusRoundBool != true)
-        {   
+        if (!GameManager.Instance.BonusRoundBool)
+       {
             GameManager.Instance.BonusRoundBool = true;
             MultiplierBarManager.Instance.ResetMultiBar();
-            
-            AmmoManager.Instance.CurrentAmmoAmount = 4; //The player will be given max ammo when the round starts -- 16/6/26: Moved from the UI manager to here -- 
-            // 10/8/26: Moved here to prevent the reload warning animation from playing during the into sequence 
 
-            Debug.Log("Bonus Round has been activated!");
+
+            GameManager.Instance.targetHitInARow = 0; //Reset the counter + the UI
+            UIManager.Instance.UpdateCounterUI(GameManager.Instance.targetHitInARow);
+            
+
+            AmmoManager.Instance.CurrentAmmoAmount = AmmoManager.Instance.MaxAmmo; //The player will be given max ammo when the round starts -- 16/6/26: Moved from the UI manager to here -- 
+            // 10/8/26: Moved here to prevent the reload warning animation from playing during the into sequence
+             
+            Debug.Log("Bonus Round Max Ammo: " + AmmoManager.Instance.MaxAmmo);
+
 
         //Action here
         OnBonusRoundStartTime?.Invoke();
-
 
         foreach (GameObject spawners in spawnerObjects) //Disables all the spawners
         {
@@ -49,14 +54,13 @@ public class BonusRoundManager : MonoBehaviour
             Debug.Log("Spawners disabled");
         }
 
-        foreach (var spawner in spawners) //Destroys any target(s) that are currently on screen before the bonus round intro animation plays
+        foreach (var spawner in spawners) //Return any targets to the pool before the round start
         {
             spawner.DestroyTargets();
         }
 
         // 1) Call the coroutine from the UI manager here
         StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
-        GameManager.Instance.targetHitInARow = 0; //Reset the counter
         PoolManager.Instance.objectsOnScreen = 1; //Without this, the object on screen value will display -2 in the inspector
 
 
@@ -66,9 +70,6 @@ public class BonusRoundManager : MonoBehaviour
         // 3) Re-enable the spawners objects
         StartCoroutine(ReEnableSpawners());
         Debug.Log("Spawners re-enabled");
-
-        //Reset the targetsHitInARow Value to 0
-        GameManager.Instance.targetHitInARow = 0;
 
         // 4) Call the method that instantiates the targets from the spawners
         }
