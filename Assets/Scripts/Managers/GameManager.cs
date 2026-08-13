@@ -56,8 +56,6 @@ public class GameManager : MonoBehaviour
     public static event Action<Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
     #endregion
     
-
-
     void OnEnable()
     {
         PlayerInputHandler.OnPlayerMissedShot += PlayerMissShot;
@@ -128,19 +126,6 @@ public class GameManager : MonoBehaviour
 
         // 4) Update the "final score" field displayed on the game over panel
         UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
-    }
-
-    //General Functions
-    public void LoadScene(int buildIndex) //Function that will load the level
-    {
-        SceneManager.LoadSceneAsync(buildIndex);
-        Debug.Log("Loading Scene");
-    }
-
-    public void QuitGame() //Will quit the game
-    {
-        Application.Quit();
-        Debug.Log("Quitting!");
     }
 
     public void PauseGame()

@@ -18,15 +18,13 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
 
     void Awake() //Singleton pattern
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

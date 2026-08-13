@@ -46,15 +46,13 @@ public class ScoreManager : MonoBehaviour
 
     void Awake() //Singleton pattern
     {
-        if (Instance != null)
+       if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 

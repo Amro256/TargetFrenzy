@@ -16,10 +16,19 @@ public class MouseHandler : MonoBehaviour
         get { return currentTarget;}
     }
 
-    void Start()
+    void Awake()
     {
         Inputs = new TargetFrenzy(); // Creates a new instance of inputs. Next, enable to map which has the action
+    }
+
+    void OnEnable()
+    {
         Inputs.Player.Enable(); //Enable the input to be able to read the mouse position
+    }
+    void OnDisable()
+    {
+        Inputs.Player.Disable(); //Disable the input to be able to read the mouse position
+        
     }
 
     //Update is called once per frame
