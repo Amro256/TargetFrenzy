@@ -28,7 +28,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         get { return maxAmmo; }
     }
 
-     public bool IsAmmoEmpty()
+    public bool IsAmmoEmpty()
     {
         return IsOutOfAmmo;
     }
@@ -44,6 +44,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         PlayerInputHandler.OnPlayerReloadInputPress -= Reload;
     }
 
+    #region singleton
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -55,14 +56,13 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
             Instance = this;
         }
     }
-
+    #endregion
 
     void Start()
     {
         CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
         IsOutOfAmmo = false; //The player will have full ammo when they start the game
     }
-
 
     public void UpdateAmmoValue(int amount) //This method will be responsible for updating the Ammo Value
     {
@@ -98,7 +98,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         {
             return;
         }
-        //The reload button will be mapped to the right mouse button, but first just add ammo back
+        //The reload button will be mapped to the right mouse button, but first just add ammo back (It has been mapped to the "R" key for a while now)
 
         //Re-Enable the Player's firing input
         OnPlayerFullAmmo.Invoke();
@@ -111,8 +111,13 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         //Play animation here
         AnimationManager.Instance.StopAnimation("IsLowOnAmmo");
 
- 
         //Debug.Log("Ammo After reload: " + CurrentAmmoAmount); --18/5/26 Commented this debug out to debug other bugs--
+    }
+
+    public void AmmoOnBonusRoundStart() 
+    {
+        IsOutOfAmmo = false; //We need to check if the player is out of ammo first, otherwise the reload can still be performed with max ammo
+        CurrentAmmoAmount = maxAmmo;    
     }
 
     
