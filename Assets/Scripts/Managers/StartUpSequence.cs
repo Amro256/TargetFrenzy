@@ -9,8 +9,6 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
 {
     //Singleton
     public static StartUpSequence Instance { get; private set; }
-    private PlayerInput pi;
-
     //Variables
     [SerializeField] private TextMeshProUGUI StartUpText;
 
@@ -24,8 +22,6 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
         {
             Instance = this;
         }
-
-        pi = FindObjectOfType<PlayerInput>();
     }
 
 
@@ -35,7 +31,9 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
         {
             Debug.Log("Bool Value On Start: " + GameManager.Instance.IsIntroSeqPlaying); //Displays true in the console
             //Disable Player Input
-            pi.enabled = false;
+            PlayerInputHandler.instance.DisableAllPlayerActions();
+            PlayerInputHandler.instance.DisablePauseAction();
+            
             yield return new WaitForSeconds(2f);
 
             StartUpText.text = "GO!";
@@ -44,7 +42,9 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
             yield return new WaitForSeconds(2f);
 
             //Re-enable Player Input
-            pi.enabled = true;
+            PlayerInputHandler.instance.EnableAllPlayerActions();
+            PlayerInputHandler.instance.EnablePauseAction();
+
             //Disable the gameObject that the countdown text is attached to
             this.StartUpText.transform.parent.gameObject.SetActive(false);
 

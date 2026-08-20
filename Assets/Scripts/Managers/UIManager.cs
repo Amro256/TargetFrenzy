@@ -12,7 +12,6 @@ public class UIManager : MonoBehaviour
 
     //General variables / others
     private int ammoIndex;
-    private PlayerInput playerInp;
 
 
     [Header("Animator Reference")]
@@ -96,7 +95,6 @@ public class UIManager : MonoBehaviour
         BonusRoundGroup.SetActive(false); //Disables the bonusRound Group when the game starts
         GameOverCanvas.gameObject.SetActive(false); //Disable the game over canvas on start
         PauseMenuCanvas.gameObject.SetActive(false);
-        playerInp = FindObjectOfType<PlayerInput>();
 
         ReloadWarningText.SetActive(false);
 
@@ -177,10 +175,12 @@ public class UIManager : MonoBehaviour
 
         foreach (GameObject hudElements in gameHUD)
         {
-            hudElements.SetActive(false); 
+            hudElements.SetActive(false);
         }
 
-        playerInp.gameObject.SetActive(false); //Disables player input
+        //Disables player input
+        PlayerInputHandler.instance.DisableAllPlayerActions();
+        PlayerInputHandler.instance.DisablePauseAction();
 
         BonusStartText.SetActive(false);
         BonusCountdownTest.SetActive(false);
@@ -202,11 +202,12 @@ public class UIManager : MonoBehaviour
 
         foreach (GameObject hudElements in gameHUD)
         {
-            hudElements.SetActive(true);  
+            hudElements.SetActive(true);
         }
 
         //6) Re-enable player input
-        playerInp.gameObject.SetActive(true);
+        PlayerInputHandler.instance.EnableAllPlayerActions();
+        PlayerInputHandler.instance.EnablePauseAction();
     }
 
 

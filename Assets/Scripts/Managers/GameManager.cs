@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {get; private set;} //Static instance so other scripts can access this
 
     //References
-    PlayerInput playerInput;
     public int targetHitInARow; //To track the targets hit
     [SerializeField] private int maxTargetsToHit = 10;
     [SerializeField] private Texture2D targetReticleTexture;
@@ -55,18 +54,6 @@ public class GameManager : MonoBehaviour
     public static event Action<Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
     public static event Action<Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
     #endregion
-    
-    void OnEnable()
-    {
-        PlayerInputHandler.OnPlayerMissedShot += PlayerMissShot;
-        TimeManager.OnOutOfTime += TimeOver;
-    }
-
-    void OnDisable()
-    {
-        PlayerInputHandler.OnPlayerMissedShot -= PlayerMissShot;
-        TimeManager.OnOutOfTime -= TimeOver;
-    }
 
     void Awake()
     {
@@ -78,14 +65,27 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-
         //Set the intro sequence bool to true BEFORE start
         isIntroSeqPlaying = true;
     }
 
+
+    void OnEnable()
+    {
+        PlayerInputHandler.OnPlayerMissedShot += PlayerMissShot;
+        TimeManager.OnOutOfTime += TimeOver;
+    }
+
+    void OnDisable()
+    {   
+        PlayerInputHandler.OnPlayerMissedShot -= PlayerMissShot;
+        TimeManager.OnOutOfTime -= TimeOver;
+    }
+
+   
+
     void Start()
     {
-        playerInput = FindObjectOfType<PlayerInput>();
         IsBonusRActive = false;
         //Start to coroutine for the startup sequence
         StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
@@ -104,9 +104,12 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
 
         //Disable the player's fire and reload input
-        playerInput.actions.FindAction("Fire").Disable();
-        playerInput.actions.FindAction("Reload").Disable();
-        playerInput.actions.FindAction("Pause").Disable();
+        //inputs.Player.Disable();
+        PlayerInputHandler.instance.DisableAllPlayerActions();
+        // playerInput.actions.FindAction("Fire").Disable();
+        // playerInput.actions.FindAction("Reload").Disable();
+        // playerInput.actions.FindAction("Pause").Disable();
+        PlayerInputHandler.instance.DisablePauseAction();
 
         //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
 
@@ -151,7 +154,6 @@ public class GameManager : MonoBehaviour
     }
 
    
-
     private void PlayerMissShot() //Method responsible for the players' misses! 14/4/26: Moved fom the Player Input script to the Game manager
     {
         MissCount++;

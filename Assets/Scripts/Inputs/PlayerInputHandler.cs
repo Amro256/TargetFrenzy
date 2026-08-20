@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public static PlayerInputHandler instance;
     //References
-    private PlayerInput pi; //Reference to the player Input component so specific actions can be disabled
+    private TargetFrenzy inputs; //20/8/26: Replaced the reference to the player input component with the C# class for better consistency
     MouseHandler PlayerMH; //Reference to the MouseHandler script, so this script can access the current target (GameObject)
 
     //Actions to be invoked
@@ -18,33 +19,59 @@ public class PlayerInputHandler : MonoBehaviour
     public static event Action OnPlayerMissedShot;
     public static event Action OnConfirmedHit;
 
-    //Property so the game manager can access the PlayerInput to disable certain actions 
-    public PlayerInput PI
+    void Awake()
     {
-        get { return pi; }
-    }
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
 
+        inputs = new TargetFrenzy();
+
+    }
+    
     void OnEnable()
     {
+        //Two different actions maps
+        inputs.Player.Enable();
+        inputs.Pause.Enable(); //Only has the pause functionality
+
+        //Subscribe the actions to the "performed" binding
+        inputs.Player.Fire.performed += OnFire;
+        inputs.Player.Reload.performed += OnReload;
+        inputs.Pause.Pause.performed += OnPause;
+
         AmmoManager.OnPlayerOutOfAmmo += DisableFiringFunctionality;
         AmmoManager.OnPlayerFullAmmo += EnableFiringFunctionality;
     }
 
     void OnDisable()
     {
+        //Two different actions maps
+        inputs.Player.Disable();
+        inputs.Pause.Disable(); //Only has the pause functionality
+
+        //unsubscribe the actions from the "performed" binding
+        inputs.Player.Fire.performed -= OnFire;
+        inputs.Player.Reload.performed -= OnReload;
+        inputs.Pause.Pause.performed -= OnPause;  
+        
         AmmoManager.OnPlayerOutOfAmmo -= DisableFiringFunctionality;
         AmmoManager.OnPlayerFullAmmo -= EnableFiringFunctionality;
     }
 
     private void Start()
     {
-        pi = FindObjectOfType<PlayerInput>();
         PlayerMH = FindObjectOfType<MouseHandler>(); //Finds an object that has the mouse handler script attached to it
     }
 
 
     //Method for shooting / firing - using Unity Events as the notification behaviour 
-    public void OnFire(InputAction.CallbackContext context)
+    private void OnFire(InputAction.CallbackContext context)
     {
         if (context.performed) //Check if the action has been performed / completed
         {
@@ -81,7 +108,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-    public void OnReload(InputAction.CallbackContext context) //Reload is mapped to the "R" key as of now
+    private void OnReload(InputAction.CallbackContext context) //Reload is mapped to the "R" key as of now
     {
         //For handling reloading
         if (!context.performed) return; //Checks if the R key was NOT PRESSED (performed)
@@ -98,7 +125,7 @@ public class PlayerInputHandler : MonoBehaviour
         Debug.Log("Reload performed");
     }
 
-    public void OnPause(InputAction.CallbackContext context)
+    private void OnPause(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
 
@@ -107,34 +134,54 @@ public class PlayerInputHandler : MonoBehaviour
         if (GameManager.Instance.IsGamePaused()) //This script will need to know the status of the game, whether its paused or not, to disable/enable the other actions
         {
             Debug.Log("Actions disabled");
-
-            pi.actions.FindAction("Look").Disable();
-            pi.actions.FindAction("Fire").Disable();
-            pi.actions.FindAction("Reload").Disable();
+            DisableAllPlayerActions();
             return;
         }
         else
         {
             Debug.Log("Actions enabled");
-
-            pi.actions.FindAction("Look").Enable();
-            pi.actions.FindAction("Fire").Enable();
-            pi.actions.FindAction("Reload").Enable();
+            EnableAllPlayerActions();
             return;
         }
     }
 
-    void DisableFiringFunctionality()
+    //Method to handle enabling and disabling inputs / actions
+
+    public Vector2 ReadMouseValue()
     {
-        pi.actions.FindAction("Fire").Disable();
-        return;
-        //Invoke action here
+        return inputs.Player.Look.ReadValue<Vector2>();
     }
 
-    void EnableFiringFunctionality()
+    public void EnableAllPlayerActions()
     {
-        pi.actions.FindAction("Fire").Enable();
-        return;
-        //Invoke action here
+        inputs.Player.Enable();
     }
+
+    public void DisableAllPlayerActions()
+    {
+        inputs.Player.Disable();
+    }
+
+     public void EnablePauseAction()
+    {
+        inputs.Pause.Enable();
+    }
+
+    public void DisablePauseAction()
+    {
+        inputs.Pause.Disable();
+    }
+    
+    //Method to handle ONLY enabling and disabling the fire input / action
+    void EnableFiringFunctionality()
+    {   
+        inputs.Player.Fire.Enable();
+    }
+
+    void DisableFiringFunctionality()
+    {
+        inputs.Player.Fire.Disable();
+    }
+
+    
 }
