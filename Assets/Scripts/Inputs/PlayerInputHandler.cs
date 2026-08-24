@@ -129,24 +129,10 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!context.performed) return;
 
-        GameManager.Instance.PauseGame();
-
-        if (GameManager.Instance.IsGamePaused()) //This script will need to know the status of the game, whether its paused or not, to disable/enable the other actions
-        {
-            Debug.Log("Actions disabled");
-            DisableAllPlayerActions();
-            return;
-        }
-        else
-        {
-            Debug.Log("Actions enabled");
-            EnableAllPlayerActions();
-            return;
-        }
+        GameManager.Instance.PauseCheck();
     }
 
     //Method to handle enabling and disabling inputs / actions
-
     public Vector2 ReadMouseValue()
     {
         return inputs.Player.Look.ReadValue<Vector2>();

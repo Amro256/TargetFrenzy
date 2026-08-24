@@ -26,7 +26,5 @@ public class TimeIncreaseTarget : TargetClass
 
         
         OnTimeIncrease?.Invoke(TimeValue);
-
-        ScorePopUpManager.Instance.DisplayTimerPopUp(TimeValue, "+", "s", Color.green);
     }
 }

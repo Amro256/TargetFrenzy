@@ -30,7 +30,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
 
 
     //Create a method to display for the score pop up. This method can be called in the individual target scripts
-    public void DisplayScorePopUp(Vector3 position, int score, string text, Color textColour)
+    public void DisplayScorePopUp(Vector3 position, string text, int score,string ptsText ,Color textColour)
     {
         //1) Create a slight offset of the y axis, so the text doesnt spawn in the middle of the target
         Vector3 textOffset = new Vector3(0, 0.7f, 0);
@@ -43,28 +43,13 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
 
         if (ScoreManager.Instance.IsMultiActive)
         {
-            scoreText.text = text + ScoreManager.Instance.HitScore.ToString();
+            scoreText.text = text + ScoreManager.Instance.HitScore.ToString() + ptsText;
         }
         else
         {
-            scoreText.text = text + score.ToString(); //Converts the int score to a string
+            scoreText.text = text + score.ToString() + ptsText; //Converts the int score to a string
         }
         
-        scoreText.color = textColour; //Sets the colour of the text
-
-        Destroy(obj, 1.5f); //Destroy the game object after 1.5 seconds
-    }
-
-  
-    public void DisplayTimerPopUp(int timer, string text, string sectext, Color textColour)
-    {
-        //1) Instantiate the prefab that will take in the targets' position plus the offset!
-        GameObject obj = Instantiate(TimerTextPrefab, timerInstantiatePosition.transform.position, Quaternion.identity); 
-
-        //2) Get the text mesh pro component attached to the child object. The 0 refers to the index, so 0 = the first child object
-        TextMeshPro scoreText = obj.transform.GetComponent<TextMeshPro>();
-
-        scoreText.text = text + timer.ToString() + sectext; //Converts the int score to a string
         scoreText.color = textColour; //Sets the colour of the text
 
         Destroy(obj, 1.5f); //Destroy the game object after 1.5 seconds

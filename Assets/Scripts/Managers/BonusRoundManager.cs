@@ -40,7 +40,7 @@ public class BonusRoundManager : MonoBehaviour
 
 
             GameManager.Instance.targetHitInARow = 0; //Reset the counter + the UI
-            UIManager.Instance.UpdateCounterUI(GameManager.Instance.targetHitInARow);
+            UIManager.Instance.UpdateTargetCounterUI(GameManager.Instance.targetHitInARow);
             
 
         //Action here

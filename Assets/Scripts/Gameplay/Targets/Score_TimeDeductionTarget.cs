@@ -30,8 +30,8 @@ public class Score_TimeDeductionTarget : TargetClass
         OnTimeDeduction?.Invoke(TimeValue);
         //TimeManager.Instance.TimeDeduction(TimeDeduction);
 
-        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, ScoreValue, "-", Color.red);
-        ScorePopUpManager.Instance.DisplayTimerPopUp(TimeValue, "-", "s", Color.red);
+        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, "-", ScoreValue, "pts", Color.red);
+
         
     }
 }

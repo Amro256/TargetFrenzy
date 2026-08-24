@@ -48,9 +48,10 @@ public class UIManager : MonoBehaviour
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
 
-        GameManager.OnGamePause += DisplayMenu; //-Might Change this
-        GameManager.OnGameStart += DisableMenu;
-        GameManager.OnGameResume += DisableMenu;
+        GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
+        GameManager.OnGameStart += DisablePauseMenu;
+
+        GameManager.OnGameResume += DisablePauseMenu;
         GameManager.OnTimeOver += DisplayMenu;
 
         PlayerInputHandler.OnPlayerMissUI += ConsumeAmmo;
@@ -65,9 +66,9 @@ public class UIManager : MonoBehaviour
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
 
-        GameManager.OnGamePause -= DisplayMenu; //-- Might change this
-        GameManager.OnGameStart -= DisableMenu;
-        GameManager.OnGameResume -= DisableMenu;
+        GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
+        GameManager.OnGameStart -= DisablePauseMenu;
+        GameManager.OnGameResume -= DisablePauseMenu;
         GameManager.OnTimeOver -= DisplayMenu;
         
         PlayerInputHandler.OnPlayerMissUI -= ConsumeAmmo;
@@ -148,7 +149,7 @@ public class UIManager : MonoBehaviour
         TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void UpdateCounterUI(int value)
+    public void UpdateTargetCounterUI(int value)
     {
         TargetCounterText.text = value.ToString();
     }
@@ -171,6 +172,16 @@ public class UIManager : MonoBehaviour
         {
             UIMenu.enabled = true; //Now the canvas should be enabled when the player gets a game over    
         }
+    }
+
+    public void DisplayPauseMenu()
+    {
+        PauseMenuCanvas.gameObject.SetActive(true);
+    }
+
+    public void DisablePauseMenu()
+    {
+        PauseMenuCanvas.gameObject.SetActive(false);
     }
 
     public void DisableMenu(Canvas UIMenu)

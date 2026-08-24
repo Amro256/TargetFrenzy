@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SpawnerClass[] spawners;
 
     //General Variables - Bool   
-    private bool IsPaused = false;  //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
+    private bool isPaused; //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
     private bool isGameOver;
     private bool isIntroSeqPlaying { get; set; }
@@ -35,9 +35,10 @@ public class GameManager : MonoBehaviour
         set { IsBonusRActive = value; }
     }
 
-    public bool IsGamePaused()
+    public bool IsPaused
     {
-        return IsPaused;
+        get { return isPaused; }
+        set { isPaused = value; }
     }
 
 
@@ -49,9 +50,9 @@ public class GameManager : MonoBehaviour
     //Actions 
     public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
     public static event Action OnMaxTargetsRowHit;
-    public static event Action<Canvas> OnGameStart; //--Action: For disabling the pause UI on start
-    public static event Action<Canvas> OnGamePause; //--Action: Enables the pause UI when the game is paused
-    public static event Action<Canvas> OnGameResume; //--Action: Disables the pause UI when the game resumes
+    public static event Action OnGameStart; //--Action: For disabling the pause UI on start
+    public static event Action OnGamePause; //--Action: Enables the pause UI when the game is paused
+    public static event Action OnGameResume; //--Action: Disables the pause UI when the game resumes
     public static event Action<Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
     #endregion
 
@@ -82,8 +83,6 @@ public class GameManager : MonoBehaviour
         TimeManager.OnOutOfTime -= TimeOver;
     }
 
-   
-
     void Start()
     {
         IsBonusRActive = false;
@@ -91,7 +90,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
         isGameOver = false;
     }
-
 
     public void UpdateMouseCursor() //Call this method when the player is hovering over a target
     {
@@ -104,11 +102,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
 
         //Disable the player's fire and reload input
-        //inputs.Player.Disable();
         PlayerInputHandler.instance.DisableAllPlayerActions();
-        // playerInput.actions.FindAction("Fire").Disable();
-        // playerInput.actions.FindAction("Reload").Disable();
-        // playerInput.actions.FindAction("Pause").Disable();
         PlayerInputHandler.instance.DisablePauseAction();
 
         //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
@@ -134,26 +128,39 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         //Code here for game pausing
-        if (!IsPaused)
+        IsPaused = true;
+        Time.timeScale = 0;
+        Debug.Log("Game Currently Paused!");
+        //Invoke action here to display pause UI
+        OnGamePause?.Invoke();
+    }
+
+    public void ResumeGame()
+    {
+        IsPaused = false;
+        Time.timeScale = 1;
+        Debug.Log("Game Resumed!");
+        //Invoke action here to hide the pause UI
+        OnGameResume?.Invoke();
+    }
+
+    public void PauseCheck() //Check to see if the bool value is NOT false then execute the code below
+    {
+        if (!IsPaused) //24/8/26: This was sitting in the "PlayerInputHandler" script for whatever reason (thanks past me!s)
         {
-            IsPaused = true;
-            Time.timeScale = 0;
-            Debug.Log("Game Currently Paused!");
-            //Invoke action here to display pause UI
-            UIManager.Instance.PauseMenuCanvas.gameObject.SetActive(true);
-            OnGamePause?.Invoke(UIManager.Instance.PauseMenuCanvas);
+            //Call the pause game method
+            PauseGame();
+            Debug.Log("Actions disabled");
+            PlayerInputHandler.instance.DisableAllPlayerActions();
         }
         else
         {
-            IsPaused = false;
-            Time.timeScale = 1;
-            Debug.Log("Game Resumed!");
-            //Invoke action here to hide the pause UI
-            OnGameResume?.Invoke(UIManager.Instance.PauseMenuCanvas);
+            ResumeGame(); //Call the resume game method
+            Debug.Log("Actions enabled");
+            PlayerInputHandler.instance.EnableAllPlayerActions();
         }
     }
 
-   
     private void PlayerMissShot() //Method responsible for the players' misses! 14/4/26: Moved fom the Player Input script to the Game manager
     {
         MissCount++;
@@ -161,7 +168,7 @@ public class GameManager : MonoBehaviour
 
         //Call the player row decrement method -- 21/7/26: Changed from calling the Decrement method to resetting the value
         targetHitInARow = 0;
-        UIManager.Instance.UpdateCounterUI(targetHitInARow);
+        UIManager.Instance.UpdateTargetCounterUI(targetHitInARow);
 
         StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
 
@@ -183,7 +190,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        UIManager.Instance.UpdateCounterUI(targetHitInARow);
+        UIManager.Instance.UpdateTargetCounterUI(targetHitInARow);
     }
 
     //Method to track how many targets the player as hit in a row
@@ -194,6 +201,6 @@ public class GameManager : MonoBehaviour
             targetHitInARow--; //This also prevents the value from going into the negatives
         }
 
-        UIManager.Instance.UpdateCounterUI(targetHitInARow);
+        UIManager.Instance.UpdateTargetCounterUI(targetHitInARow);
     }
 }
