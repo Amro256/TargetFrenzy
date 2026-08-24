@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text TimerText;
     [SerializeField] private TMP_Text FinalScoreText;
     [SerializeField] private TMP_Text TargetCounterText;
+    [SerializeField] private TMP_Text MultiValueText;
 
     [Header("UI Canvas References")]
     public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
@@ -97,6 +98,7 @@ public class UIManager : MonoBehaviour
         PauseMenuCanvas.gameObject.SetActive(false);
 
         ReloadWarningText.SetActive(false);
+        MultiValueText.enabled = false;
 
         StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
     }
@@ -146,13 +148,23 @@ public class UIManager : MonoBehaviour
         TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-
     public void UpdateCounterUI(int value)
     {
         TargetCounterText.text = value.ToString();
     }
 
+    public void UpdateMultiValueText(int multiValue)
+    {
+        MultiValueText.enabled = true;
+        MultiValueText.text = "x" + multiValue.ToString();
+        MultiValueText.color = new Color32(71, 197,255, 255);
+    }
 
+    public void DisableMultiValueText()
+    {
+        MultiValueText.enabled = false;
+    }
+    
     public void DisplayMenu(Canvas UIMenu) //Method that can be called by the game manager script to display the pause menu
     {
         if (UIMenu != null)

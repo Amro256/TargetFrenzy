@@ -127,6 +127,7 @@ public class ScoreManager : MonoBehaviour
         {
             IsMultiActive = true; //Set Multi bool to true
             CurrentMultiValue = MultiValue;
+            UIManager.Instance.UpdateMultiValueText(CurrentMultiValue);
 
 
             Debug.Log("Multi Active!");
@@ -137,8 +138,8 @@ public class ScoreManager : MonoBehaviour
 
             //Call a new Coroutine that will reset the multi bool once the multiplier duration is up
             StartCoroutine(MultiplierDuration());
+            
 
-            ScorePopUpManager.Instance.DisplayMultiplierPopUp(MultiValue, "x", Color.blue);
         }
         else
         {
@@ -151,7 +152,7 @@ public class ScoreManager : MonoBehaviour
     {
         yield return new WaitForSeconds(MultiplierBarManager.Instance.maxMultiplierDuration); //This will wait for the multiplier duration to be done BEFORE setting the Multi bool back to false
         //And so it uses the max multiplier duration from the multiplier script as 'how long it should wait' before the bool is set to false
-
+        UIManager.Instance.DisableMultiValueText();
         IsMultiActive = false; //Sets the multi bool back to false
      }
 

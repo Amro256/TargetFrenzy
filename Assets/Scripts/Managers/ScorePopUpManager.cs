@@ -55,22 +55,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
         Destroy(obj, 1.5f); //Destroy the game object after 1.5 seconds
     }
 
-    //Method for the multiplier pop up. This will only be called in the Multiplier target script
-    public void DisplayMultiplierPopUp(int multi, string text, Color textColour)
-    {
-        //1) Instantiate the prefab that will take in the targets' position plus the offset!
-        GameObject obj = Instantiate(MultiTextPrefab, multiPosition.transform.position, Quaternion.identity);
-
-        //2) Get the text mesh pro component attached to the child object. The 0 refers to the index, so 0 = the first child object
-        TextMeshPro scoreText = obj.transform.GetComponent<TextMeshPro>();
-
-        scoreText.text = text + multi.ToString(); //Converts the int score to a string
-        scoreText.color = textColour; //Sets the colour of the text
-
-        Destroy(obj, 1.5f); //Destroy the game object after 1.5 seconds
-    }
-    
-
+  
     public void DisplayTimerPopUp(int timer, string text, string sectext, Color textColour)
     {
         //1) Instantiate the prefab that will take in the targets' position plus the offset!
