@@ -54,6 +54,7 @@ public class SpawnerClass : MonoBehaviour //This is the base class that the spaw
                 PoolManager.Instance.ReturnPooledObject(target); // 07/7/26: This was changed from destroying the target object to calling the returnPooled method
             }
         }
+           
     }
 
     //Method to handle selecting a target based on weighting

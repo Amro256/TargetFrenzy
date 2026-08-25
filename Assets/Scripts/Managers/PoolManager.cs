@@ -171,6 +171,6 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
     public void DecrementTargetsOnScreen()
     {
-        objectsOnScreen--;
+        objectsOnScreen = Mathf.Max(0, objectsOnScreen - 1); //To prevent the value from going below 0
     }
 }
