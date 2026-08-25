@@ -120,8 +120,8 @@ public class GameManager : MonoBehaviour
         // 3) Disable the main game hud
         UIManager.Instance.HideMainHud();
 
-        // 4) Update the "final score" field displayed on the game over panel
-        UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
+        // 4) Update the "final score" field displayed on the game over panel 
+        StartCoroutine(UIManager.Instance.FinalScoreTally());
     }
 
     public void PauseGame()

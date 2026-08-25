@@ -32,9 +32,6 @@ public class AudioManager : MonoBehaviour
     //Method to play Sound - Make it static so other scripts can access and call it!
     public void PlaySound(AudioClip clip, float volume)
     {
-        // audioSource.clip = clip;
-        // audioSource.volume = volume;
-
         audioSource.PlayOneShot(clip, volume);
         
     }

@@ -7,7 +7,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     //Migrate UI functionality from the game manager here!!
-    public static UIManager Instance { get; private set;}
+    public static UIManager Instance { get; private set; }
 
     //General variables / others
     private int spriteIndex; //For tracking the ammo sprites
@@ -41,6 +41,9 @@ public class UIManager : MonoBehaviour
 
     [Header("Ammo Sprite Objects")]
     [SerializeField] private GameObject[] ammoSprites; //Reference to the ammo group sitting in the bottom left of the screen
+
+    [Header("Others")]
+    private float currentDisplayScore = 0;
     #endregion
 
     #region Actions
@@ -53,7 +56,7 @@ public class UIManager : MonoBehaviour
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
 
-        GameManager.OnGamePause += ShowPauseMenu; 
+        GameManager.OnGamePause += ShowPauseMenu;
         GameManager.OnGameStart += HidePauseMenu;
 
         GameManager.OnGameResume += HidePauseMenu;
@@ -77,7 +80,7 @@ public class UIManager : MonoBehaviour
 
         GameManager.OnGameResume -= HidePauseMenu;
         GameManager.OnTimeOver -= ShowTimeOverScreen;
-        
+
         PlayerInputHandler.OnPlayerMissUI -= ConsumeAmmo;
         TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
@@ -167,7 +170,7 @@ public class UIManager : MonoBehaviour
     {
         MultiValueText.gameObject.SetActive(true);
         MultiValueText.text = "x" + multiValue.ToString();
-        MultiValueText.color = new Color32(71, 197,255, 255);
+        MultiValueText.color = new Color32(71, 197, 255, 255);
     }
 
     public void ShowReloadWarning()
@@ -238,6 +241,7 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+    #region Coroutines
     public IEnumerator BonusRoundIntroScreen()
     {
         //1) Disable the hud
@@ -288,5 +292,16 @@ public class UIManager : MonoBehaviour
 
         //There's no need to wait for xyz seconds to disable the countdown text, as the whole group will be disabled in the "BonusRoundIntroScreen" coroutine
     }
+
+    public IEnumerator FinalScoreTally()
+    {
+        while (currentDisplayScore < ScoreManager.Instance.TotalScore)
+        {
+            currentDisplayScore = Mathf.MoveTowards(currentDisplayScore, ScoreManager.Instance.TotalScore, 500f * Time.deltaTime);
+            FinalScoreText.text = Mathf.FloorToInt(currentDisplayScore).ToString();
+            yield return null;
+        }
+    }
+    #endregion
 
 }

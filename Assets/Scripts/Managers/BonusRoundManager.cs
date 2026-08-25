@@ -50,7 +50,7 @@ public class BonusRoundManager : MonoBehaviour
         }
 
         // 1) Call the coroutine from the UI manager here
-            StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
+        StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
         //PoolManager.Instance.objectsOnScreen = 1; //Without this, the object on screen value will display -2 in the inspector
 
 
