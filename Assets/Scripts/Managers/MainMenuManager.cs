@@ -12,6 +12,11 @@ public class MainMenuManager : MonoBehaviour
         Debug.Log("Loading Scene");
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public void QuitGame() //Will quit the game
     {
         Application.Quit();
