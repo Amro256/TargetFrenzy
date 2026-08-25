@@ -15,7 +15,6 @@ public class MouseHandler : MonoBehaviour
         get { return currentTarget;}
     }
 
-
     //Update is called once per frame
     private void Update()
     {
@@ -32,7 +31,7 @@ public class MouseHandler : MonoBehaviour
 
         if (hit)
         {
-            currentTarget = hit.collider.gameObject; //Debug.Log($"Hovering over: {currentTarget.name}");
+            currentTarget = hit.collider.gameObject;
             GameManager.Instance.UpdateMouseCursor();
 
         }

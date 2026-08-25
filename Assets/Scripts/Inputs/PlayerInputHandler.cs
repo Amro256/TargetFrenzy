@@ -8,14 +8,14 @@ using UnityEngine.UI;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public static PlayerInputHandler instance;
+    public static PlayerInputHandler instance { get; private set; }
     //References
     private TargetFrenzy inputs; //20/8/26: Replaced the reference to the player input component with the C# class for better consistency
     MouseHandler PlayerMH; //Reference to the MouseHandler script, so this script can access the current target (GameObject)
 
     //Actions to be invoked
     public static event Action OnPlayerMissUI;
-    public static event Action OnPlayerReloadInputPress;
+    public static event Action OnReloadPress;
     public static event Action OnPlayerMissedShot;
     public static event Action OnConfirmedHit;
 
@@ -33,7 +33,7 @@ public class PlayerInputHandler : MonoBehaviour
         inputs = new TargetFrenzy();
 
     }
-    
+
     void OnEnable()
     {
         //Two different actions maps
@@ -45,8 +45,11 @@ public class PlayerInputHandler : MonoBehaviour
         inputs.Player.Reload.performed += OnReload;
         inputs.Pause.Pause.performed += OnPause;
 
-        AmmoManager.OnPlayerOutOfAmmo += DisableFiringFunctionality;
-        AmmoManager.OnPlayerFullAmmo += EnableFiringFunctionality;
+        AmmoManager.OnOutOfAmmo += DisableFiringFunctionality;
+        AmmoManager.OnFullAmmo += EnableFiringFunctionality;
+
+        UIManager.OnInputsEnable += EnablePlayerAndPauseActions;
+        UIManager.OnInputsDisable += DisablePlayerAndPauseActions;
     }
 
     void OnDisable()
@@ -58,10 +61,13 @@ public class PlayerInputHandler : MonoBehaviour
         //unsubscribe the actions from the "performed" binding
         inputs.Player.Fire.performed -= OnFire;
         inputs.Player.Reload.performed -= OnReload;
-        inputs.Pause.Pause.performed -= OnPause;  
-        
-        AmmoManager.OnPlayerOutOfAmmo -= DisableFiringFunctionality;
-        AmmoManager.OnPlayerFullAmmo -= EnableFiringFunctionality;
+        inputs.Pause.Pause.performed -= OnPause;
+
+        AmmoManager.OnOutOfAmmo -= DisableFiringFunctionality;
+        AmmoManager.OnFullAmmo -= EnableFiringFunctionality;
+
+        UIManager.OnInputsEnable -= EnablePlayerAndPauseActions;
+         UIManager.OnInputsDisable -= DisablePlayerAndPauseActions;
     }
 
     private void Start()
@@ -69,7 +75,7 @@ public class PlayerInputHandler : MonoBehaviour
         PlayerMH = FindObjectOfType<MouseHandler>(); //Finds an object that has the mouse handler script attached to it
     }
 
-
+    #region Methods for Input Actions
     //Method for shooting / firing - using Unity Events as the notification behaviour 
     private void OnFire(InputAction.CallbackContext context)
     {
@@ -103,7 +109,6 @@ public class PlayerInputHandler : MonoBehaviour
                 //Invoke Action
                 OnPlayerMissUI?.Invoke();
                 OnPlayerMissedShot?.Invoke();
-
             }
         }
     }
@@ -121,7 +126,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         //Code here - Invoke any actions here!
-        OnPlayerReloadInputPress?.Invoke();
+        OnReloadPress?.Invoke();
         Debug.Log("Reload performed");
     }
 
@@ -131,7 +136,9 @@ public class PlayerInputHandler : MonoBehaviour
 
         GameManager.Instance.PauseCheck();
     }
+    #endregion
 
+    #region General Input Related Methods
     //Method to handle enabling and disabling inputs / actions
     public Vector2 ReadMouseValue()
     {
@@ -147,6 +154,19 @@ public class PlayerInputHandler : MonoBehaviour
     {
         inputs.Player.Disable();
     }
+
+    public void EnablePlayerAndPauseActions()
+    {
+        inputs.Player.Enable();
+        inputs.Pause.Enable();
+    }
+
+    public void DisablePlayerAndPauseActions()
+    {
+        inputs.Player.Disable();
+        inputs.Pause.Disable();
+    }
+
 
      public void EnablePauseAction()
     {
@@ -168,6 +188,6 @@ public class PlayerInputHandler : MonoBehaviour
     {
         inputs.Player.Fire.Disable();
     }
-
+    #endregion
     
 }

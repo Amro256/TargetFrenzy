@@ -13,12 +13,12 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     //General Variables
     [SerializeField] private int maxAmmo = 4;
     [SerializeField] public int CurrentAmmoAmount;
-    private bool IsOutOfAmmo;
+    private bool IsOutOfAmmo; //The player will have full ammo when they start the game
 
     #region actions
-    public static event Action OnPlayerReloadUI; // For the UI Manager 
-    public static event Action OnPlayerFullAmmo; //For the Player Input UI;
-    public static event Action OnPlayerOutOfAmmo; //For the Player Input UI;
+    public static event Action OnReloadSprites; // For the UI Manager 
+    public static event Action OnFullAmmo; //For the Player Input UI;
+    public static event Action OnOutOfAmmo; //For the Player Input UI;
     #endregion
 
     #region Properties
@@ -34,16 +34,6 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     }
     #endregion
 
-    private void OnEnable()
-    {
-        PlayerInputHandler.OnPlayerReloadInputPress += Reload;
-    }
-
-    private void OnDisable()
-    {
-        PlayerInputHandler.OnPlayerReloadInputPress -= Reload;
-    }
-
     #region singleton
     void Awake()
     {
@@ -58,66 +48,63 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     }
     #endregion
 
+    private void OnEnable()
+    {
+        PlayerInputHandler.OnReloadPress += Reload;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInputHandler.OnReloadPress -= Reload;
+    }
+
     void Start()
     {
-        CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
-        IsOutOfAmmo = false; //The player will have full ammo when they start the game
+        CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts 
     }
 
     public void UpdateAmmoValue(int amount) //This method will be responsible for updating the Ammo Value
     {
-
         CurrentAmmoAmount -= amount; //Reduce the ammo value by one
-
-        //Debug.Log("Current Ammo: " + CurrentAmmoAmount); --18/5/26 Commented this debug out to debug other bugs--
 
         //If statement to check if the currentAmmo Amount is less than 0
 
         if (CurrentAmmoAmount <= 0)
         {
             //Disable the Player's fire input
-            OnPlayerOutOfAmmo?.Invoke();
+            OnOutOfAmmo?.Invoke();
             Debug.LogError("Please Reload!");
             IsOutOfAmmo = true;
 
-            UIManager.Instance.ReloadWarningText.SetActive(true);
+            UIManager.Instance.ShowReloadWarning();
+
             //Play animation here
             AnimationManager.Instance.StartAnimation("IsLowOnAmmo");
         }
-
     }
 
 
-    //Add a method for reload functionality. Reloading will be mapped the right mouse button
+    //Add a method for reload functionality. Reloading will be mapped the "R" key
     public void Reload()
     {
-        //This is where the code goes for handling reloading
-
-        //First - Check if the player is NOT out of ammo
-        if (!IsOutOfAmmo)
-        {
-            return;
-        }
-        //The reload button will be mapped to the right mouse button, but first just add ammo back (It has been mapped to the "R" key for a while now)
-
+        //Set the "isOutOfAmmo" bool back to false as the player will have full ammo after reloading
+        IsOutOfAmmo = false;
+        Debug.Log("Is player out of ammo: " + IsOutOfAmmo);
+           
         //Re-Enable the Player's firing input
-        OnPlayerFullAmmo.Invoke();
+        OnFullAmmo.Invoke();
 
         CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
-        OnPlayerReloadUI?.Invoke(); //-- Not working as the function does not get called
-        IsOutOfAmmo = false;
+        OnReloadSprites?.Invoke(); //Reload the ammo sprites
 
-        UIManager.Instance.ReloadWarningText.SetActive(false);
-        //Play animation here
-        AnimationManager.Instance.StopAnimation("IsLowOnAmmo");
-
-        //Debug.Log("Ammo After reload: " + CurrentAmmoAmount); --18/5/26 Commented this debug out to debug other bugs--
+        //Disable the Reload Warning gameObject
+        UIManager.Instance.HideReloadWarning();
     }
-
-    public void AmmoOnBonusRoundStart() 
+    
+    public void AmmoOnBonusRoundStart()
     {
         IsOutOfAmmo = false; //We need to check if the player is out of ammo first, otherwise the reload can still be performed with max ammo
-        CurrentAmmoAmount = maxAmmo;    
+        CurrentAmmoAmount = maxAmmo;
     }
 
     

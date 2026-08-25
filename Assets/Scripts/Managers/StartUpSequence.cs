@@ -24,16 +24,20 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
         }
     }
 
+    void Start()
+    {
+        StartCoroutine(BeginStartUpSequence());
+    }
+
 
     public IEnumerator BeginStartUpSequence()
     {
         if (GameManager.Instance.IsIntroSeqPlaying) //Check with the bool first to see if the sequence has not been played
         {
-            Debug.Log("Bool Value On Start: " + GameManager.Instance.IsIntroSeqPlaying); //Displays true in the console
             //Disable Player Input
             PlayerInputHandler.instance.DisableAllPlayerActions();
             PlayerInputHandler.instance.DisablePauseAction();
-            
+
             yield return new WaitForSeconds(2f);
 
             StartUpText.text = "GO!";
@@ -50,9 +54,8 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
 
             //Reset the value back to false to resume 
             GameManager.Instance.IsIntroSeqPlaying = false;
-            Debug.Log("Bool Value After: " + GameManager.Instance.IsIntroSeqPlaying);
         }
-        
+
     }
     
 }

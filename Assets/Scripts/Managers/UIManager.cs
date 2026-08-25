@@ -3,17 +3,16 @@ using UnityEngine;
 using System; //Namespace to allow usages of actions
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
     //Migrate UI functionality from the game manager here!!
-    public static UIManager Instance;
+    public static UIManager Instance { get; private set;}
 
     //General variables / others
-    private int ammoIndex;
+    private int spriteIndex; //For tracking the ammo sprites
 
-
+    #region References
     [Header("Animator Reference")]
     [SerializeField] private Animator anim;
 
@@ -26,38 +25,44 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text MultiValueText;
 
     [Header("UI Canvas References")]
-    public Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
-    public Canvas GameOverCanvas; //Reference to the Game Over Canvas
-    public Canvas GameHudCanvas; //Reference to the Game Over Canvas
+    [SerializeField] private Canvas PauseMenuCanvas; //Reference to the Pause Menu Canvas
+    [SerializeField] private Canvas GameOverCanvas; //Reference to the Game Over Canvas
+    [SerializeField] private Canvas GameHudCanvas; //Reference to the game hud
 
     [Header("UI Game Objects References")]
     [SerializeField] private GameObject BonusStartText; //Reference to gameobject containing the text for the start of the bonus round
-    [SerializeField] private GameObject BonusCountdownTest; //Reference to gameobject containing the countdown text for the bonus round
-    [SerializeField] public GameObject ReloadWarningText;
+    [SerializeField] private GameObject BonusCountdownText; //Reference to gameobject containing the countdown text for the bonus round
+    [SerializeField] private GameObject ReloadWarningText;
 
 
     [Header("UI Groups")]
     [SerializeField] private GameObject[] gameHUD; //Reference to the score, time, and multiplier group //11/6/26: Changed to an array for refactoring purposes
     [SerializeField] private GameObject BonusRoundGroup; //Reference to the bonus round UI group
 
-
     [Header("Ammo Sprite Objects")]
-    [SerializeField] public GameObject[] ammoSprites; //Reference to the ammo group sitting in the bottom left of the screen
+    [SerializeField] private GameObject[] ammoSprites; //Reference to the ammo group sitting in the bottom left of the screen
+    #endregion
 
+    #region Actions
+    public static event Action OnInputsEnable;
+    public static event Action OnInputsDisable;
+    #endregion
+
+    #region Enable & Disable Methods
     private void OnEnable()
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
 
-        GameManager.OnGamePause += DisplayPauseMenu; //-Might Change this
-        GameManager.OnGameStart += DisablePauseMenu;
+        GameManager.OnGamePause += ShowPauseMenu; 
+        GameManager.OnGameStart += HidePauseMenu;
 
-        GameManager.OnGameResume += DisablePauseMenu;
-        GameManager.OnTimeOver += DisplayMenu;
+        GameManager.OnGameResume += HidePauseMenu;
+        GameManager.OnTimeOver += ShowTimeOverScreen;
 
         PlayerInputHandler.OnPlayerMissUI += ConsumeAmmo;
         TimeManager.OnTimerUpdate += UpdateTimerUI;
 
-        AmmoManager.OnPlayerReloadUI += ReloadAmmoSprites;
+        AmmoManager.OnReloadSprites += ReloadAmmoSprites;
         PlayerInputHandler.OnConfirmedHit += ConsumeAmmo;
 
     }
@@ -66,18 +71,21 @@ public class UIManager : MonoBehaviour
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
 
-        GameManager.OnGamePause -= DisplayPauseMenu; //-- Might change this
-        GameManager.OnGameStart -= DisablePauseMenu;
-        GameManager.OnGameResume -= DisablePauseMenu;
-        GameManager.OnTimeOver -= DisplayMenu;
+        GameManager.OnGamePause -= ShowPauseMenu;
+        GameManager.OnGameStart -= HidePauseMenu;
+
+
+        GameManager.OnGameResume -= HidePauseMenu;
+        GameManager.OnTimeOver -= ShowTimeOverScreen;
         
         PlayerInputHandler.OnPlayerMissUI -= ConsumeAmmo;
         TimeManager.OnTimerUpdate -= UpdateTimerUI;
 
-        AmmoManager.OnPlayerReloadUI -= ReloadAmmoSprites;
+        AmmoManager.OnReloadSprites -= ReloadAmmoSprites;
 
         PlayerInputHandler.OnConfirmedHit -= ConsumeAmmo;
     }
+    #endregion
 
     void Awake()
     {
@@ -90,30 +98,30 @@ public class UIManager : MonoBehaviour
             Instance = this;
         }
     }
+    private void Start()
+    {
+        InitialiseUI();
+    }
 
-
-    void Start()
+    void InitialiseUI()
     {
         BonusRoundGroup.SetActive(false); //Disables the bonusRound Group when the game starts
         GameOverCanvas.gameObject.SetActive(false); //Disable the game over canvas on start
         PauseMenuCanvas.gameObject.SetActive(false);
 
         ReloadWarningText.SetActive(false);
-        MultiValueText.enabled = false;
-
-        StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
+        MultiValueText.gameObject.SetActive(false);
     }
 
+    #region Ammo Related Methods
     public void ConsumeAmmo() //Call this method in the mouseInput script
     {
-
-        if (ammoIndex < ammoSprites.Length)
+        if (spriteIndex < ammoSprites.Length)
         {
-            ammoSprites[ammoIndex].SetActive(false);
-            ammoIndex++;
+            ammoSprites[spriteIndex].SetActive(false);
+            spriteIndex++;
         }
 
-        Debug.Log("Current Index: " + ammoIndex);
     }
 
     public void ReloadAmmoSprites() //Does the opposite of the code above - used for when the player has to reload (Currently not being called --Is working as of 5/5/26)
@@ -126,9 +134,11 @@ public class UIManager : MonoBehaviour
 
         }
         //Reset the ammo index - so the UI can keep updating accordingly
-        ammoIndex = 0;
+        spriteIndex = 0;
     }
+    #endregion
 
+    #region HUD Related Methods
     public void UpdateScoreUI(int score)
     {
         ScoreText.text = score.ToString();
@@ -138,7 +148,6 @@ public class UIManager : MonoBehaviour
     {
         FinalScoreText.text = finalScore.ToString();
     }
-
 
     public void UpdateTimerUI(float timeToDisplay)
     {
@@ -156,60 +165,95 @@ public class UIManager : MonoBehaviour
 
     public void UpdateMultiValueText(int multiValue)
     {
-        MultiValueText.enabled = true;
+        MultiValueText.gameObject.SetActive(true);
         MultiValueText.text = "x" + multiValue.ToString();
         MultiValueText.color = new Color32(71, 197,255, 255);
     }
 
-    public void DisableMultiValueText()
+    public void ShowReloadWarning()
     {
-        MultiValueText.enabled = false;
-    }
-    
-    public void DisplayMenu(Canvas UIMenu) //Method that can be called by the game manager script to display the pause menu
-    {
-        if (UIMenu != null)
-        {
-            UIMenu.enabled = true; //Now the canvas should be enabled when the player gets a game over    
-        }
+        ReloadWarningText.gameObject.SetActive(true);
     }
 
-    public void DisplayPauseMenu()
+    public void HideReloadWarning()
+    {
+        ReloadWarningText.gameObject.SetActive(false);
+    }
+
+    public void HideMultiValueText()
+    {
+        MultiValueText.gameObject.SetActive(false);
+    }
+
+    public void ShowBonusText()
+    {
+        BonusStartText.gameObject.SetActive(true);
+    }
+
+    public void HideBonusText()
+    {
+        BonusStartText.gameObject.SetActive(false);
+    }
+
+    public void ShowCountdownText()
+    {
+        BonusCountdownText.gameObject.SetActive(true);
+    }
+
+    public void HideCountdownText()
+    {
+        BonusCountdownText.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region Game Menu Methods
+    public void ShowTimeOverScreen()
+    {
+        GameOverCanvas.gameObject.SetActive(true);
+    }
+
+    public void HideTimeOverScreen()
+    {
+        GameOverCanvas.gameObject.SetActive(false);
+    }
+
+    public void ShowMainHud()
+    {
+        GameHudCanvas.gameObject.SetActive(true);
+    }
+
+    public void HideMainHud()
+    {
+        GameHudCanvas.gameObject.SetActive(false);
+    }
+
+    public void ShowPauseMenu()
     {
         PauseMenuCanvas.gameObject.SetActive(true);
     }
 
-    public void DisablePauseMenu()
+    public void HidePauseMenu()
     {
         PauseMenuCanvas.gameObject.SetActive(false);
     }
-
-    public void DisableMenu(Canvas UIMenu)
-    {
-        if (UIMenu != null)
-        {
-            UIMenu.enabled = false; //Now the canvas should be enabled when the player gets a game over    
-        }
-    }
+    #endregion
 
     public IEnumerator BonusRoundIntroScreen()
     {
-        //1) Disable the top left UI group and the ammo UI group & disable player input
-
-        foreach (GameObject hudElements in gameHUD)
+        //1) Disable the hud
+        foreach (GameObject hudElement in gameHUD)
         {
-            hudElements.SetActive(false);
+            hudElement.SetActive(false);
         }
 
-        //Disables player input
-        PlayerInputHandler.instance.DisableAllPlayerActions();
-        PlayerInputHandler.instance.DisablePauseAction();
+        //Disables player input - Using action
+        OnInputsDisable?.Invoke();
 
-        BonusStartText.SetActive(false);
-        BonusCountdownTest.SetActive(false);
+        HideBonusText();
+        HideCountdownText();
 
         //2) Activate the bonus Round Group
-        BonusRoundGroup.SetActive(true);
+        BonusRoundGroup.gameObject.SetActive(true);
         StartCoroutine(BonusRoundTextAnim());
 
         //3) trigger the text animation
@@ -220,28 +264,27 @@ public class UIManager : MonoBehaviour
 
         ReloadAmmoSprites(); //This is being called to update the ammo amount (visually)
 
-        //5)Re-enable the top left / ammo UI groups
-        BonusRoundGroup.SetActive(false);
+        BonusRoundGroup.gameObject.SetActive(false);
 
-        foreach (GameObject hudElements in gameHUD)
+        //5)Re-enable the top left / ammo UI groups
+        foreach (GameObject hudElement in gameHUD)
         {
-            hudElements.SetActive(true);
+            hudElement.SetActive(true);
         }
 
-        //6) Re-enable player input
-        PlayerInputHandler.instance.EnableAllPlayerActions();
-        PlayerInputHandler.instance.EnablePauseAction();
+        //6) Re-enable player input - Using action
+        OnInputsEnable?.Invoke();
     }
 
 
     IEnumerator BonusRoundTextAnim() //Coroutine to control the timing of the two bonus round texts' : "Bonus Round" should play first followed by the countdown timer
     {
-        BonusStartText.SetActive(true); //Enable the "Bonus Round" text
+        ShowBonusText(); //Enable the "Bonus Round" text
 
         yield return new WaitForSeconds(2.5f); //Wait 2.5 seconds before disabling the previous text and enabling the countdown text
-        BonusStartText.SetActive(false); //Disables the "Bonus Round text
+        HideBonusText(); //Disables the "Bonus Round text
 
-        BonusCountdownTest.SetActive(true); //Enable the countdown text
+        ShowCountdownText(); //Enable the countdown text - "3... 2... 1... Go!"
 
         //There's no need to wait for xyz seconds to disable the countdown text, as the whole group will be disabled in the "BonusRoundIntroScreen" coroutine
     }

@@ -42,15 +42,16 @@ public class CountdownManager : MonoBehaviour
             //While the timer is greater than 0, assign the timer value to the text value
             countdownText.text = countdownTime.ToString();
 
+            //How long to wait (in seconds) before calling it again?
+            yield return new WaitForSeconds(1f);
+
             //Decrement
             countdownTime--;
 
-            //How long to wait (in seconds) before calling it again?
-
-            yield return new WaitForSeconds(1f);
-
-            countdownText.text = "GO!";
+            
         }
+
+        countdownText.text = "GO!";
 
         //How long to wait again (in seconds) before disabling the text gameObject?
         yield return new WaitForSeconds(2f);

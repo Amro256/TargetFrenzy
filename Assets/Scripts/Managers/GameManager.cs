@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     public static event Action OnGameStart; //--Action: For disabling the pause UI on start
     public static event Action OnGamePause; //--Action: Enables the pause UI when the game is paused
     public static event Action OnGameResume; //--Action: Disables the pause UI when the game resumes
-    public static event Action<Canvas> OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
+    public static event Action OnTimeOver; //--Action: Enable the timer over canvas when the player runs out of time
     #endregion
 
     void Awake()
@@ -115,11 +115,10 @@ public class GameManager : MonoBehaviour
         }
 
         // 2) Display the game over panel here
-        UIManager.Instance.GameOverCanvas.gameObject.SetActive(true);
-        OnTimeOver?.Invoke(UIManager.Instance.GameOverCanvas);
+        OnTimeOver?.Invoke();
 
         // 3) Disable the main game hud
-        UIManager.Instance.DisableMenu(UIManager.Instance.GameHudCanvas);
+        UIManager.Instance.HideMainHud();
 
         // 4) Update the "final score" field displayed on the game over panel
         UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
@@ -127,7 +126,6 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        //Code here for game pausing
         IsPaused = true;
         Time.timeScale = 0;
         Debug.Log("Game Currently Paused!");
@@ -146,7 +144,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseCheck() //Check to see if the bool value is NOT false then execute the code below
     {
-        if (!IsPaused) //24/8/26: This was sitting in the "PlayerInputHandler" script for whatever reason (thanks past me!s)
+        if (!IsPaused) //24/8/26: This was sitting in the "PlayerInputHandler" script for whatever reason (thanks past me!)
         {
             //Call the pause game method
             PauseGame();

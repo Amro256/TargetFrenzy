@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &99162028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3045,12 +3045,11 @@ MonoBehaviour:
   GameOverCanvas: {fileID: 708779066}
   GameHudCanvas: {fileID: 1215868182}
   BonusStartText: {fileID: 611326958}
-  BonusCountdownTest: {fileID: 99162027}
+  BonusCountdownText: {fileID: 99162027}
   ReloadWarningText: {fileID: 1280186599}
   gameHUD:
   - {fileID: 1184091385}
   - {fileID: 1245120421}
-  - {fileID: 1618022900}
   BonusRoundGroup: {fileID: 1887686968}
   ammoSprites:
   - {fileID: 466574538}
@@ -3112,7 +3111,7 @@ GameObject:
   - component: {fileID: 975058622}
   - component: {fileID: 975058623}
   m_Layer: 0
-  m_Name: BonusRound
+  m_Name: BonusRoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6350,7 +6349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1887686969
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6854,7 +6853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHitInARow: 0
-  maxTargetsToHit: 10
+  maxTargetsToHit: 2
   targetReticleTexture: {fileID: 2800000, guid: c7e0dead9005b064290b52f17ae21656, type: 3}
   spawners:
   - {fileID: 777882535}

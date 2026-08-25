@@ -22,8 +22,6 @@ public class AnimationManager : MonoBehaviour //This script will hold and manage
         }
     }
 
-
-
     //Methods to start and stop the animation
     public void StartAnimation(string aniParam)
     {

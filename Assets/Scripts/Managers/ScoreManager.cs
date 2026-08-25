@@ -152,7 +152,7 @@ public class ScoreManager : MonoBehaviour
     {
         yield return new WaitForSeconds(MultiplierBarManager.Instance.maxMultiplierDuration); //This will wait for the multiplier duration to be done BEFORE setting the Multi bool back to false
         //And so it uses the max multiplier duration from the multiplier script as 'how long it should wait' before the bool is set to false
-        UIManager.Instance.DisableMultiValueText();
+        UIManager.Instance.HideMultiValueText();
         IsMultiActive = false; //Sets the multi bool back to false
      }
 
