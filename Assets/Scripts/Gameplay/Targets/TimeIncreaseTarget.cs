@@ -17,14 +17,16 @@ public class TimeIncreaseTarget : TargetClass
     public static event Action<int> OnTimeIncrease;
 
     public override void OnHit()
-    {   
+    {
         base.OnHit();
-        
+
         AmmoManager.Instance.UpdateAmmoValue(1);
         GameManager.Instance.PlayerHitRowDecrement();
-        //Add code here for Increasing Time
 
-        
+        //Add code here for Increasing Time
         OnTimeIncrease?.Invoke(TimeValue);
+
+        //Show the timer pop up (will appear above the time UI element)
+        ScorePopUpManager.Instance.ShowTimerPopUp("+", TimeValue, Color.green );
     }
 }

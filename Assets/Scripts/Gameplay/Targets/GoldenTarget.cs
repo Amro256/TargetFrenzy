@@ -31,6 +31,6 @@ public class GoldenTarget : TargetClass
 
         OnTargetHit?.Invoke(ScoreValue);
         
-        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, "+", ScoreValue, "pts", Color.gold);
+        ScorePopUpManager.Instance.ShowScorePopUp(transform.position, "+", ScoreValue, "pts", Color.gold);
     }
 }

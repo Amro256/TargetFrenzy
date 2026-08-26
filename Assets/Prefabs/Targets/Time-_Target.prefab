@@ -156,4 +156,4 @@ MonoBehaviour:
   moveSpeed: 8
   ScoreValue: 0
   ScoreMultiValue: 0
-  TimeValue: 50
+  TimeValue: 20

@@ -17,14 +17,16 @@ public class TimeDeductionTarget : TargetClass
     public static event Action<int> OnTimeDeduction;
 
     public override void OnHit()
-    {    
+    {
         base.OnHit();
-        
+
         AmmoManager.Instance.UpdateAmmoValue(1);
         GameManager.Instance.PlayerHitRowDecrement();
         //Add code here for time Deduction
 
-        
+
         OnTimeDeduction?.Invoke(TimeValue);
+        
+        ScorePopUpManager.Instance.ShowTimerPopUp("-", TimeValue, Color.darkRed);
     }
 }

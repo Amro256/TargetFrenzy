@@ -37,7 +37,7 @@ public class MultiplierTarget : TargetClass
         {
              OnMultiplierActive?.Invoke(ScoreMultiValue);
         }
-        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, "+", ScoreValue, "pts", Color.green);
+        ScorePopUpManager.Instance.ShowScorePopUp(transform.position, "+", ScoreValue, "pts", Color.green);
     }
 }
 

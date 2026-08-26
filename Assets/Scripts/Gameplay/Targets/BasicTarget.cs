@@ -31,7 +31,7 @@ public class BasicTarget : TargetClass
 
         
     
-        ScorePopUpManager.Instance.DisplayScorePopUp(transform.position, "+", ScoreValue, "pts", Color.green);
+        ScorePopUpManager.Instance.ShowScorePopUp(transform.position, "+", ScoreValue, "pts", Color.green);
     }
 
 }

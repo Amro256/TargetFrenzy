@@ -11,9 +11,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
     [SerializeField] private GameObject popUpPrefab; //The Game object that has the text component attached to it
     [SerializeField] private GameObject MultiTextPrefab;
     [SerializeField] private GameObject TimerTextPrefab;
-    
-    [SerializeField] private GameObject multiPosition;
-    [SerializeField] private GameObject timerInstantiatePosition;
+    [SerializeField] private GameObject timerInstantiatePoint;
     #endregion Variables
 
     void Awake() //Singleton pattern
@@ -30,7 +28,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
 
 
     //Create a method to display for the score pop up. This method can be called in the individual target scripts
-    public void DisplayScorePopUp(Vector3 position, string text, int score,string ptsText ,Color textColour)
+    public void ShowScorePopUp(Vector3 position, string text, int score, string ptsText, Color textColour)
     {
         //1) Create a slight offset of the y axis, so the text doesnt spawn in the middle of the target
         Vector3 textOffset = new Vector3(0, 0.7f, 0);
@@ -49,8 +47,22 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
         {
             scoreText.text = text + score.ToString() + ptsText; //Converts the int score to a string
         }
-        
+
         scoreText.color = textColour; //Sets the colour of the text
+
+        Destroy(obj, 1.5f); //Destroy the game object after 1.5 seconds
+    }
+
+
+    public void ShowTimerPopUp(string text, int time, Color textColour)
+    {
+        GameObject obj = Instantiate(TimerTextPrefab, timerInstantiatePoint.transform.position, Quaternion.identity);
+
+        TextMeshPro timerText = obj.transform.GetChild(0).GetComponent<TextMeshPro>();
+
+        timerText.text = text + time.ToString() + "s";
+
+        timerText.color = textColour;
 
         Destroy(obj, 1.5f); //Destroy the game object after 1.5 seconds
     }
