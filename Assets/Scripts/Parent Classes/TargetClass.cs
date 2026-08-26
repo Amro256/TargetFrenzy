@@ -130,7 +130,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
         //Return the target to the object pool
         PoolManager.Instance.ReturnPooledObject(gameObject);
-        Debug.Log(gameObject + " Returned to the pool");
+        //Debug.Log(gameObject + " Returned to the pool");
     }
     #endregion
 }

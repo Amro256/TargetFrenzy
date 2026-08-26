@@ -14,12 +14,19 @@ public class ScoreManager : MonoBehaviour
     //General Variables
     private int totalScore; //General Variable to store the score.
     private int hitScore;
+    private int highScore { get; set; } //To store the player's high score
+
+    public int HighScore
+    {
+        get { return highScore; }
+        set { highScore = value; }
+    }
 
     public int HitScore
     {
-        get{ return hitScore; }
+        get { return hitScore; }
     }
-    
+
     public int TotalScore
     {
         get { return totalScore; }
@@ -43,10 +50,12 @@ public class ScoreManager : MonoBehaviour
 
     public static event Action OnBonusRoundActivated;
 
+    public static event Action<int> OnHighScore;
+
 
     void Awake() //Singleton pattern
     {
-       if (Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
@@ -79,7 +88,7 @@ public class ScoreManager : MonoBehaviour
     public void ScoreIncrease(int ScoreValue) //Method for handling adding score that takes in an integer as a parameter 
     {
         hitScore = ScoreValue;
-        
+
 
         //Check to see if the multiplier is active, then apply it to the score
 
@@ -87,34 +96,42 @@ public class ScoreManager : MonoBehaviour
         {
             hitScore *= CurrentMultiValue;
         }
-        
+
         totalScore += HitScore;
+        HighScore = totalScore;
+        Debug.Log("Current High Score: " + highScore);
 
         if (TotalScore >= bonusRoundThreshold && !GameManager.Instance.BonusRoundBool) //Bool check in place to prevent the bonus round animations from repeating
-        {  
+        {
             OnScoreChanged?.Invoke(TotalScore);
             Debug.Log("Current Score: " + TotalScore);
-            
+
             Debug.Log("You've met the threshold!");
-            
+
             OnBonusRoundActivated?.Invoke();
         }
 
-         Debug.Log("Current Score: " + TotalScore);
+        Debug.Log("Current Score: " + TotalScore);
 
         //Update the score UI here
-        OnScoreChanged?.Invoke(TotalScore);        
+        OnScoreChanged?.Invoke(TotalScore);
     }
 
     public void ScoreDeduction(int ScoreValue) //Method for handling deduction in score
     {
-        totalScore -= ScoreValue;
+        hitScore = ScoreValue;
 
-        if (totalScore <= 0)
+        totalScore -= hitScore;
+
+        if (totalScore <= 0) //Check to make sure the score doesnt drop if the player hits a penalty target
         {
-            totalScore = 0;    
+            totalScore = 0;
             OnScoreChanged?.Invoke(TotalScore);
         }
+
+        HighScore = totalScore;
+        Debug.Log("Current Score: " + TotalScore);
+        Debug.Log("Current High Score: " + highScore);
 
         //Update the score UI here
         OnScoreChanged?.Invoke(TotalScore);
@@ -138,14 +155,12 @@ public class ScoreManager : MonoBehaviour
 
             //Call a new Coroutine that will reset the multi bool once the multiplier duration is up
             StartCoroutine(MultiplierDuration());
-            
-
         }
         else
         {
             Debug.Log("Multi Already Active");
         }
-        
+
     }
 
     private IEnumerator MultiplierDuration() //A 2nd Coroutine 
@@ -154,6 +169,29 @@ public class ScoreManager : MonoBehaviour
         //And so it uses the max multiplier duration from the multiplier script as 'how long it should wait' before the bool is set to false
         UIManager.Instance.HideMultiValueText();
         IsMultiActive = false; //Sets the multi bool back to false
-     }
+    }
+
+    public void PlayerHighScore()
+    {
+        //Check if there a high score has already been set
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            //Check to see if the player's current score is higher than the previous high score
+            if (totalScore > PlayerPrefs.GetInt("HighScore"))
+            {
+                //Set a new high score
+                PlayerPrefs.SetInt("HighScore", HighScore);
+            }
+        }
+        else
+        {
+            //if there is no high score, set one
+            PlayerPrefs.SetInt("HighScore", HighScore);
+        }
+
+        //Update UI
+        OnHighScore?.Invoke(HighScore);   
+    }
 
 }
+

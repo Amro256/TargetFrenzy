@@ -122,6 +122,9 @@ public class GameManager : MonoBehaviour
 
         // 4) Update the "final score" field displayed on the game over panel 
         StartCoroutine(UIManager.Instance.FinalScoreTally());
+
+        //5) Update the high score field
+        ScoreManager.Instance.PlayerHighScore();
     }
 
     public void PauseGame()

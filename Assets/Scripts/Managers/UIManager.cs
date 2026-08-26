@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text ScoreText;
     [SerializeField] private TMP_Text TimerText;
     [SerializeField] private TMP_Text FinalScoreText;
+    [SerializeField] private TMP_Text HighScoreText;
     [SerializeField] private TMP_Text TargetCounterText;
     [SerializeField] private TMP_Text MultiValueText;
 
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Others")]
     private float currentDisplayScore = 0;
+    private float currentHighScoreDisplay = 0;
     #endregion
 
     #region Actions
@@ -55,6 +57,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ScoreManager.OnScoreChanged += UpdateScoreUI;
+        ScoreManager.OnHighScore += UpdateHighScoreUI;
 
         GameManager.OnGamePause += ShowPauseMenu;
         GameManager.OnGameStart += HidePauseMenu;
@@ -73,6 +76,8 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         ScoreManager.OnScoreChanged -= UpdateScoreUI;
+        ScoreManager.OnHighScore -= UpdateHighScoreUI;
+
 
         GameManager.OnGamePause -= ShowPauseMenu;
         GameManager.OnGameStart -= HidePauseMenu;
@@ -150,6 +155,11 @@ public class UIManager : MonoBehaviour
     public void UpdateFinalScoreUI(int finalScore)
     {
         FinalScoreText.text = finalScore.ToString();
+    }
+
+    public void UpdateHighScoreUI(int highScore)
+    {
+        HighScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
     }
 
     public void UpdateTimerUI(float timeToDisplay)
@@ -302,6 +312,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
     }
+
     #endregion
 
 }
