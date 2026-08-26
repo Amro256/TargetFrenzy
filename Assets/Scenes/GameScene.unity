@@ -4657,7 +4657,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: 6b8c06b7ecee76547ab283145679d511, type: 3}
+  - {fileID: 8300000, guid: 6f50b1fc03573af46a6f072607d0c06b, type: 3}
+  - {fileID: 8300000, guid: 1bce6780e47489b439e892d246818f3d, type: 3}
 --- !u!4 &1263946923
 Transform:
   m_ObjectHideFlags: 0
@@ -7636,6 +7637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CountdownManager
   countdownTime: 3
   countdownText: {fileID: 99162029}
+  countdownSFX: {fileID: 8300000, guid: 6f50b1fc03573af46a6f072607d0c06b, type: 3}
 --- !u!1 &2062750418
 GameObject:
   m_ObjectHideFlags: 0
@@ -7774,6 +7776,7 @@ MonoBehaviour:
   - {fileID: 1808147572}
   - {fileID: 547356825}
   - {fileID: 256553238}
+  gameOverTrack: {fileID: 8300000, guid: 1bce6780e47489b439e892d246818f3d, type: 3}
 --- !u!4 &2101860352
 Transform:
   m_ObjectHideFlags: 0

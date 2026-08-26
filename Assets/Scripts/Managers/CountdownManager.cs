@@ -15,6 +15,7 @@ public class CountdownManager : MonoBehaviour
     //General variables
     [SerializeField] private int countdownTime;
     [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private AudioClip countdownSFX;
 
 
     void Awake()
@@ -35,7 +36,8 @@ public class CountdownManager : MonoBehaviour
         yield return new WaitForSeconds(2.5f); //This is here to prevent THIS coroutine starting at the same time as the "bonus round" text. Meaning this will start after the completion of the first coroutine
 
         //Check to see if the countdown timer is greater than 0 (use a while loop)
-
+        AudioManager.Instance.PlaySound(countdownSFX, 0.5f);
+        
         while (countdownTime > 0)
         {
 
@@ -45,12 +47,13 @@ public class CountdownManager : MonoBehaviour
             //How long to wait (in seconds) before calling it again?
             yield return new WaitForSeconds(1f);
 
+
             //Decrement
             countdownTime--;
 
-            
-        }
 
+        }
+    
         countdownText.text = "GO!";
 
         //How long to wait again (in seconds) before disabling the text gameObject?
