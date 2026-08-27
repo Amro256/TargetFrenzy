@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using Unity.Mathematics;
 
 public class ScorePopUpManager : MonoBehaviour //This script will be responsible for floating / pop up score values when a target is hit
 {
@@ -8,9 +9,10 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
 
     #region Variables
     //General Variables
-    [SerializeField] private GameObject popUpPrefab; //The Game object that has the text component attached to it
-    [SerializeField] private GameObject MultiTextPrefab;
-    [SerializeField] private GameObject TimerTextPrefab;
+    [SerializeField] private GameObject scorePopUpPrefab; //The Game object that has the text component attached to it
+    [SerializeField] private GameObject timerTextPrefab;
+    [SerializeField] private GameObject scoreDecreasePopUpPrefab;
+    [SerializeField] private GameObject scoreDecreasePoint;
     #endregion Variables
 
     void Awake() //Singleton pattern
@@ -27,13 +29,13 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
 
 
     //Create a method to display for the score pop up. This method can be called in the individual target scripts
-    public void ShowScorePopUp(Vector3 position, string text, int score, string ptsText, Color textColour)
+    public void ShowScorePopUp(Vector3 position, string text, int scoreValue, string ptsText, Color textColour)
     {
         //1) Create a slight offset of the y axis, so the text doesnt spawn in the middle of the target
         Vector3 textOffset = new Vector3(0, 0.7f, 0);
 
         //2) Instantiate the prefab that will take in the targets' position plus the offset!
-        GameObject obj = Instantiate(popUpPrefab, position + textOffset, Quaternion.identity);
+        GameObject obj = Instantiate(scorePopUpPrefab, position + textOffset, Quaternion.identity);
 
         //3) Get the text mesh pro component attached to the child object. The 0 refers to the index, so 0 = the first child object
         TextMeshPro scoreText = obj.transform.GetComponentInChildren<TextMeshPro>();
@@ -44,7 +46,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
         }
         else
         {
-            scoreText.text = text + score.ToString() + ptsText; //Converts the int score to a string
+            scoreText.text = text + scoreValue.ToString() + ptsText; //Converts the int score to a string
         }
 
         scoreText.color = textColour; //Sets the colour of the text
@@ -53,11 +55,25 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
     }
 
 
+    public void ShowScoreDecreasePopUp(string text, int scoreValue, Color textColour)
+    {
+        GameObject obj = Instantiate(scoreDecreasePopUpPrefab, scoreDecreasePoint.transform.position, Quaternion.identity);
+
+        TextMeshPro scoreDecreaseText = obj.transform.GetComponentInChildren<TextMeshPro>();
+
+        scoreDecreaseText.text = text + scoreValue.ToString();
+
+        scoreDecreaseText.color = textColour;
+
+        Destroy(obj, 1.5f);
+    }
+
+
     public void ShowTimerPopUp(Vector3 position, string text, int time, Color textColour)
     {
         Vector3 textOffset = new Vector3(0, 0.7f, 0);
 
-        GameObject obj = Instantiate(TimerTextPrefab, position + textOffset, Quaternion.identity);
+        GameObject obj = Instantiate(timerTextPrefab, position + textOffset, Quaternion.identity);
 
         TextMeshPro timerText = obj.transform.GetComponentInChildren<TextMeshPro>();
 
