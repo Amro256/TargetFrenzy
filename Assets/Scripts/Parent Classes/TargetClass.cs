@@ -25,7 +25,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     #region Variables
     //General variables
-    private BoxCollider2D targetCollider;
+    private GameObject prefabTarget;
     private float targetTimer = 10f; //How long targets are able to stay on screen for before returning to the pool
     private bool isMovingOffScreen = false;
     private Coroutine returnCoroutine;
@@ -104,8 +104,11 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         isMovingOffScreen = true;
 
         //Disable the box collider
-        targetCollider = GetComponent<BoxCollider2D>();
-        targetCollider.enabled = false;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+        //Sprite Rendered to change the alpha channel
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.color = new Color(0.5f, 0.5f, 0.5f, 0.5f); //Sets the targets' colour to gray and alpha channel to 50%
 
         //Move the target to the middle point
         while (Vector3.Distance(transform.position, offScreenMidPoint.position) > 0.1f)
@@ -126,7 +129,8 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         }
 
         //Re-enable the box collider
-        targetCollider.enabled = true;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        sr.color = Color.white;
 
         //Return the target to the object pool
         PoolManager.Instance.ReturnPooledObject(gameObject);

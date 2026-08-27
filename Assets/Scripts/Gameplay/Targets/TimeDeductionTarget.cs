@@ -27,6 +27,6 @@ public class TimeDeductionTarget : TargetClass
 
         OnTimeDeduction?.Invoke(TimeValue);
         
-        ScorePopUpManager.Instance.ShowTimerPopUp("-", TimeValue, Color.darkRed);
+        ScorePopUpManager.Instance.ShowTimerPopUp(transform.position, "-", TimeValue, Color.darkRed);
     }
 }

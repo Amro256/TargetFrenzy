@@ -11,7 +11,6 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
     [SerializeField] private GameObject popUpPrefab; //The Game object that has the text component attached to it
     [SerializeField] private GameObject MultiTextPrefab;
     [SerializeField] private GameObject TimerTextPrefab;
-    [SerializeField] private GameObject timerInstantiatePoint;
     #endregion Variables
 
     void Awake() //Singleton pattern
@@ -37,7 +36,7 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
         GameObject obj = Instantiate(popUpPrefab, position + textOffset, Quaternion.identity);
 
         //3) Get the text mesh pro component attached to the child object. The 0 refers to the index, so 0 = the first child object
-        TextMeshPro scoreText = obj.transform.GetChild(0).GetComponent<TextMeshPro>();
+        TextMeshPro scoreText = obj.transform.GetComponentInChildren<TextMeshPro>();
 
         if (ScoreManager.Instance.IsMultiActive)
         {
@@ -54,11 +53,13 @@ public class ScorePopUpManager : MonoBehaviour //This script will be responsible
     }
 
 
-    public void ShowTimerPopUp(string text, int time, Color textColour)
+    public void ShowTimerPopUp(Vector3 position, string text, int time, Color textColour)
     {
-        GameObject obj = Instantiate(TimerTextPrefab, timerInstantiatePoint.transform.position, Quaternion.identity);
+        Vector3 textOffset = new Vector3(0, 0.7f, 0);
 
-        TextMeshPro timerText = obj.transform.GetChild(0).GetComponent<TextMeshPro>();
+        GameObject obj = Instantiate(TimerTextPrefab, position + textOffset, Quaternion.identity);
+
+        TextMeshPro timerText = obj.transform.GetComponentInChildren<TextMeshPro>();
 
         timerText.text = text + time.ToString() + "s";
 

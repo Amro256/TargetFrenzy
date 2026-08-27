@@ -27,6 +27,6 @@ public class TimeIncreaseTarget : TargetClass
         OnTimeIncrease?.Invoke(TimeValue);
 
         //Show the timer pop up (will appear above the time UI element)
-        ScorePopUpManager.Instance.ShowTimerPopUp("+", TimeValue, Color.green );
+        ScorePopUpManager.Instance.ShowTimerPopUp(transform.position, "+", TimeValue, Color.lightGreen);
     }
 }
