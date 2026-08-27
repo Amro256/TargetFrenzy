@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
     //14/4/26: The variables below were moved from the player input script to the game manager 
     private int MaxMisses = 5; //Max amount of possible clicks the player has before resulting in a game over
     private int MissCount = 0; //Variable that will track the player's misses 
-    [SerializeField] private AudioClip gameOverTrack;
 
     #region Actions
     //Actions 
@@ -114,9 +113,6 @@ public class GameManager : MonoBehaviour
             spawner.gameObject.SetActive(false); //Disables the spawners
             spawner.DestroyTargets();
         }
-
-        //Play game over track
-        AudioManager.Instance.PlaySound(gameOverTrack, 0.5f);
 
         // 2) Display the game over panel here
         OnTimeOver?.Invoke();

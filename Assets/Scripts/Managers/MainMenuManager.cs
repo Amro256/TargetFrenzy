@@ -14,7 +14,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1);
     }
 
     public void QuitGame() //Will quit the game

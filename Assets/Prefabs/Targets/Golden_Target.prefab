@@ -154,6 +154,6 @@ MonoBehaviour:
   offScreenPoint: {fileID: 8970116377287971844, guid: 5d23179cec348ad41b51c879d3cca908, type: 3}
   offScreenMidPoint: {fileID: 7827864461251312141, guid: dc988eeb17aaeba43a2b810a00666518, type: 3}
   moveSpeed: 8
-  ScoreValue: 300
+  ScoreValue: 200
   ScoreMultiValue: 0
   TimeDeduction: 0
