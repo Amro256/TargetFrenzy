@@ -6,9 +6,9 @@ public class AudioManager : MonoBehaviour
 {
 
     public static AudioManager Instance {get; private set;} //Make the audioManager static so it can accessed by other scripts
+    [SerializeField] private AudioData audioData; //Reference to the scriptable Object
     private AudioSource audioSource; //Private reference to the audio source component
 
-    [SerializeField] private AudioClip[] audioClips;
 
    void Awake()
     {
@@ -30,9 +30,9 @@ public class AudioManager : MonoBehaviour
     }
 
     //Method to play Sound - Make it static so other scripts can access and call it!
-    public void PlaySound(AudioClip clip, float volume)
+    public void PlaySound(AudioClip audioClip, float volume)
     {
-        audioSource.PlayOneShot(clip, volume);
+        audioSource.PlayOneShot(audioClip, audioData.Volume);
         
     }
 }

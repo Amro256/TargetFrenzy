@@ -177,7 +177,7 @@ public class ScoreManager : MonoBehaviour
         if (PlayerPrefs.HasKey("HighScore"))
         {
             //Check to see if the player's current score is higher than the previous high score
-            if (totalScore > PlayerPrefs.GetInt("HighScore"))
+            if (highScore > PlayerPrefs.GetInt("HighScore"))
             {
                 //Set a new high score
                 PlayerPrefs.SetInt("HighScore", HighScore);
