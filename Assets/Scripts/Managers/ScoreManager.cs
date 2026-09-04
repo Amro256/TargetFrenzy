@@ -154,7 +154,7 @@ public class ScoreManager : MonoBehaviour
             //Code to handling the UI bar goes here -- Activate Bar
             StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
             //Play Audio here
-            AudioManager.Instance.PlaySound(multiplierBarAudio.Clips[4], 1f);
+            AudioManager.Instance.PlayUISFX(multiplierBarAudio.Clips[4], 1f);
 
             //Call a new Coroutine that will reset the multi bool once the multiplier duration is up
             StartCoroutine(MultiplierDuration());

@@ -36,7 +36,7 @@ public class CountdownManager : MonoBehaviour
         yield return new WaitForSeconds(2.5f); //This is here to prevent THIS coroutine starting at the same time as the "bonus round" text. Meaning this will start after the completion of the first coroutine
 
         //Check to see if the countdown timer is greater than 0 (use a while loop)
-        AudioManager.Instance.PlaySound(countdownAudio.Clips[1], 1f);
+        AudioManager.Instance.PlayUISFX(countdownAudio.Clips[1], 1f);
 
         while (countdownTime > 0)
         {

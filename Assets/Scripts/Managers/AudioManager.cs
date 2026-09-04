@@ -5,12 +5,16 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
 
-    public static AudioManager Instance {get; private set;} //Make the audioManager static so it can accessed by other scripts
+    public static AudioManager Instance { get; private set; } //Make the audioManager static so it can accessed by other scripts
     [SerializeField] private AudioData audioData; //Reference to the scriptable Object
-    private AudioSource audioSource; //Private reference to the audio source component
+
+    //Audio Source References
+    [SerializeField] AudioSource SFXSource; //Private reference to the audio source component
+    [SerializeField] AudioSource UISource;
+    [SerializeField] AudioSource MenuSource;
 
 
-   void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -22,17 +26,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    //Method to play Sound - Make it static so other scripts can access and call it!
+    public void PlaySFX(AudioClip audioClip, float volume)
     {
-        audioSource = GetComponent<AudioSource>(); // Grabs the audio source component on start
+        SFXSource.PlayOneShot(audioClip, audioData.Volume);
+
     }
 
-    //Method to play Sound - Make it static so other scripts can access and call it!
-    public void PlaySound(AudioClip audioClip, float volume)
+    public void PlayUISFX(AudioClip audioClip, float volume)
     {
-        audioSource.PlayOneShot(audioClip, audioData.Volume);
+        UISource.PlayOneShot(audioClip, audioData.Volume);
+
+    }
+    
+    public void PlayMenuSFX(AudioClip audioClip, float volume)
+    {
+        MenuSource.PlayOneShot(audioClip, audioData.Volume);
         
     }
 }

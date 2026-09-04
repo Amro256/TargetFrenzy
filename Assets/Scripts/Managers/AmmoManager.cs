@@ -92,7 +92,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         IsOutOfAmmo = false;
         Debug.Log("Is player out of ammo: " + IsOutOfAmmo);
 
-         AudioManager.Instance.PlaySound(reloadSFX.Clips[5], 1f);  
+        AudioManager.Instance.PlayUISFX(reloadSFX.Clips[5], 1f);  
         //Re-Enable the Player's firing input
         OnFullAmmo.Invoke();
 
