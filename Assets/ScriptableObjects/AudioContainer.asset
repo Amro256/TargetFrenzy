@@ -15,4 +15,11 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 847bfbc66fd85924baedbde3d6c40c60, type: 3}
   - {fileID: 8300000, guid: 7181a70ed50c3af41afc9c804b9fc1f9, type: 3}
-  volume: 0.3
+  - {fileID: 8300000, guid: 70e2bf9b5cd964b42a2a5c1ab8de7fe5, type: 3}
+  - {fileID: 8300000, guid: a4fd4668cb4643542bd41eaa8a006e79, type: 3}
+  - {fileID: 8300000, guid: 82fd223745b5dd94cb3d67a8d1cae113, type: 3}
+  - {fileID: 8300000, guid: f43f8ca4ebbfab74abbca5ff65fb71b1, type: 3}
+  - {fileID: 8300000, guid: 4a7c03a0bdbd79f49b03f84a70066e18, type: 3}
+  - {fileID: 8300000, guid: 1c4d0376a627eef42b9ce64c0099d76c, type: 3}
+  - {fileID: 8300000, guid: c8decb4bc2fcac947bcf67105006d559, type: 3}
+  volume: 1

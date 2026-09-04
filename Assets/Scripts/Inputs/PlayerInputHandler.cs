@@ -11,6 +11,7 @@ public class PlayerInputHandler : MonoBehaviour
     public static PlayerInputHandler instance { get; private set; }
     //References
     private TargetFrenzy inputs; //20/8/26: Replaced the reference to the player input component with the C# class for better consistency
+    [SerializeField] private AudioData audioSFX;
     MouseHandler PlayerMH; //Reference to the MouseHandler script, so this script can access the current target (GameObject)
 
     //Actions to be invoked
@@ -87,6 +88,7 @@ public class PlayerInputHandler : MonoBehaviour
                 
                 //Screen Shake 
                 StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
+                AudioManager.Instance.PlaySound(audioSFX.Clips[3], 1f);
 
                 if (Target != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
@@ -106,6 +108,7 @@ public class PlayerInputHandler : MonoBehaviour
                 AmmoManager.Instance.UpdateAmmoValue(1);  //As of: 5/5/26 - This has been moved from the UI manager as it was overlapping with the same code 
                 //that's responsible for updating the ammo value when the player hits a target, resulting in the ammo value decreasing by two instead of one.
 
+                AudioManager.Instance.PlaySound(audioSFX.Clips[2], 1f);
                 //Invoke Action
                 OnPlayerMissUI?.Invoke();
                 OnPlayerMissedShot?.Invoke();

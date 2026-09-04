@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int maxTargetsToHit = 10;
     [SerializeField] private Texture2D targetReticleTexture;
     [SerializeField] private SpawnerClass[] spawners;
-    [SerializeField] private AudioData gameoverAudio;
+    [SerializeField] private AudioData audioSFX;
 
 
     //General Variables - Bool   
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
             spawner.DestroyTargets();
         }
 
-        AudioManager.Instance.PlaySound(gameoverAudio.Clips[0], 1f);
+        AudioManager.Instance.PlaySound(audioSFX.Clips[0], 1f);
 
         // 2) Display the game over panel here
         OnTimeOver?.Invoke();
@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         IsPaused = true;
+        AudioManager.Instance.PlaySound(audioSFX.Clips[6], 1f);
         Time.timeScale = 0;
         Debug.Log("Game Currently Paused!");
         //Invoke action here to display pause UI
@@ -143,6 +144,7 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         IsPaused = false;
+        AudioManager.Instance.PlaySound(audioSFX.Clips[7], 1f);
         Time.timeScale = 1;
         Debug.Log("Game Resumed!");
         //Invoke action here to hide the pause UI

@@ -15,6 +15,7 @@ public class ScoreManager : MonoBehaviour
     private int totalScore; //General Variable to store the score.
     private int hitScore;
     private int highScore { get; set; } //To store the player's high score
+    [SerializeField] private AudioData multiplierBarAudio;
 
     public int HighScore
     {
@@ -152,6 +153,8 @@ public class ScoreManager : MonoBehaviour
 
             //Code to handling the UI bar goes here -- Activate Bar
             StartCoroutine(MultiplierBarManager.Instance.BarRoutine());
+            //Play Audio here
+            AudioManager.Instance.PlaySound(multiplierBarAudio.Clips[4], 1f);
 
             //Call a new Coroutine that will reset the multi bool once the multiplier duration is up
             StartCoroutine(MultiplierDuration());

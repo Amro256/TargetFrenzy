@@ -14,6 +14,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     [SerializeField] private int maxAmmo = 4;
     [SerializeField] public int CurrentAmmoAmount;
     private bool IsOutOfAmmo; //The player will have full ammo when they start the game
+    [SerializeField] private AudioData reloadSFX;
 
     #region actions
     public static event Action OnReloadSprites; // For the UI Manager 
@@ -90,9 +91,11 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         //Set the "isOutOfAmmo" bool back to false as the player will have full ammo after reloading
         IsOutOfAmmo = false;
         Debug.Log("Is player out of ammo: " + IsOutOfAmmo);
-           
+
+         AudioManager.Instance.PlaySound(reloadSFX.Clips[5], 1f);  
         //Re-Enable the Player's firing input
         OnFullAmmo.Invoke();
+
 
         CurrentAmmoAmount = MaxAmmo; //Set the current ammo back to the max ammo
         OnReloadSprites?.Invoke(); //Reload the ammo sprites

@@ -2446,6 +2446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26306f84399fed499a3ae74a0eec078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSFX: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
 --- !u!114 &609494577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3438,6 +3439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38faf1fb640e25d469ac772dc6b5d87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  multiplierBarAudio: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
 --- !u!1 &975058621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3492,6 +3494,7 @@ MonoBehaviour:
   - {fileID: 1808147572}
   - {fileID: 547356825}
   - {fileID: 256553238}
+  audioSFX: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
 --- !u!1 &986092638
 GameObject:
   m_ObjectHideFlags: 0
@@ -6264,6 +6267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAmmo: 4
   CurrentAmmoAmount: 0
+  reloadSFX: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
 --- !u!1 &1643819091
 GameObject:
   m_ObjectHideFlags: 0
@@ -7767,14 +7771,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHitInARow: 0
-  maxTargetsToHit: 10
+  maxTargetsToHit: 2
   targetReticleTexture: {fileID: 2800000, guid: c7e0dead9005b064290b52f17ae21656, type: 3}
   spawners:
   - {fileID: 777882535}
   - {fileID: 1808147572}
   - {fileID: 547356825}
   - {fileID: 256553238}
-  gameoverAudio: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
+  audioSFX: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
 --- !u!4 &2101860352
 Transform:
   m_ObjectHideFlags: 0
