@@ -307,7 +307,7 @@ public class UIManager : MonoBehaviour
     {
         while (currentDisplayScore < ScoreManager.Instance.TotalScore)
         {
-            currentDisplayScore = Mathf.MoveTowards(currentDisplayScore, ScoreManager.Instance.TotalScore, 500f * Time.deltaTime);
+            currentDisplayScore = Mathf.MoveTowards(currentDisplayScore, ScoreManager.Instance.TotalScore, 1000f * Time.deltaTime);
             FinalScoreText.text = Mathf.FloorToInt(currentDisplayScore).ToString();
             yield return null;
         }
