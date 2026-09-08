@@ -11,6 +11,7 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
     public static StartUpSequence Instance { get; private set; }
     //Variables
     [SerializeField] private TextMeshProUGUI StartUpText;
+    [SerializeField] private AudioData startUpCountdownAudio;
 
     void Awake()
     {
@@ -38,9 +39,13 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
             PlayerInputHandler.instance.DisableAllPlayerActions();
             PlayerInputHandler.instance.DisablePauseAction();
 
+            //Play the "Ready" clip here
+            AudioManager.Instance.PlayUISFX(startUpCountdownAudio.Clips[9], 1f);
             yield return new WaitForSeconds(2f);
 
             StartUpText.text = "GO!";
+            //Play the "Go" Clip here
+            AudioManager.Instance.PlayUISFX(startUpCountdownAudio.Clips[10], 1f);
 
             //How long to wait again (in seconds) before disabling the text gameObject?
             yield return new WaitForSeconds(2f);

@@ -6221,6 +6221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartUpSequence
   StartUpText: {fileID: 850913421}
+  startUpCountdownAudio: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
 --- !u!1 &1462462126
 GameObject:
   m_ObjectHideFlags: 0
