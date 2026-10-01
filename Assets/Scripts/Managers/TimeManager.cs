@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Mathematics;
 
 public class TimeManager : MonoBehaviour
 {
@@ -28,7 +29,6 @@ public class TimeManager : MonoBehaviour
         TimeIncreaseTarget.OnTimeIncrease -= TimeIncrease;
         TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
         Score_TimeDeductionTarget.OnTimeDeduction -= TimeDeduction;
-
         BonusRoundManager.OnBonusRoundStartTime -= StartBonusRound;
     }
 
@@ -45,6 +45,10 @@ public class TimeManager : MonoBehaviour
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
+
+                //Prevents the timer from going below zero
+                timeRemaining = MathF.Max(timeRemaining, 0f);
+
                 DisplayTime(timeRemaining);
             }
             else
@@ -107,7 +111,6 @@ public class TimeManager : MonoBehaviour
         StartCoroutine(BonusTimerBuffer());
 
     }
-
 
     IEnumerator BonusTimerBuffer() //Coroutine to temporarily freeze the timer during the bonus round intro screen
     {
