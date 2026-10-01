@@ -7,16 +7,20 @@ public class ScoreManager : MonoBehaviour
 {
     //This script will be used to be track and store the player's score. It will also make it easier to implement the multiplier functionality without the code becoming a mess.
 
-    //Singleton
-
+    #region Singleton
     public static ScoreManager Instance;
+    #endregion
 
-    //General Variables
+    #region Variables
     private int totalScore; //General Variable to store the score.
     private int hitScore;
+    private int CurrentMultiValue; //Will be used to track and store the current multiplier value
+    private bool isMultiActive; //This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
+    private int bonusRoundThreshold = 3500; //If the player's score hits this threshold, it'll trigger the bonus round (Old Value: 3500)
     private int highScore { get; set; } //To store the player's high score
-    [SerializeField] private AudioData multiplierBarAudio;
-
+    #endregion
+   
+    #region Properties
     public int HighScore
     {
         get { return highScore; }
@@ -33,26 +37,21 @@ public class ScoreManager : MonoBehaviour
         get { return totalScore; }
     }
 
-    private int CurrentMultiValue; //Will be used to track and store the current multiplier value
-    private bool isMultiActive;//This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
-
     public bool IsMultiActive
     {
         get { return isMultiActive; }
         set { isMultiActive = value; }
     }
+    #endregion
 
-    private bool HasBonusBeenTriggered;
-    private int bonusRoundThreshold = 3500; //If the player's score hits this threshold, it'll trigger the bonus round (Old Value: 3500)
-
+    #region Actions
     //Actions
     public static event Action<int> OnScoreChanged;
     public static event Action<int> OnMultiValueChanged;
-
-    public static event Action OnBonusRoundActivated;
-
     public static event Action<int> OnHighScore;
-
+    public static event Action OnBonusRoundActivated;
+    #endregion
+    [SerializeField] private AudioData multiplierBarAudio;
 
     void Awake() //Singleton pattern
     {
@@ -65,7 +64,6 @@ public class ScoreManager : MonoBehaviour
             Instance = this;
         }
     }
-
 
     private void OnEnable()
     {
@@ -85,11 +83,9 @@ public class ScoreManager : MonoBehaviour
         Score_TimeDeductionTarget.OnScoreDeduction -= ScoreDeduction;
     }
 
-
     public void ScoreIncrease(int ScoreValue) //Method for handling adding score that takes in an integer as a parameter 
     {
         hitScore = ScoreValue;
-
 
         //Check to see if the multiplier is active, then apply it to the score
 

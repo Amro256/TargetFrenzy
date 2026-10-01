@@ -303,15 +303,18 @@ public class UIManager : MonoBehaviour
         //There's no need to wait for xyz seconds to disable the countdown text, as the whole group will be disabled in the "BonusRoundIntroScreen" coroutine
     }
 
-    public IEnumerator FinalScoreTally()
-    {
-        while (currentDisplayScore < ScoreManager.Instance.TotalScore)
-        {
-            currentDisplayScore = Mathf.MoveTowards(currentDisplayScore, ScoreManager.Instance.TotalScore, 1000f * Time.deltaTime);
-            FinalScoreText.text = Mathf.FloorToInt(currentDisplayScore).ToString();
-            yield return null;
-        }
-    }
+
+    //------------------------------------------------------------------UNUSED------------------------------------------------------------------ //
+
+    // public IEnumerator FinalScoreTally() 
+    // {
+    //     while (currentDisplayScore < ScoreManager.Instance.TotalScore)
+    //     {
+    //         currentDisplayScore = Mathf.MoveTowards(currentDisplayScore, ScoreManager.Instance.TotalScore, 1000f * Time.deltaTime);
+    //         FinalScoreText.text = Mathf.FloorToInt(currentDisplayScore).ToString();
+    //         yield return null;
+    //     }
+    // }
 
     #endregion
 

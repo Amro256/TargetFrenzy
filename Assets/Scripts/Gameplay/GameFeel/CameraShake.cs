@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class CameraShake : MonoBehaviour //Call this script whenever there's a need for camera shake
 {
     //Singleton

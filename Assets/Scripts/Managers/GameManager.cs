@@ -80,9 +80,10 @@ public class GameManager : MonoBehaviour
     }
 
     void OnDisable()
-    {   
+    {
         PlayerInputHandler.OnPlayerMissedShot -= PlayerMissShot;
         TimeManager.OnOutOfTime -= TimeOver;
+        
     }
 
     void Start()
@@ -125,7 +126,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.HideMainHud();
 
         // 4) Update the "final score" field displayed on the game over panel 
-        StartCoroutine(UIManager.Instance.FinalScoreTally());
+        UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
 
         //5) Update the high score field
         ScoreManager.Instance.PlayerHighScore();
@@ -186,6 +187,7 @@ public class GameManager : MonoBehaviour
         // }
     }
 
+    //Method to track how many targets the player as hit in a row
     public void PlayerHitRowIncrement()
     {
         targetHitInARow++;
@@ -200,7 +202,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateTargetCounterUI(targetHitInARow);
     }
 
-    //Method to track how many targets the player as hit in a row
+    
     public void PlayerHitRowDecrement()
     {
         if (targetHitInARow > 0) //Check to see if the targets hit is greater than 0 before decrementing the value
