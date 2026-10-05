@@ -104,7 +104,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         isMovingOffScreen = true;
 
         //Disable the box collider
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.GetComponent<CircleCollider2D>().enabled = false;
 
         //Sprite Rendered to change the alpha channel
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -131,7 +131,7 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         }
 
         //Re-enable the box collider
-        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.GetComponent<CircleCollider2D>().enabled = true;
         sr.color = defaultColour;
 
         //Return the target to the object pool
