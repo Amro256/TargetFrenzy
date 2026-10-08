@@ -416,7 +416,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Audio Credits:
+  m_text: ' Credits
 
 '
   m_isRightToLeft: 0
@@ -2070,8 +2070,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 172, y: -225}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 868.75287, y: -586}
+  m_SizeDelta: {x: 1593.506, y: 864.591}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1597586069
 MonoBehaviour:
@@ -2093,16 +2093,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Bonus round (Start) - 8bit-style bonus effect by complex_waveform -- https://freesound.org/s/213149/
-    -- License: Attribution 4.0\n\nBonus round (Countdown) - Countdown sound effect
-    8-bit by Lesiakower (pixabay)\n\nGame Over - 8-bit gane over sound effect by
-    Lesiakower (pixabay) \n\nMain Menu Music - GameStart by u_xmiigyhi46 (pixabay)\n\nMultiplier
-    - 8bit-powerup4 from Ultimate 8BIT SFX Library Vol 1 by mOsh (itch.io)\n\nPause
-    / Resume - sfx_sounds_pause3_in / sfx_sounds_pause3_out from The Essential Retro
-    Video Game Sound Effects \nCollection by Juhani Junkala (Open Game art)\n\nReload
-    - Retro Weapon Reload Best A 03 from FreeSFX by Kronbits (itch.io)\n\nStartup
-    countdown - 8-bit Countdown Ready / Go by JapanYoshiTheGamer (freesound.org)\n\nAny
-    remaining uncredited SFX were created by me"
+  m_text: "Art and animation - Created by me\n\nBonus round (Start) - 8bit-style
+    bonus effect by complex_waveform -- https://freesound.org/s/213149/ -- License:
+    Attribution 4.0\n\nBonus round (Countdown) - Countdown sound effect 8-bit by
+    Lesiakower (pixabay)\n\nFont -  Jersey 10 by Sarah Cadigan-Fried (Google Fonts)\n\nGame
+    Over - 8-bit gane over sound effect by Lesiakower (pixabay) \n\nMain Menu Music
+    - GameStart by u_xmiigyhi46 (pixabay)\n\nMultiplier - 8bit-powerup4 from Ultimate
+    8BIT SFX Library Vol 1 by mOsh (itch.io)\n\nPause / Resume - sfx_sounds_pause3_in
+    / sfx_sounds_pause3_out from The Essential Retro Video Game Sound Effects \nCollection
+    by Juhani Junkala (Open Game art)\n\nReload - Retro Weapon Reload Best A 03 from
+    FreeSFX by Kronbits (itch.io)\n\nStartup countdown - 8-bit Countdown Ready /
+    Go by JapanYoshiTheGamer (freesound.org)\n\nAny remaining uncredited SFX - Created
+    by me"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f46a72b67e761b0499ff8770675d7b8a, type: 2}
   m_sharedMaterial: {fileID: 68013573598250340, guid: f46a72b67e761b0499ff8770675d7b8a, type: 2}
@@ -2129,8 +2131,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

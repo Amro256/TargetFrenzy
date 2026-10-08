@@ -88,7 +88,7 @@ public class PlayerInputHandler : MonoBehaviour
                 GameObject currentTarget = PlayerMH.CurrentTarget;
 
                 //Screen Shake 
-                StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
+                StartCoroutine(CameraShake.Instance.BeginScreenShake(0.45f, 0.25f));
                 AudioManager.Instance.PlaySFX(audioSFX.Clips[3], 1f);
 
                 if (Target != null) //Change the If statement to a switch statement (Due to the multiple targets)

@@ -33,10 +33,16 @@ public class AnimationManager : MonoBehaviour //This script will hold and manage
         }
     }
 
-    public void StopAnimation(Animator animator, string aniParam)
+    public void StopAnimation(int animatorIndex, string aniParam)
     {
-    
-        animator.SetBool(aniParam, false);
+        if (animatorIndex >= 0 && animatorIndex < animators.Length)
+        {
+            if (animators[animatorIndex].runtimeAnimatorController != null)
+            {
+                animators[animatorIndex].SetBool(aniParam, false);
+            }
+            
+        }
         
     }
     
