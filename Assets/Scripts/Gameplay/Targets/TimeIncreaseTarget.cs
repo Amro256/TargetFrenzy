@@ -11,13 +11,15 @@ public class TimeIncreaseTarget : TargetClass
     [Header("Target Effects")]
     [SerializeField] private int ScoreValue; 
     [SerializeField] private int ScoreMultiValue;
-    [SerializeField] private int TimeValue = 10; //This target's purpose is to add more time 
+    [SerializeField] private int TimeValue = 10; //This target's purpose is to add more time
+    [SerializeField] private Animator animator; 
 
     //Actions
     public static event Action<int> OnTimeIncrease;
 
     public override void OnHit()
     {
+        animator.SetTrigger("HasTargetBeenHit");
         base.OnHit();
 
         AmmoManager.Instance.UpdateAmmoValue(1);

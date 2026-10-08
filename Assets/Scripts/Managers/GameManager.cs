@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     //General Variables - Bool   
     private bool isPaused; //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
-    private bool isGameOver;
+    private bool isGameOver = false;
     private bool isIntroSeqPlaying { get; set; }
 
     public bool IsIntroSeqPlaying
@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
 
     #region Actions
     //Actions 
-    public static event Action OnOutOfAmmo; //--Action: For displaying the pause UI when the player is out of ammo
     public static event Action OnMaxTargetsRowHit;
     public static event Action OnGameStart; //--Action: For disabling the pause UI on start
     public static event Action OnGamePause; //--Action: Enables the pause UI when the game is paused
@@ -91,7 +90,6 @@ public class GameManager : MonoBehaviour
         IsBonusRActive = false;
         //Start to coroutine for the startup sequence
         StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
-        isGameOver = false;
     }
 
     public void UpdateMouseCursor() //Call this method when the player is hovering over a target
@@ -102,34 +100,37 @@ public class GameManager : MonoBehaviour
     //General Methods 
     public void TimeOver()
     {
-        isGameOver = true;
-
-        //Disable the player's fire and reload input
-        PlayerInputHandler.instance.DisableAllPlayerActions();
-        PlayerInputHandler.instance.DisablePauseAction();
-
-        //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
-
-        // 1) Destroy any targets currently on screen --12/8/26: Changed to disabling the spawners
-        foreach (var spawner in spawners)
+        if (!isGameOver)
         {
-            spawner.gameObject.SetActive(false); //Disables the spawners
-            spawner.DestroyTargets();
-        }
+            
+            //Disable the player's fire and reload input
+            PlayerInputHandler.instance.DisableAllPlayerActions();
+            PlayerInputHandler.instance.DisablePauseAction();
 
-        AudioManager.Instance.PlayMenuSFX(audioSFX.Clips[0], 1f);
+            //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
 
-        // 2) Display the game over panel here
-        OnTimeOver?.Invoke();
+            // 1) Destroy any targets currently on screen --12/8/26: Changed to disabling the spawners
+            
+            foreach (var spawner in spawners)
+            {
+                spawner.gameObject.SetActive(false); //Disables the spawners
+                spawner.DestroyTargets();
+            }
 
-        // 3) Disable the main game hud
-        UIManager.Instance.HideMainHud();
+            AudioManager.Instance.PlayMenuSFX(audioSFX.Clips[0], 1f);
 
-        // 4) Update the "final score" field displayed on the game over panel 
-        UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
+            // 2) Display the game over panel here
+            OnTimeOver?.Invoke();
 
-        //5) Update the high score field
-        ScoreManager.Instance.PlayerHighScore();
+            // 3) Disable the main game hud
+            UIManager.Instance.HideMainHud();
+
+            // 4) Update the "final score" field displayed on the game over panel 
+            UIManager.Instance.UpdateFinalScoreUI(ScoreManager.Instance.TotalScore);
+
+            //5) Update the high score field
+            ScoreManager.Instance.PlayerHighScore();
+        } 
     }
 
     public void PauseGame()

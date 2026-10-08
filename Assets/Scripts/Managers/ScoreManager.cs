@@ -47,7 +47,6 @@ public class ScoreManager : MonoBehaviour
     #region Actions
     //Actions
     public static event Action<int> OnScoreChanged;
-    public static event Action<int> OnMultiValueChanged;
     public static event Action<int> OnHighScore;
     public static event Action OnBonusRoundActivated;
     #endregion

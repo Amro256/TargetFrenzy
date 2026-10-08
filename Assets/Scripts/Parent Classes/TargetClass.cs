@@ -81,12 +81,12 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     }
 
     //Methods to start and stop the return object coroutine
-    public void StartCoroutine() //Can be called in the pool manager
+    public void StartMovingCoroutine() //Can be called in the pool manager
     {
         returnCoroutine = StartCoroutine(ReturnObjectAfterTime());
     }
 
-    public void StopCoroutine() //Can also be called in the pool manager
+    public void StopMovingCoroutine() //Can also be called in the pool manager
     {
         if (returnCoroutine != null) //Checks if the coroutine is currently running
         {

@@ -73,7 +73,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Start()
     {
-        PlayerMH = FindObjectOfType<MouseHandler>(); //Finds an object that has the mouse handler script attached to it
+        PlayerMH = FindAnyObjectByType<MouseHandler>(); //Finds an object that has the mouse handler script attached to it
     }
 
     #region Methods for Input Actions
@@ -85,21 +85,19 @@ public class PlayerInputHandler : MonoBehaviour
             if (PlayerMH.CurrentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
                 TargetClass Target = PlayerMH.CurrentTarget.GetComponent<TargetClass>();
-                
+                GameObject currentTarget = PlayerMH.CurrentTarget;
+
                 //Screen Shake 
                 StartCoroutine(CameraShake.Instance.BeginScreenShake(0.35f, 0.15f));
                 AudioManager.Instance.PlaySFX(audioSFX.Clips[3], 1f);
 
                 if (Target != null) //Change the If statement to a switch statement (Due to the multiple targets)
                 {
-                    Target.OnHit();
-                    //Invoke Action Here
-                    OnConfirmedHit?.Invoke(); //This action will consume ammo if the player hits a target and the UI will update accordingly
-
+                    StartCoroutine(ReturnTargetToPoolAfterAnimation(Target, currentTarget));
                 }
+                
+                //PoolManager.Instance.ReturnPooledObject(PlayerMH.CurrentTarget);
 
-                //Destroy(PlayerMH.CurrentTarget);
-                PoolManager.Instance.ReturnPooledObject(PlayerMH.CurrentTarget);
             }
             else
             {
@@ -114,6 +112,17 @@ public class PlayerInputHandler : MonoBehaviour
                 OnPlayerMissedShot?.Invoke();
             }
         }
+    }
+
+    private IEnumerator ReturnTargetToPoolAfterAnimation(TargetClass target, GameObject currentTarget)
+    {
+        target.OnHit();
+
+        //Invoke Action Here
+        OnConfirmedHit?.Invoke(); //This action will consume ammo if the player hits a target and the UI will update accordingly
+
+        yield return new WaitForSeconds(35f / 60f); //Wait for the animation to finish playing before return a target to the pool
+        PoolManager.Instance.ReturnPooledObject(currentTarget);
     }
 
     private void OnReload(InputAction.CallbackContext context) //Reload is mapped to the "R" key as of now

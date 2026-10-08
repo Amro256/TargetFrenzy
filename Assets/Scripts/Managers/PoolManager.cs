@@ -10,6 +10,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     public class PoolMember : MonoBehaviour // 30/6/26: Added a class that acts as a data container 
     {
         public GameObject prefab;
+        public Animator animator;
     }
     #endregion
 
@@ -60,6 +61,8 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
         // 2) Initialise the dictionary, which create an empty dictionary waiting to be populated
         poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
+        
+        
 
         GenerateObjectsToPool();
     }
@@ -77,6 +80,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
     }
 
+    #region Pool Methods
     private void GenerateObjectsToPool()
     {
         // 3) Use a for each loop to loop through the prefab list and add the objects to the list
@@ -88,13 +92,13 @@ public class PoolManager : MonoBehaviour //Script for object pooling
             // 5) Add all the objects to the target pool
             for (int i = 0; i < poolSize; i++)
             {
-
                 // 6) Fill out pool by instantiating the prefabs
                 GameObject obj = Instantiate(objectPrefab);
 
                 //Object (copy of the class)
                 PoolMember member = obj.AddComponent<PoolMember>(); //Adds the "PoolMember" component to the instantiated objects
                 member.prefab = objectPrefab; //Holds a reference to the original prefab
+                member.animator = obj.GetComponent<Animator>();
 
 
                 // 7) Attached the Instantiated objects to the parent game object
@@ -124,7 +128,6 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         // 11) Remove an object from the queue for use in game
         GameObject targetObj = pool.Dequeue();
 
-
         //Commented out for testing
         TargetClass target = targetObj.GetComponent<TargetClass>(); //Here we get the targets in the pool that have the target class script (or derived) script attached to it
         activeTargets.Add(target); //Add it the active targets list
@@ -133,9 +136,8 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         IncrementTargetsOnScreen(); //To track how many objects are currently on screen
         targetObj.SetActive(true); //Set the object to true so it becomes visible
 
-
-        //Call the coroutine to return the object to the pool after a set amount of time
-        target.StartCoroutine();
+        //Call the coroutine (from the target class) to return the object to the pool after moving off screen
+        target.StartMovingCoroutine();
 
         return targetObj;
     }
@@ -146,23 +148,31 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     {
         // 13) Fetch the "PoolMember" component that is attached to the current object
         PoolMember member = targetObj.GetComponent<PoolMember>();
-        TargetClass target = targetObj.GetComponent<TargetClass>(); //Here we get the targets in the pool that have the target class script (or derived) script attached to it
+        TargetClass target = targetObj.GetComponent<TargetClass>(); //Here we get the targets in the pool that contains the target class script (or derived) script attached to it
 
         // 14) Return the correct objects to the queue based on the store prefab reference 
         poolDictionary[member.prefab].Enqueue(targetObj);
 
         if (target != null) //Check whether a target has been hit or not (manually)
         {
-            target.StopCoroutine(); //Stop the coroutine to prevent any issues with the "current objects on screen" value
+            target.StopMovingCoroutine(); //Stop the coroutine to prevent any issues with the "current objects on screen" value
             activeTargets.Remove(target); //Removing it from the active targets list
-        }   
-        
+        }
+
+        //Reset the animation state before returning the object to the pool
+        if (member.animator != null)
+        {
+            member.animator.Rebind(); //Resets the animator to its default state
+            member.animator.Update(0);
+        }
+
         // 15) Set the gameobject back to false as it no longer is being used
         targetObj.SetActive(false);
 
         DecrementTargetsOnScreen();
 
     }
+    #endregion
 
     public void IncrementTargetsOnScreen()
     {

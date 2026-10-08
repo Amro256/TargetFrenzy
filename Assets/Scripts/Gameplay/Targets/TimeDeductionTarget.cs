@@ -13,11 +13,16 @@ public class TimeDeductionTarget : TargetClass
     [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeValue; //This target's purpose is to ONLY deduct time.
 
+    [SerializeField] private Animator animator;
+
+
     //Actions
     public static event Action<int> OnTimeDeduction;
 
     public override void OnHit()
     {
+        animator.SetTrigger("HasTargetBeenHit");
+
         base.OnHit();
 
         AmmoManager.Instance.UpdateAmmoValue(1);
@@ -26,7 +31,7 @@ public class TimeDeductionTarget : TargetClass
 
 
         OnTimeDeduction?.Invoke(TimeValue);
-        
+
         ScorePopUpManager.Instance.ShowTimerPopUp(transform.position, "-", TimeValue, Color.darkRed);
     }
 }

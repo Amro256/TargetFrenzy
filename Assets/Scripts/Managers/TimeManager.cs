@@ -63,12 +63,8 @@ public class TimeManager : MonoBehaviour
             if (timeRemaining <= 15) //Check to see if timer remaining is less than 15 seconds, if so, then play the warning animation
             {
                 Debug.Log("Less than 15 seconds remaining. Play Animation"); //Works as intended
-                AnimationManager.Instance.StartAnimation("ValueHasReachedThreshold");
+                AnimationManager.Instance.StartAnimation(0, "ValueHasReachedThreshold");
 
-            }
-            else
-            {
-                AnimationManager.Instance.StopAnimation("ValueHasReachedThreshold"); //24/7/26: Forgot to add this initially to prevent the timer text remaining red if the timer is greater than 15 seconds
             }
         }
     }

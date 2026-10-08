@@ -12,6 +12,8 @@ public class BasicTarget : TargetClass
     [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeDeduction;
 
+    [SerializeField] private Animator animator;
+
     //Actions
     public static event Action<int> OnTargetHit;
 
@@ -19,18 +21,17 @@ public class BasicTarget : TargetClass
     //Create a method that will handle the score and then call it in the mouse input script
     public override void OnHit()
     {
-        base.OnHit();
+        animator.SetTrigger("HasTargetBeenHit");
         
-        //Update the ammo value
+        base.OnHit();
 
+        //Update the ammo value
         AmmoManager.Instance.UpdateAmmoValue(1);
 
         GameManager.Instance.PlayerHitRowIncrement();
 
         OnTargetHit?.Invoke(ScoreValue);
 
-        
-    
         ScorePopUpManager.Instance.ShowScorePopUp(transform.position, "+", ScoreValue, "pts", Color.green);
     }
 

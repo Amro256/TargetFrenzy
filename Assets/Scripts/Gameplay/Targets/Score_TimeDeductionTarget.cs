@@ -12,6 +12,7 @@ public class Score_TimeDeductionTarget : TargetClass
     [SerializeField] private int ScoreValue = 10; //With this target, the player loses some of their score and current time
     [SerializeField] private int ScoreMultiValue;
     [SerializeField] private int TimeValue;
+    [SerializeField] private Animator animator;
 
     //Actions 
     public static event Action<int> OnScoreDeduction;
@@ -20,6 +21,7 @@ public class Score_TimeDeductionTarget : TargetClass
 
     public override void OnHit()
     {
+        animator.SetTrigger("HasTargetBeenHit");
         base.OnHit();
 
         //Add code here for score and time deduction

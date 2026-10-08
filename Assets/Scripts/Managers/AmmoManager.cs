@@ -61,7 +61,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     void Start()
     {
-        CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts 
+        CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
     }
 
     public void UpdateAmmoValue(int amount) //This method will be responsible for updating the Ammo Value
@@ -80,7 +80,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
             UIManager.Instance.ShowReloadWarning();
 
             //Play animation here
-            AnimationManager.Instance.StartAnimation("IsLowOnAmmo");
+            AnimationManager.Instance.StartAnimation(1, "IsLowOnAmmo");
         }
     }
 

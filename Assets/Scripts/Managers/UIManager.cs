@@ -42,10 +42,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Ammo Sprite Objects")]
     [SerializeField] private GameObject[] ammoSprites; //Reference to the ammo group sitting in the bottom left of the screen
-
-    [Header("Others")]
-    private float currentDisplayScore = 0;
-    private float currentHighScoreDisplay = 0;
     #endregion
 
     #region Actions

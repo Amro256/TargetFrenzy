@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7277596770102226905}
   - component: {fileID: 5671278692039514491}
   - component: {fileID: 5982534735651780287}
+  - component: {fileID: 8546572319501621728}
   m_Layer: 0
   m_Name: Target_Penalty
   m_TagString: PenTarget
@@ -147,3 +148,26 @@ MonoBehaviour:
   ScoreValue: 100
   ScoreMultiValue: 0
   TimeValue: 15
+  animator: {fileID: 8546572319501621728}
+--- !u!95 &8546572319501621728
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004156872212290216}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: db2e7a7afcf92e74cb5bc7df5cbd4029, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

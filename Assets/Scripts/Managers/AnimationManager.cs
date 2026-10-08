@@ -5,10 +5,8 @@ public class AnimationManager : MonoBehaviour //This script will hold and manage
 {
     public static AnimationManager Instance { get; private set; } //Singleton Pattern
 
-
     //General Variables
     [SerializeField] private Animator[] animators; //Array to hold the animator components attached to different game objects
-
 
     void Awake()
     {
@@ -23,20 +21,23 @@ public class AnimationManager : MonoBehaviour //This script will hold and manage
     }
 
     //Methods to start and stop the animation
-    public void StartAnimation(string aniParam)
+    public void StartAnimation(int animatorIndex, string aniParam)
     {
-        foreach (Animator am in animators)
+        if (animatorIndex >= 0 && animatorIndex < animators.Length)
         {
-            am.SetBool(aniParam, true);
+            if (animators[animatorIndex].runtimeAnimatorController != null)
+            {
+                animators[animatorIndex].SetBool(aniParam, true);
+            }
+            
         }
     }
 
-    public void StopAnimation(string aniParam)
+    public void StopAnimation(Animator animator, string aniParam)
     {
-        foreach (Animator am in animators)
-        {
-            am.SetBool(aniParam, false );
-        }
+    
+        animator.SetBool(aniParam, false);
+        
     }
     
 }

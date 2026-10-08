@@ -6109,7 +6109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationManager
   animators:
-  - {fileID: 1250459557}
   - {fileID: 223418917}
   - {fileID: 1292070562}
 --- !u!1 &1440959040
