@@ -33,6 +33,7 @@ public class BonusRoundManager : MonoBehaviour
         if (!GameManager.Instance.BonusRoundBool)
        {
         GameManager.Instance.BonusRoundBool = true;
+        UIManager.Instance.HideTargetCountGroup();
 
         ResetHudElements();
             
@@ -53,11 +54,11 @@ public class BonusRoundManager : MonoBehaviour
         // 1) Call the coroutine from the UI manager here
         StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
         AudioManager.Instance.PlayUISFX(audioSFX.Clips[8], 1f);
-        //PoolManager.Instance.objectsOnScreen = 1; //Without this, the object on screen value will display -2 in the inspector
 
 
         // 2) Call the coroutine from the countdown manager here
         StartCoroutine(CountdownManager.Instance.CountdownTimer());
+
 
         // 3) Re-enable the spawners objects
         StartCoroutine(ReEnableSpawners());

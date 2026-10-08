@@ -30,10 +30,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Canvas GameOverCanvas; //Reference to the Game Over Canvas
     [SerializeField] private Canvas GameHudCanvas; //Reference to the game hud
 
-    [Header("UI Game Objects References")]
+    [Header("specific UI Game Objects References")]
     [SerializeField] private GameObject BonusStartText; //Reference to gameobject containing the text for the start of the bonus round
     [SerializeField] private GameObject BonusCountdownText; //Reference to gameobject containing the countdown text for the bonus round
     [SerializeField] private GameObject ReloadWarningText;
+    [SerializeField] private GameObject targetCounterGroup;
 
 
     [Header("UI Groups")]
@@ -212,6 +213,11 @@ public class UIManager : MonoBehaviour
     public void HideCountdownText()
     {
         BonusCountdownText.gameObject.SetActive(false);
+    }
+
+    public void HideTargetCountGroup()
+    {
+        targetCounterGroup.SetActive(false);
     }
     #endregion
 

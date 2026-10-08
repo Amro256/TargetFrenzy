@@ -3737,6 +3737,7 @@ MonoBehaviour:
   BonusStartText: {fileID: 611326958}
   BonusCountdownText: {fileID: 99162027}
   ReloadWarningText: {fileID: 1280186599}
+  targetCounterGroup: {fileID: 1140820752}
   gameHUD:
   - {fileID: 1184091385}
   - {fileID: 1245120421}

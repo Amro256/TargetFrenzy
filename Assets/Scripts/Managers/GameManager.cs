@@ -18,18 +18,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SpawnerClass[] spawners;
     [SerializeField] private AudioData audioSFX;
 
-
+    #region Variables
     //General Variables - Bool   
     private bool isPaused; //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
     private bool isGameOver = false;
     private bool isIntroSeqPlaying { get; set; }
+    #endregion
 
+    #region Properties
     public bool IsIntroSeqPlaying
     {
         get { return isIntroSeqPlaying; }
         set { isIntroSeqPlaying = value; }
-     }
+    }
 
     public bool BonusRoundBool
     {
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
         get { return isPaused; }
         set { isPaused = value; }
     }
+    #endregion
 
 
     //14/4/26: The variables below were moved from the player input script to the game manager 
