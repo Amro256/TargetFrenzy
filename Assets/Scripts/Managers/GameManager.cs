@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     //References
     public int targetHitInARow; //To track the targets hit
+    [SerializeField] private float spawnTime =  3.5f;
     [SerializeField] private int maxTargetsToHit = 10;
     [SerializeField] private Texture2D targetReticleTexture;
     [SerializeField] private SpawnerClass[] spawners;
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
     //General Variables - Bool   
     private bool isPaused; //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
+    private bool isBonusRoundIntroPlaying = false;
     private bool isGameOver = false;
     private bool isIntroSeqPlaying { get; set; }
     #endregion
@@ -37,6 +40,12 @@ public class GameManager : MonoBehaviour
     {
         get { return IsBonusRActive; }
         set { IsBonusRActive = value; }
+    }
+
+    public bool BonusRoundIntro
+    {
+        get { return isBonusRoundIntroPlaying; }
+        set { isBonusRoundIntroPlaying = value; }
     }
 
     public bool IsPaused
@@ -93,6 +102,35 @@ public class GameManager : MonoBehaviour
         IsBonusRActive = false;
         //Start to coroutine for the startup sequence
         StartCoroutine(StartUpSequence.Instance.BeginStartUpSequence());
+        StartCoroutine(StartSpawnCycle());
+    }
+
+
+    //This was moved out of the spawner parent class and intro the game manager to centralise the spawning
+    private IEnumerator StartSpawnCycle()
+    {
+        //Wait until the intro sequence is done playing before executing the code below
+        yield return new WaitUntil(() => !IsIntroSeqPlaying);
+
+        while (true)
+        {
+            //Don't spawn any targets during the bonus round intro sequence
+            yield return new WaitUntil(() => !BonusRoundIntro);
+
+            if (!PoolManager.Instance.HasReachedMaxOnScreen) //Spawn targets if the amount on screen has not reached its max on screen value (5)
+            {
+                foreach (SpawnerClass spawner in spawners)
+                {
+                    if (PoolManager.Instance.HasReachedMaxOnScreen) //Stop spawning if IT HAS reached it max on screen value
+                        break;
+
+                    spawner.SpawnTarget(); //Call the spawn target method, which is responsible for spawning targets and assigning the lerp points
+                }
+
+            }
+            yield return new WaitForSeconds(spawnTime);  //How long to wait before spawning in targets  
+
+        }
     }
 
     public void UpdateMouseCursor() //Call this method when the player is hovering over a target
@@ -114,11 +152,13 @@ public class GameManager : MonoBehaviour
 
             // 1) Destroy any targets currently on screen --12/8/26: Changed to disabling the spawners
             
-            foreach (var spawner in spawners)
+            foreach (SpawnerClass spawner in spawners)
             {
                 spawner.gameObject.SetActive(false); //Disables the spawners
-                spawner.DestroyTargets();
+               
             }
+
+            PoolManager.Instance.DestroyAllTargets();
 
             AudioManager.Instance.PlayMenuSFX(audioSFX.Clips[0], 1f);
 

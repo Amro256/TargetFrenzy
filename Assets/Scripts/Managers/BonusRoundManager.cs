@@ -6,9 +6,9 @@ using Unity.VisualScripting;
 public class BonusRoundManager : MonoBehaviour
 {
     //General variables
-    [SerializeField] private GameObject[] spawnerObjects;
     [SerializeField ] private SpawnerClass[] spawners;
     [SerializeField] private AudioData audioSFX;
+
 
     //Actions
     public static event Action OnBonusRoundStartTime;
@@ -33,6 +33,7 @@ public class BonusRoundManager : MonoBehaviour
         if (!GameManager.Instance.BonusRoundBool)
        {
         GameManager.Instance.BonusRoundBool = true;
+        GameManager.Instance.BonusRoundIntro = true;
         UIManager.Instance.HideTargetCountGroup();
 
         ResetHudElements();
@@ -40,16 +41,13 @@ public class BonusRoundManager : MonoBehaviour
         //Action here
         OnBonusRoundStartTime?.Invoke();
 
-        foreach (GameObject spawners in spawnerObjects) //Disables all the spawners
+        foreach (SpawnerClass spawners in spawners) //Disables all the spawners
         {
-            spawners.SetActive(false);
+            spawners.gameObject.SetActive(false);
             Debug.Log("Spawners disabled");
         }
 
-        foreach (SpawnerClass spawner in spawners) //Return any targets to the pool before the round start
-        {
-            spawner.DestroyTargets();
-        }
+        PoolManager.Instance.DestroyAllTargets();
 
         // 1) Call the coroutine from the UI manager here
         StartCoroutine(UIManager.Instance.BonusRoundIntroScreen());
@@ -58,7 +56,6 @@ public class BonusRoundManager : MonoBehaviour
 
         // 2) Call the coroutine from the countdown manager here
         StartCoroutine(CountdownManager.Instance.CountdownTimer());
-
 
         // 3) Re-enable the spawners objects
         StartCoroutine(ReEnableSpawners());
@@ -84,18 +81,14 @@ public class BonusRoundManager : MonoBehaviour
     {
         yield return new WaitForSeconds(7f);
 
-        foreach (GameObject spawner in spawnerObjects)
+        foreach (SpawnerClass spawner in spawners)
         {
-            spawner.SetActive(true);
+            spawner.gameObject.SetActive(true);
         }
 
         yield return new WaitForSeconds(2f);
 
-        foreach (var spawner in spawners)
-        {
-            //Call the spawn target script
-            spawner.SpawnTargets();
-            Debug.Log("Spawning: " + spawner);
-        }
+        GameManager.Instance.BonusRoundIntro = false;
+
     }
 }

@@ -130,13 +130,12 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
             yield return null;
         }
 
+        //Return the target to the object pool
+        PoolManager.Instance.ReturnPooledObject(gameObject);
+        
         //Re-enable the box collider
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
         sr.color = defaultColour;
-
-        //Return the target to the object pool
-        PoolManager.Instance.ReturnPooledObject(gameObject);
-        //Debug.Log(gameObject + " Returned to the pool");
     }
     #endregion
 }

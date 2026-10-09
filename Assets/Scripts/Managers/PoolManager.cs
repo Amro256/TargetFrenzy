@@ -26,7 +26,6 @@ public class PoolManager : MonoBehaviour //Script for object pooling
     [SerializeField] private List<GameObject> targetPrefabs; //Reference to the objects I want to pool
     [SerializeField] private int poolSize; //To control the size of the pool
     private List<TargetClass> activeTargets = new List<TargetClass>(); //A new list to hold targets with the target class (or derived) script attached to it
-    private bool hasReachedMaxOnScreen; //Bool to check if the objects on screen has reached it's maximum amount
     #endregion
 
     #region Properties
@@ -63,8 +62,7 @@ public class PoolManager : MonoBehaviour //Script for object pooling
         poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
         
         
-
-        GenerateObjectsToPool();
+        GenerateObjectsToPool(); //Populate the pool on awake
     }
 
 
@@ -173,6 +171,23 @@ public class PoolManager : MonoBehaviour //Script for object pooling
 
     }
     #endregion
+
+    // Moved from the spawner class into the pool manager
+    public void DestroyAllTargets()
+    {
+        // Create a list that will store active targets that will return to the pool when the bonus round is triggered
+        List<TargetClass> targetsToReturn = new List<TargetClass>(activeTargets);
+
+        foreach (TargetClass target in targetsToReturn)
+        {
+            if (target != null && target.gameObject.activeSelf)
+            {
+                ReturnPooledObject(target.gameObject);
+            }
+        }
+        //clear the active targets list to prevent an issues
+        activeTargets.Clear();
+    }
 
     public void IncrementTargetsOnScreen()
     {

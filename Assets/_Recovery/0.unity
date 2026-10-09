@@ -1018,6 +1018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c746149e25c2f439a3213b4d2f9867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnTime: 3.8
   targetObjects:
   - targetPrefab: {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
     targetWeight: 30
@@ -2041,6 +2042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9a399d2bbe4af4883fe3ed487883c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnTime: 3.7
   targetObjects:
   - targetPrefab: {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
     targetWeight: 20
@@ -3219,6 +3221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecd780b9b527264baf093d23c6b33c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnTime: 3.5
   targetObjects:
   - targetPrefab: {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
     targetWeight: 50
@@ -3833,6 +3836,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e377145b8979bb4e9af931fd76e0c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BonusRoundManager
+  spawnerObjects:
+  - {fileID: 777882533}
+  - {fileID: 1808147570}
+  - {fileID: 547356823}
+  - {fileID: 256553236}
   spawners:
   - {fileID: 777882535}
   - {fileID: 1808147572}
@@ -8112,6 +8120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc9363623ac25548817d66c941393df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnTime: 3.6
   targetObjects:
   - targetPrefab: {fileID: 2589061412695622472, guid: 930d81bbaa632714aa8549bf75f137eb, type: 3}
     targetWeight: 25
@@ -9273,7 +9282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHitInARow: 0
-  spawnTime: 3.5
   maxTargetsToHit: 10
   targetReticleTexture: {fileID: 2800000, guid: c7e0dead9005b064290b52f17ae21656, type: 3}
   spawners:

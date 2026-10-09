@@ -10,17 +10,5 @@ public class Spawner3 : SpawnerClass //This class inherits from the Spawner Clas
     //11/6/26: Most of the code in this script (and the other spawner scripts) has been moved to the spawner class. They are inherit the same behaviour, so why copy them into their individual scripts.
     // It'll also make debugging easier, as I only have to go through one centralised script. 
 
-    void Start()
-    {
-        SpawnTargets();
-        //Call the SpawnTargets method here
-    }
-
-
-    //Override the Instantiation code here
-    public override void SpawnTargets()
-    {
-        StartCoroutine(InstantiateTargets());
-    }
     
 }
