@@ -16,7 +16,7 @@ public class ScoreManager : MonoBehaviour
     private int hitScore;
     private int CurrentMultiValue; //Will be used to track and store the current multiplier value
     private bool isMultiActive; //This bool will be used to check whether the score multiplier is active or not! (By default it'll be set to false)
-    private int bonusRoundThreshold = 3500; //If the player's score hits this threshold, it'll trigger the bonus round (Old Value: 3500)
+    private int bonusRoundThreshold = 4000; //If the player's score hits this threshold, it'll trigger the bonus round (Old Value: 3500)
     private int highScore { get; set; } //To store the player's high score
     #endregion
    

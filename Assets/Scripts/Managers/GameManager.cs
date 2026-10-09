@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
             {
                 foreach (SpawnerClass spawner in spawners)
                 {
-                    if (PoolManager.Instance.HasReachedMaxOnScreen) //Stop spawning if IT HAS reached it max on screen value
+                    if (PoolManager.Instance.HasReachedMaxOnScreen | isGameOver == true) //Stop spawning if IT HAS reached it max on screen value OR the game is over
                         break;
 
                     spawner.SpawnTarget(); //Call the spawn target method, which is responsible for spawning targets and assigning the lerp points
@@ -143,7 +143,8 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
-            
+            isGameOver = true; 
+
             //Disable the player's fire and reload input
             PlayerInputHandler.instance.DisableAllPlayerActions();
             PlayerInputHandler.instance.DisablePauseAction();
@@ -152,11 +153,12 @@ public class GameManager : MonoBehaviour
 
             // 1) Destroy any targets currently on screen --12/8/26: Changed to disabling the spawners
             
-            foreach (SpawnerClass spawner in spawners)
+            foreach (var spawner in spawners)
             {
                 spawner.gameObject.SetActive(false); //Disables the spawners
                
-            }
+            }   
+
 
             PoolManager.Instance.DestroyAllTargets();
 
