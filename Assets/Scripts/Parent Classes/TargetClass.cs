@@ -82,7 +82,10 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     //Methods to start and stop the return object coroutine
     public void StartMovingCoroutine() //Can be called in the pool manager
     {
-        returnCoroutine = StartCoroutine(ReturnObjectAfterTime());
+        if (returnCoroutine == null)
+        {
+            returnCoroutine = StartCoroutine(ReturnObjectAfterTime());
+        }
     }
 
     public void StopMovingCoroutine() //Can also be called in the pool manager
@@ -100,43 +103,48 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     {
         yield return new WaitForSeconds(targetTimer); //Wait for 10 seconds 
 
-        isMovingOffScreen = true;
-
-        //Disable the box collider
-        gameObject.GetComponent<CircleCollider2D>().enabled = false;
-
-        //Sprite Rendered to change the alpha channel
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        var defaultColour = sr.color; //Store the default colour of the target
-
-        sr.color = new Color(0.5f, 0.5f, 0.5f, 0.5f); //Sets the targets' colour to gray and alpha channel to 50%
-
-        //Move the target to the middle point
-        while (Vector3.Distance(transform.position, offScreenMidPoint.position) > 0.1f)
+        if (!isMovingOffScreen)
         {
-            Debug.Log("Move targets off screen");
-            transform.position = Vector3.MoveTowards(transform.position, offScreenMidPoint.position, moveSpeed * Time.deltaTime);
+            isMovingOffScreen = true;
 
+
+            //Sprite Rendered to change the alpha channel
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            var defaultColour = sr.color; //Store the default colour of the target
+
+            //Disable the box collider
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            sr.color = new Color(0.5f, 0.5f, 0.5f, 0.5f); //Sets the targets' colour to gray and alpha channel to 50%
+
+            //Move the target to the middle point
+            while (Vector3.Distance(transform.position, offScreenMidPoint.position) > 0.1f)
+            {
+                Debug.Log("Move targets off screen");
+                transform.position = Vector3.MoveTowards(transform.position, offScreenMidPoint.position, moveSpeed * Time.deltaTime);
+
+                yield return null;
+            }
+
+            //Afterwards move the target to the off screen position, where it will then return to the pool
+            while (Vector3.Distance(transform.position, offScreenPoint.position) > 0.1f)
+            {
+                Debug.Log("Move targets off screen");
+                transform.position = Vector3.MoveTowards(transform.position, offScreenPoint.position, moveSpeed * Time.deltaTime);
+
+                yield return null;
+            }
+
+            //Re-enable the box collider
+            gameObject.GetComponent<CircleCollider2D>().enabled = true;
+            sr.color = defaultColour;
+            isMovingOffScreen = false;
+
+            //Return the target to the object pool
+            PoolManager.Instance.ReturnPooledObject(gameObject);
+            
             yield return null;
         }
-
-        //Afterwards move the target to the off screen position, where it will then return to the pool
-        while (Vector3.Distance(transform.position, offScreenPoint.position) > 0.1f)
-        {
-            Debug.Log("Move targets off screen");
-            transform.position = Vector3.MoveTowards(transform.position, offScreenPoint.position, moveSpeed * Time.deltaTime);
-
-            yield return null;
-        }
-
-        //Return the target to the object pool
-        PoolManager.Instance.ReturnPooledObject(gameObject);
-
-        //Re-enable the box collider
-        gameObject.GetComponent<CircleCollider2D>().enabled = true;
-        sr.color = defaultColour;
-        
-        yield return null;
+           
     }
     #endregion
 }
