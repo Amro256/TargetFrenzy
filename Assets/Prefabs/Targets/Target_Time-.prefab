@@ -147,7 +147,7 @@ MonoBehaviour:
   moveSpeed: 8
   ScoreValue: 0
   ScoreMultiValue: 0
-  TimeValue: 20
+  TimeValue: 25
   animator: {fileID: 5193568335792828340}
 --- !u!95 &5193568335792828340
 Animator:

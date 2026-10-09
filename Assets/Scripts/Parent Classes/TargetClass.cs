@@ -25,7 +25,6 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
     #region Variables
     //General variables
-    private GameObject prefabTarget;
     private float targetTimer = 10f; //How long targets are able to stay on screen for before returning to the pool
     private Coroutine returnCoroutine;
     private bool isMovingOffScreen = false;
@@ -132,10 +131,12 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
 
         //Return the target to the object pool
         PoolManager.Instance.ReturnPooledObject(gameObject);
-        
+
         //Re-enable the box collider
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
         sr.color = defaultColour;
+        
+        yield return null;
     }
     #endregion
 }
