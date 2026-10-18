@@ -26,15 +26,26 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
     #region Variables
     //General variables
     private float targetTimer = 10f; //How long targets are able to stay on screen for before returning to the pool
+    private SpriteRenderer sr;
+    private Color defaultColour;
     private Coroutine returnCoroutine;
     private bool isMovingOffScreen = false;
 
     #endregion
 
+
+    void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        defaultColour = sr.color; //Store the default colour of the target
+    }
+
     private void OnEnable()
     {
         moveSpeed = PoolManager.Instance.CurrentMoveSpeed;
         isMovingOffScreen = false; //Reset the bool
+
+        sr.color = defaultColour;
     }
 
     void Start()
@@ -106,11 +117,6 @@ public class TargetClass : MonoBehaviour //Parent class that all the target scri
         if (!isMovingOffScreen)
         {
             isMovingOffScreen = true;
-
-
-            //Sprite Rendered to change the alpha channel
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            var defaultColour = sr.color; //Store the default colour of the target
 
             //Disable the box collider
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
