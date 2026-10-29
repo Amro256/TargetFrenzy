@@ -6,8 +6,8 @@ public class MouseHandler : MonoBehaviour
 {
 
     //14/4/16: Variables moved from the Player Input Handler:
-    private Vector3 mousePos; //Stores the screen space mouse position    
-    private Vector3 mouseWorldPos; // Stores the world space mouse position
+    private Vector3 screenTouchPos; //Stores the screen space mouse position    
+    private Vector3 screenTouchWorldPos; // Stores the world space mouse position
     private GameObject currentTarget; //To store the target the mouse is current hovering over --14/4/24: This has now been moved to the new Mouse Handler script, as its more relevant to that script than the input handler
     
     public GameObject CurrentTarget //Property field so the Player Input script can access the 'current target'
@@ -18,26 +18,40 @@ public class MouseHandler : MonoBehaviour
     //Update is called once per frame
     private void Update()
     {
-        mousePos = PlayerInputHandler.instance.ReadMouseValue(); //Reads and updates the mouse position on screen (In screen space)
-        mousePos.z = Camera.main.nearClipPlane; //Set the z coordinate to the camera's near clip - this will keep it in the visible area
-        mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos); //Converts the screen space coordinates to world space (provides xyz coordinates
-
-        //Raycast code taken from the target detection script for testing - Placing the raycast code here means each target gameobject wont need to have the "target detection"
-        //script attached to it
-
-        //Fire a raycast that will detect the targets by tag
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(mouseWorldPos.x, mouseWorldPos.y), Vector2.zero, 0);
-        Debug.DrawRay(mouseWorldPos, Vector2.up * 0.1f, Color.red, 10f);
-
-        if (hit)
+        if (Input.touchCount > 0)
         {
+            Touch touch = Input.GetTouch(0); //Gets the first touch
+
+            if (touch.phase != TouchPhase.Began) return;
+
+            screenTouchPos = touch.position;
+        }
+
+            screenTouchPos = PlayerInputHandler.instance.ReadTouchPosition(); //Reads and updates the mouse position on screen (In screen space)
+        
+            screenTouchPos.z = Camera.main.nearClipPlane; //Set the z coordinate to the camera's near clip - this will keep it in the visible area
+            screenTouchWorldPos = Camera.main.ScreenToWorldPoint(screenTouchPos); //Converts the screen space coordinates to world space (provides xyz coordinates
+
+            //Debug.Log(screenTouchWorldPos);
+
+            //Raycast code taken from the target detection script for testing - Placing the raycast code here means each target gameobject wont need to have the "target detection"
+            //script attached to it
+
+            //Fire a raycast that will detect the targets by tag
+            RaycastHit2D hit = Physics2D.Raycast(screenTouchWorldPos, Vector2.zero, 0f);
+            Debug.DrawRay(screenTouchWorldPos, Vector2.up * 0.1f, Color.red, 10f);
+            
+
+            if (hit)
+             {
             currentTarget = hit.collider.gameObject;
             GameManager.Instance.UpdateMouseCursor();
 
-        }
-        else
-        {
+            }
+             else
+            {
             currentTarget = null;  //Debug.Log("Nothing detected"); //for debugging
-        }
+             }
+        
     }
 }

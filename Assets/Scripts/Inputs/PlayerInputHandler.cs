@@ -42,7 +42,7 @@ public class PlayerInputHandler : MonoBehaviour
         inputs.Pause.Enable(); //Only has the pause functionality
 
         //Subscribe the actions to the "performed" binding
-        inputs.Player.Fire.performed += OnFire;
+        inputs.Player.TouchPressed.performed += OnTouchPressed;
         inputs.Player.Reload.performed += OnReload;
         inputs.Pause.Pause.performed += OnPause;
 
@@ -60,7 +60,7 @@ public class PlayerInputHandler : MonoBehaviour
         inputs.Pause.Disable(); //Only has the pause functionality
 
         //unsubscribe the actions from the "performed" binding
-        inputs.Player.Fire.performed -= OnFire;
+        inputs.Player.TouchPressed.performed -= OnTouchPressed;
         inputs.Player.Reload.performed -= OnReload;
         inputs.Pause.Pause.performed -= OnPause;
 
@@ -78,10 +78,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     #region Methods for Input Actions
     //Method for shooting / firing - using Unity Events as the notification behaviour 
-    private void OnFire(InputAction.CallbackContext context)
+    private void OnTouchPressed(InputAction.CallbackContext context)
     {
-        if (context.performed) //Check if the action has been performed / completed
-        {
+        if (!context.performed) return; //Check if the action has been performed / completed
+        
             if (PlayerMH.CurrentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
             {
                 TargetClass Target = PlayerMH.CurrentTarget.GetComponent<TargetClass>();
@@ -95,9 +95,8 @@ public class PlayerInputHandler : MonoBehaviour
                 {
                     StartCoroutine(ReturnTargetToPoolAfterAnimation(Target, currentTarget));
                 }
-                
-                //PoolManager.Instance.ReturnPooledObject(PlayerMH.CurrentTarget);
 
+                //PoolManager.Instance.ReturnPooledObject(PlayerMH.CurrentTarget);
             }
             else
             {
@@ -110,7 +109,6 @@ public class PlayerInputHandler : MonoBehaviour
                 //Invoke Action
                 OnPlayerMissUI?.Invoke();
                 OnPlayerMissedShot?.Invoke();
-            }
         }
     }
 
@@ -129,7 +127,6 @@ public class PlayerInputHandler : MonoBehaviour
     {
         //For handling reloading
         if (!context.performed) return; //Checks if the R key was NOT PRESSED (performed)
-
 
         if (!AmmoManager.Instance.IsAmmoEmpty())
         {
@@ -152,9 +149,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     #region General Input Related Methods
     //Method to handle enabling and disabling inputs / actions
-    public Vector2 ReadMouseValue()
+    public Vector2 ReadTouchPosition()
     {
-        return inputs.Player.Look.ReadValue<Vector2>();
+        return inputs.Player.ScreenPosition.ReadValue<Vector2>();
     }
 
     public void EnableAllPlayerActions()
@@ -193,12 +190,12 @@ public class PlayerInputHandler : MonoBehaviour
     //Method to handle ONLY enabling and disabling the fire input / action
     void EnableFiringFunctionality()
     {   
-        inputs.Player.Fire.Enable();
+        inputs.Player.ScreenPosition.Enable(); //Remember to chance the method name later
     }
 
     void DisableFiringFunctionality()
     {
-        inputs.Player.Fire.Disable();
+        inputs.Player.ScreenPosition.Disable(); //Remember to chance the method name later
     }
     #endregion
     

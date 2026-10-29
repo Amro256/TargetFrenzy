@@ -7,18 +7,18 @@
             "id": "5b8d3b64-e3c2-40ee-99a9-c4066dd3239d",
             "actions": [
                 {
-                    "name": "Look",
+                    "name": "ScreenPosition",
                     "type": "Value",
-                    "id": "65fa3f67-7b75-46df-b4b9-de04d2e78f24",
+                    "id": "982bea72-3889-4e24-8674-ae26a3590b04",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
+                    "name": "TouchPressed",
                     "type": "Button",
-                    "id": "982bea72-3889-4e24-8674-ae26a3590b04",
+                    "id": "ab3ea0f1-674b-4efd-af71-5357869741c4",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -37,23 +37,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "8c8e490b-c610-4785-884f-f04217b23ca4",
-                    "path": "<Mouse>/position",
+                    "id": "64be658b-2e1c-4592-b26e-8eb4d940efdf",
+                    "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Fire",
+                    "groups": ";Touch",
+                    "action": "ScreenPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -65,6 +54,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12b3e826-f300-40c6-a8ea-4235f0e22a78",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "TouchPressed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

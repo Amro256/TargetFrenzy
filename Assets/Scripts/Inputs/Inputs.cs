@@ -93,18 +93,18 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
             ""id"": ""5b8d3b64-e3c2-40ee-99a9-c4066dd3239d"",
             ""actions"": [
                 {
-                    ""name"": ""Look"",
+                    ""name"": ""ScreenPosition"",
                     ""type"": ""Value"",
-                    ""id"": ""65fa3f67-7b75-46df-b4b9-de04d2e78f24"",
+                    ""id"": ""982bea72-3889-4e24-8674-ae26a3590b04"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""TouchPressed"",
                     ""type"": ""Button"",
-                    ""id"": ""982bea72-3889-4e24-8674-ae26a3590b04"",
+                    ""id"": ""ab3ea0f1-674b-4efd-af71-5357869741c4"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -123,23 +123,12 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""8c8e490b-c610-4785-884f-f04217b23ca4"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""64be658b-2e1c-4592-b26e-8eb4d940efdf"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
+                    ""groups"": "";Touch"",
+                    ""action"": ""ScreenPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -151,6 +140,17 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12b3e826-f300-40c6-a8ea-4235f0e22a78"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Touch"",
+                    ""action"": ""TouchPressed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -766,8 +766,8 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_ScreenPosition = m_Player.FindAction("ScreenPosition", throwIfNotFound: true);
+        m_Player_TouchPressed = m_Player.FindAction("TouchPressed", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
@@ -866,8 +866,8 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_ScreenPosition;
+    private readonly InputAction m_Player_TouchPressed;
     private readonly InputAction m_Player_Reload;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -881,13 +881,13 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActions(@TargetFrenzy wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/Look".
+        /// Provides access to the underlying input action "Player/ScreenPosition".
         /// </summary>
-        public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @ScreenPosition => m_Wrapper.m_Player_ScreenPosition;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Fire".
+        /// Provides access to the underlying input action "Player/TouchPressed".
         /// </summary>
-        public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @TouchPressed => m_Wrapper.m_Player_TouchPressed;
         /// <summary>
         /// Provides access to the underlying input action "Player/Reload".
         /// </summary>
@@ -918,12 +918,12 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
-            @Fire.started += instance.OnFire;
-            @Fire.performed += instance.OnFire;
-            @Fire.canceled += instance.OnFire;
+            @ScreenPosition.started += instance.OnScreenPosition;
+            @ScreenPosition.performed += instance.OnScreenPosition;
+            @ScreenPosition.canceled += instance.OnScreenPosition;
+            @TouchPressed.started += instance.OnTouchPressed;
+            @TouchPressed.performed += instance.OnTouchPressed;
+            @TouchPressed.canceled += instance.OnTouchPressed;
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
@@ -938,12 +938,12 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActions" />
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
-            @Fire.started -= instance.OnFire;
-            @Fire.performed -= instance.OnFire;
-            @Fire.canceled -= instance.OnFire;
+            @ScreenPosition.started -= instance.OnScreenPosition;
+            @ScreenPosition.performed -= instance.OnScreenPosition;
+            @ScreenPosition.canceled -= instance.OnScreenPosition;
+            @TouchPressed.started -= instance.OnTouchPressed;
+            @TouchPressed.performed -= instance.OnTouchPressed;
+            @TouchPressed.canceled -= instance.OnTouchPressed;
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
@@ -1344,19 +1344,19 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Look" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ScreenPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLook(InputAction.CallbackContext context);
+        void OnScreenPosition(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Fire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "TouchPressed" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnFire(InputAction.CallbackContext context);
+        void OnTouchPressed(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Reload" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
