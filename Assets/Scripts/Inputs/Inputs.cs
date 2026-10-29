@@ -146,7 +146,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""12b3e826-f300-40c6-a8ea-4235f0e22a78"",
-                    ""path"": ""<Touchscreen>/Press"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Touch"",
