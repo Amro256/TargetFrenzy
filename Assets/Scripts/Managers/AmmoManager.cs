@@ -84,8 +84,7 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         }
     }
 
-
-    //Add a method for reload functionality. Reloading will be mapped the "R" key
+    //Add a method for reload functionality.
     public void Reload()
     {
         //Set the "isOutOfAmmo" bool back to false as the player will have full ammo after reloading
@@ -109,7 +108,5 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         IsOutOfAmmo = false; //We need to check if the player is out of ammo first, otherwise the reload can still be performed with max ammo
         CurrentAmmoAmount = maxAmmo;
     }
-
-    
 
 }
