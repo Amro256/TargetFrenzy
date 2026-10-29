@@ -43,7 +43,6 @@ public class PlayerInputHandler : MonoBehaviour
 
         //Subscribe the actions to the "performed" binding
         inputs.Player.TouchPressed.performed += OnTouchPressed;
-        inputs.Player.Reload.performed += OnReload;
         inputs.Pause.Pause.performed += OnPause;
 
         AmmoManager.OnOutOfAmmo += DisableFiringFunctionality;
@@ -61,7 +60,6 @@ public class PlayerInputHandler : MonoBehaviour
 
         //unsubscribe the actions from the "performed" binding
         inputs.Player.TouchPressed.performed -= OnTouchPressed;
-        inputs.Player.Reload.performed -= OnReload;
         inputs.Pause.Pause.performed -= OnPause;
 
         AmmoManager.OnOutOfAmmo -= DisableFiringFunctionality;
@@ -123,21 +121,21 @@ public class PlayerInputHandler : MonoBehaviour
         PoolManager.Instance.ReturnPooledObject(currentTarget);
     }
 
-    private void OnReload(InputAction.CallbackContext context) //Reload is mapped to the "R" key as of now
-    {
-        //For handling reloading
-        if (!context.performed) return; //Checks if the R key was NOT PRESSED (performed)
+    // private void OnReload(InputAction.CallbackContext context) //Reload is mapped to the "R" key as of now
+    // {
+    //     //For handling reloading
+    //     if (!context.performed) return; //Checks if the R key was NOT PRESSED (performed)
 
-        if (!AmmoManager.Instance.IsAmmoEmpty())
-        {
-            Debug.Log("You cant reload yet!");
-            return;
-        }
+    //     if (!AmmoManager.Instance.IsAmmoEmpty())
+    //     {
+    //         Debug.Log("You cant reload yet!");
+    //         return;
+    //     }
 
-        //Code here - Invoke any actions here!
-        OnReloadPress?.Invoke();
-        Debug.Log("Reload performed");
-    }
+    //     //Code here - Invoke any actions here!
+    //     OnReloadPress?.Invoke();
+    //     Debug.Log("Reload performed");
+    // }
 
     private void OnPause(InputAction.CallbackContext context)
     {

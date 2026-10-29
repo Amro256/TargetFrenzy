@@ -87,6 +87,12 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
     //Add a method for reload functionality.
     public void Reload()
     {
+        if (!IsAmmoEmpty())
+        {
+            Debug.Log("You cant reload yet!");
+            return;
+        }
+    
         //Set the "isOutOfAmmo" bool back to false as the player will have full ammo after reloading
         IsOutOfAmmo = false;
         Debug.Log("Is player out of ammo: " + IsOutOfAmmo);
