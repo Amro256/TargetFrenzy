@@ -7,15 +7,13 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    void Awake()
+    void Start()
     {
         foreach (GameObject arrow in arrows)
         {
             arrow.SetActive(false);
         }
     }
-
-
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {

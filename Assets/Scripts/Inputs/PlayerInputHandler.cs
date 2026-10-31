@@ -232,9 +232,6 @@ public class PlayerInputHandler : MonoBehaviour
         inputs.Touch.ScreenPosition.Disable(); //Remember to chance the method name later
 
     }
-
-   
-
     #endregion
 
 }
