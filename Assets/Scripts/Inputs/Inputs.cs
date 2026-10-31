@@ -89,7 +89,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
     ""name"": ""Target Frenzy"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Touch"",
             ""id"": ""5b8d3b64-e3c2-40ee-99a9-c4066dd3239d"",
             ""actions"": [
                 {
@@ -131,34 +131,6 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Touch"",
                     ""action"": ""TouchPressed"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Pause"",
-            ""id"": ""9c3d4009-5a24-431f-acb9-ad5004c68ead"",
-            ""actions"": [
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""607dae3b-0c31-4767-8e60-2051eb32a345"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""62c7a11b-1f2a-463e-adc5-deb3d79d3215"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -744,13 +716,10 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_ScreenPosition = m_Player.FindAction("ScreenPosition", throwIfNotFound: true);
-        m_Player_TouchPressed = m_Player.FindAction("TouchPressed", throwIfNotFound: true);
-        // Pause
-        m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
-        m_Pause_Pause = m_Pause.FindAction("Pause", throwIfNotFound: true);
+        // Touch
+        m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
+        m_Touch_ScreenPosition = m_Touch.FindAction("ScreenPosition", throwIfNotFound: true);
+        m_Touch_TouchPressed = m_Touch.FindAction("TouchPressed", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -767,8 +736,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
 
     ~@TargetFrenzy()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, TargetFrenzy.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Pause.enabled, "This will cause a leak and performance issues, TargetFrenzy.Pause.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Touch.enabled, "This will cause a leak and performance issues, TargetFrenzy.Touch.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, TargetFrenzy.UI.Disable() has not been called.");
     }
 
@@ -842,34 +810,34 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_ScreenPosition;
-    private readonly InputAction m_Player_TouchPressed;
+    // Touch
+    private readonly InputActionMap m_Touch;
+    private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
+    private readonly InputAction m_Touch_ScreenPosition;
+    private readonly InputAction m_Touch_TouchPressed;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Player".
+    /// Provides access to input actions defined in input action map "Touch".
     /// </summary>
-    public struct PlayerActions
+    public struct TouchActions
     {
         private @TargetFrenzy m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public PlayerActions(@TargetFrenzy wrapper) { m_Wrapper = wrapper; }
+        public TouchActions(@TargetFrenzy wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/ScreenPosition".
+        /// Provides access to the underlying input action "Touch/ScreenPosition".
         /// </summary>
-        public InputAction @ScreenPosition => m_Wrapper.m_Player_ScreenPosition;
+        public InputAction @ScreenPosition => m_Wrapper.m_Touch_ScreenPosition;
         /// <summary>
-        /// Provides access to the underlying input action "Player/TouchPressed".
+        /// Provides access to the underlying input action "Touch/TouchPressed".
         /// </summary>
-        public InputAction @TouchPressed => m_Wrapper.m_Player_TouchPressed;
+        public InputAction @TouchPressed => m_Wrapper.m_Touch_TouchPressed;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public InputActionMap Get() { return m_Wrapper.m_Touch; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -877,9 +845,9 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="PlayerActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="TouchActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(TouchActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -887,11 +855,11 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="PlayerActions" />
-        public void AddCallbacks(IPlayerActions instance)
+        /// <seealso cref="TouchActions" />
+        public void AddCallbacks(ITouchActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_TouchActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TouchActionsCallbackInterfaces.Add(instance);
             @ScreenPosition.started += instance.OnScreenPosition;
             @ScreenPosition.performed += instance.OnScreenPosition;
             @ScreenPosition.canceled += instance.OnScreenPosition;
@@ -906,8 +874,8 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="PlayerActions" />
-        private void UnregisterCallbacks(IPlayerActions instance)
+        /// <seealso cref="TouchActions" />
+        private void UnregisterCallbacks(ITouchActions instance)
         {
             @ScreenPosition.started -= instance.OnScreenPosition;
             @ScreenPosition.performed -= instance.OnScreenPosition;
@@ -918,12 +886,12 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TouchActions.UnregisterCallbacks(ITouchActions)" />.
         /// </summary>
-        /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-        public void RemoveCallbacks(IPlayerActions instance)
+        /// <seealso cref="TouchActions.UnregisterCallbacks(ITouchActions)" />
+        public void RemoveCallbacks(ITouchActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_TouchActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -933,117 +901,21 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
-        /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-        /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-        public void SetCallbacks(IPlayerActions instance)
+        /// <seealso cref="TouchActions.AddCallbacks(ITouchActions)" />
+        /// <seealso cref="TouchActions.RemoveCallbacks(ITouchActions)" />
+        /// <seealso cref="TouchActions.UnregisterCallbacks(ITouchActions)" />
+        public void SetCallbacks(ITouchActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_TouchActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_TouchActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
+    /// Provides a new <see cref="TouchActions" /> instance referencing this action map.
     /// </summary>
-    public PlayerActions @Player => new PlayerActions(this);
-
-    // Pause
-    private readonly InputActionMap m_Pause;
-    private List<IPauseActions> m_PauseActionsCallbackInterfaces = new List<IPauseActions>();
-    private readonly InputAction m_Pause_Pause;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Pause".
-    /// </summary>
-    public struct PauseActions
-    {
-        private @TargetFrenzy m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public PauseActions(@TargetFrenzy wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Pause/Pause".
-        /// </summary>
-        public InputAction @Pause => m_Wrapper.m_Pause_Pause;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Pause; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="PauseActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(PauseActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="PauseActions" />
-        public void AddCallbacks(IPauseActions instance)
-        {
-            if (instance == null || m_Wrapper.m_PauseActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PauseActionsCallbackInterfaces.Add(instance);
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="PauseActions" />
-        private void UnregisterCallbacks(IPauseActions instance)
-        {
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PauseActions.UnregisterCallbacks(IPauseActions)" />.
-        /// </summary>
-        /// <seealso cref="PauseActions.UnregisterCallbacks(IPauseActions)" />
-        public void RemoveCallbacks(IPauseActions instance)
-        {
-            if (m_Wrapper.m_PauseActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="PauseActions.AddCallbacks(IPauseActions)" />
-        /// <seealso cref="PauseActions.RemoveCallbacks(IPauseActions)" />
-        /// <seealso cref="PauseActions.UnregisterCallbacks(IPauseActions)" />
-        public void SetCallbacks(IPauseActions instance)
-        {
-            foreach (var item in m_Wrapper.m_PauseActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_PauseActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="PauseActions" /> instance referencing this action map.
-    /// </summary>
-    public PauseActions @Pause => new PauseActions(this);
+    public TouchActions @Touch => new TouchActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1305,11 +1177,11 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         }
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Touch" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
-    /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-    public interface IPlayerActions
+    /// <seealso cref="TouchActions.AddCallbacks(ITouchActions)" />
+    /// <seealso cref="TouchActions.RemoveCallbacks(ITouchActions)" />
+    public interface ITouchActions
     {
         /// <summary>
         /// Method invoked when associated input action "ScreenPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -1325,21 +1197,6 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTouchPressed(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Pause" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="PauseActions.AddCallbacks(IPauseActions)" />
-    /// <seealso cref="PauseActions.RemoveCallbacks(IPauseActions)" />
-    public interface IPauseActions
-    {
-        /// <summary>
-        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

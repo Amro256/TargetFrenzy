@@ -18,40 +18,30 @@ public class MouseHandler : MonoBehaviour
     //Update is called once per frame
     private void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0); //Gets the first touch
-
-            if (touch.phase != TouchPhase.Began) return;
-
-            screenTouchPos = touch.position;
-        }
-
-            screenTouchPos = PlayerInputHandler.instance.ReadTouchPosition(); //Reads and updates the mouse position on screen (In screen space)
+        screenTouchPos = PlayerInputHandler.instance.ReadTouchPosition(); //Reads and updates the mouse position on screen (In screen space)
         
-            screenTouchPos.z = Camera.main.nearClipPlane; //Set the z coordinate to the camera's near clip - this will keep it in the visible area
-            screenTouchWorldPos = Camera.main.ScreenToWorldPoint(screenTouchPos); //Converts the screen space coordinates to world space (provides xyz coordinates
+        screenTouchPos.z = Camera.main.nearClipPlane; //Set the z coordinate to the camera's near clip - this will keep it in the visible area
+        screenTouchWorldPos = Camera.main.ScreenToWorldPoint(screenTouchPos); //Converts the screen space coordinates to world space (provides xyz coordinates
 
-            //Debug.Log(screenTouchWorldPos);
 
-            //Raycast code taken from the target detection script for testing - Placing the raycast code here means each target gameobject wont need to have the "target detection"
-            //script attached to it
+        //Raycast code taken from the target detection script for testing - Placing the raycast code here means each target gameobject wont need to have the "target detection"
+        //script attached to it
 
-            //Fire a raycast that will detect the targets by tag
-            RaycastHit2D hit = Physics2D.Raycast(screenTouchWorldPos, Vector2.zero, 0f);
-            Debug.DrawRay(screenTouchWorldPos, Vector2.up * 0.1f, Color.red, 10f);
+        //Fire a raycast that will detect the targets by tag
+        RaycastHit2D hit = Physics2D.Raycast(screenTouchWorldPos, Vector2.zero, 0f);
+        Debug.DrawRay(screenTouchWorldPos, Vector2.up * 0.1f, Color.red, 10f);
             
 
-            if (hit)
-             {
+        if (hit)
+        {
             currentTarget = hit.collider.gameObject;
             GameManager.Instance.UpdateMouseCursor();
 
-            }
-             else
-            {
+        }
+        else
+        {
             currentTarget = null;  //Debug.Log("Nothing detected"); //for debugging
-             }
+        }
         
     }
 }

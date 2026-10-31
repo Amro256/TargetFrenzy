@@ -36,8 +36,8 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
         if (GameManager.Instance.IsIntroSeqPlaying) //Check with the bool first to see if the sequence has not been played
         {
             //Disable Player Input
-            PlayerInputHandler.instance.DisableAllPlayerActions();
-            PlayerInputHandler.instance.DisablePauseAction();
+            PlayerInputHandler.instance.DisableTouchActions();
+            //PlayerInputHandler.instance.DisablePauseAction();
 
             //Play the "Ready" clip here
             AudioManager.Instance.PlayUISFX(startUpCountdownAudio.Clips[9], 1f);
@@ -51,8 +51,8 @@ public class StartUpSequence : MonoBehaviour //Reusing code from the countdown m
             yield return new WaitForSeconds(2f);
 
             //Re-enable Player Input
-            PlayerInputHandler.instance.EnableAllPlayerActions();
-            PlayerInputHandler.instance.EnablePauseAction();
+            PlayerInputHandler.instance.EnableTouchActions();
+            // PlayerInputHandler.instance.EnablePauseAction();
 
             //Disable the gameObject that the countdown text is attached to
             this.StartUpText.transform.parent.gameObject.SetActive(false);

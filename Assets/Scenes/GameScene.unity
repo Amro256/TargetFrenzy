@@ -2557,6 +2557,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSFX: {fileID: 11400000, guid: c0d5ef26a9c19b04a9316f429622da8f, type: 2}
+  graphicRaycasters:
+  - {fileID: 1215868180}
+  - {fileID: 1959797047}
+  - {fileID: 708779064}
 --- !u!114 &609494577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6458,7 +6462,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -102.3999, y: -88.400024}
+  m_AnchoredPosition: {x: -102.3999, y: -88.3999}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472052282

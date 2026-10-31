@@ -146,8 +146,7 @@ public class GameManager : MonoBehaviour
             isGameOver = true; 
 
             //Disable the player's fire and reload input
-            PlayerInputHandler.instance.DisableAllPlayerActions();
-            PlayerInputHandler.instance.DisablePauseAction();
+            PlayerInputHandler.instance.DisableTouchActions();
 
             //Call method to display the "Pause menu". This will be used for testing - 15/6/26: This will now be changed to the game over screen
 
@@ -205,13 +204,13 @@ public class GameManager : MonoBehaviour
             //Call the pause game method
             PauseGame();
             Debug.Log("Actions disabled");
-            PlayerInputHandler.instance.DisableAllPlayerActions();
+            PlayerInputHandler.instance.DisableTouchActions();
         }
         else
         {
             ResumeGame(); //Call the resume game method
             Debug.Log("Actions enabled");
-            PlayerInputHandler.instance.EnableAllPlayerActions();
+            PlayerInputHandler.instance.EnableTouchActions();
         }
     }
 
