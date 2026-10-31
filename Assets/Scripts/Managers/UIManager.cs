@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Canvas GameOverCanvas; //Reference to the Game Over Canvas
     [SerializeField] private Canvas GameHudCanvas; //Reference to the game hud
 
-    [Header("specific UI Game Objects References")]
+    [Header("Specific UI Game Objects References")]
     [SerializeField] private GameObject BonusStartText; //Reference to gameobject containing the text for the start of the bonus round
     [SerializeField] private GameObject BonusCountdownText; //Reference to gameobject containing the countdown text for the bonus round
     [SerializeField] private GameObject ReloadWarningText;

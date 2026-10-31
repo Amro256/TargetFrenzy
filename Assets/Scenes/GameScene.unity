@@ -565,6 +565,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &183978118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 183978119}
+  m_Layer: 5
+  m_Name: Content_TopRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &183978119
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183978118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1472052281}
+  m_Father: {fileID: 1215868183}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &204821244
 GameObject:
   m_ObjectHideFlags: 0
@@ -3652,6 +3688,7 @@ MonoBehaviour:
   gameHUD:
   - {fileID: 1184091385}
   - {fileID: 1245120421}
+  - {fileID: 183978118}
   BonusRoundGroup: {fileID: 1887686968}
   ammoSprites:
   - {fileID: 466574538}
@@ -4603,7 +4640,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1472052281}
+  - {fileID: 183978119}
   - {fileID: 1184091386}
   - {fileID: 1245120422}
   - {fileID: 1887686969}
@@ -5867,11 +5904,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1215868183}
+  m_Father: {fileID: 183978119}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -102.3999, y: -88.3999}
+  m_AnchoredPosition: {x: 1127.447, y: 581.6861}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472052282
@@ -8329,7 +8366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetHitInARow: 0
   spawnTime: 3.5
-  maxTargetsToHit: 10
+  maxTargetsToHit: 2
   targetReticleTexture: {fileID: 2800000, guid: c7e0dead9005b064290b52f17ae21656, type: 3}
   spawners:
   - {fileID: 777882535}
