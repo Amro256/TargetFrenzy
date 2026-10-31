@@ -15,10 +15,10 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private AudioData audioSFX;
     MouseHandler PlayerMH; //Reference to the MouseHandler script, so this script can access the current target (GameObject)
 
-    //Testing 
-    [SerializeField] private GraphicRaycaster[] graphicRaycasters;
-    private PointerEventData touchData;
-    private List<RaycastResult> raycastResults;
+    //Graphic Raycaster 
+    [SerializeField] private GraphicRaycaster[] graphicRaycasters; //Array containing all the GraphicRaycasters in the scene
+    private PointerEventData touchData; //Struct to hold the position data of the pointer (in this case, the touch position)
+    private List<RaycastResult> raycastResults; //List containing all the UI elements hit by the raycast
 
     #region Actions
     //Actions to be invoked
@@ -77,9 +77,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         PlayerMH = FindAnyObjectByType<MouseHandler>(); //Finds an object that has the mouse handler script attached to it
 
-        //Testing
+        //Initialisation
         touchData = new PointerEventData(EventSystem.current);
-
         raycastResults = new List<RaycastResult>();
     }
 
@@ -89,7 +88,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!context.performed) return; //Check if the action has been performed / completed  
 
-        if (HasClickedOverUI()) return;  
+        if (HasTouchedOverUI()) return; //Check if the player did not touch a UI element
 
         if (PlayerMH.CurrentTarget != null) //If the mouse IS currently hovering over a target, destroy the current target
         {
@@ -112,7 +111,7 @@ public class PlayerInputHandler : MonoBehaviour
             //Debug.Log("You have clicked on nothing"); --18/5/26 Commented this debug out to debug other bugs--
 
             AmmoManager.Instance.UpdateAmmoValue(1);  //As of: 5/5/26 - This has been moved from the UI manager as it was overlapping with the same code 
-                                                      //that's responsible for updating the ammo value when the player hits a target, resulting in the ammo value decreasing by two instead of one.
+            //that's responsible for updating the ammo value when the player hits a target, resulting in the ammo value decreasing by two instead of one.
 
             AudioManager.Instance.PlaySFX(audioSFX.Clips[2], 1f);
             //Invoke Action
@@ -163,29 +162,31 @@ public class PlayerInputHandler : MonoBehaviour
         return inputs.Touch.ScreenPosition.ReadValue<Vector2>();
     }
 
-
-     private bool HasClickedOverUI()
+    //Method to check whether the player touched a UI element
+     private bool HasTouchedOverUI()
     {
         //Get the current touch position
         touchData.position = ReadTouchPosition();
 
-        //Clear previous results
+        //Clear the list of previous results
         raycastResults.Clear();
 
-
+        //Loop through the graphicRaycasters array and perform a raycast from the current touch position. 
+        //Store the results in the raycastResults list
         foreach (var graphicRaycaster in graphicRaycasters)
         {
             graphicRaycaster.Raycast(touchData, raycastResults);
         }
 
-        //Log UI elements hit by the raycast
+        //Debug: Log UI elements hit by the raycast
         foreach (var raycastResult in raycastResults)
         {
-            Debug.Log($"Clicked in UI element: ${raycastResult}");
+            Debug.Log("Hit " + raycastResult.gameObject.name);
         }
 
+        //Return a bool that will tell whether the player has touched a UI element
         return raycastResults.Count > 0;
-     }
+    }
 
     public void EnableTouchActions()
     {
