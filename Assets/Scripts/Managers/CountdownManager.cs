@@ -10,13 +10,18 @@ public class CountdownManager : MonoBehaviour
     //Decided to isolate this from the UI manager to prevent it from becoming too bloated
 
     //Singleton
-    public static CountdownManager Instance {get; private set;}
+    public static CountdownManager Instance { get; private set; }
 
     //General variables
     [SerializeField] private int countdownTime;
     [SerializeField] private TextMeshProUGUI countdownText;
-    [SerializeField] private AudioData countdownAudio;
 
+    [Header("Resume Only Objects")]
+    [SerializeField] private GameObject resumeCountdownUI;
+    [SerializeField] private TextMeshProUGUI resumeCountdownText;
+
+      [Header("Scriptable Object Reference")]    
+    [SerializeField] private AudioData countdownAudio;
 
     void Awake()
     {
@@ -30,17 +35,24 @@ public class CountdownManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        resumeCountdownUI.SetActive(false);
+    }
+
+
     //Use a coroutine to decrement the countdown timer    
     public IEnumerator CountdownTimer()
     {
         yield return new WaitForSeconds(2.5f); //This is here to prevent THIS coroutine starting at the same time as the "bonus round" text. Meaning this will start after the completion of the first coroutine
 
-        //Check to see if the countdown timer is greater than 0 (use a while loop)
+
         AudioManager.Instance.PlayUISFX(countdownAudio.Clips[1], 1f);
+
+        //Check to see if the countdown timer is greater than 0 (use a while loop)
 
         while (countdownTime > 0)
         {
-
             //While the timer is greater than 0, assign the timer value to the text value
             countdownText.text = countdownTime.ToString();
 
@@ -50,7 +62,6 @@ public class CountdownManager : MonoBehaviour
             //Decrement
             countdownTime--;
 
-            
         }
 
         countdownText.text = "GO!";
@@ -63,4 +74,54 @@ public class CountdownManager : MonoBehaviour
 
     }
 
+
+    //Same method as above except this is for the resume countdown timer   
+    public IEnumerator ResumeCountdownTimer()
+    {
+        if (!GameManager.Instance.IsResumeCountdownPlaying) yield break; //Check if the bool value is "true". If so, display the countdown
+
+        Debug.Log("Playing Resume Countdown");
+
+        //Hide the Pause Menu
+        UIManager.Instance.HidePauseMenu();
+
+        //Show the countdown text
+        resumeCountdownUI.SetActive(true);
+
+        AudioManager.Instance.PlayUISFX(countdownAudio.Clips[1], 1f);
+
+        //Check to see if the countdown timer is greater than 0 (use a while loop)
+        while (countdownTime > 0)
+        {
+            //While the timer is greater than 0, assign the timer value to the text value
+            resumeCountdownText.text = countdownTime.ToString();
+
+            //How long to wait (in seconds) before calling it again?
+            yield return new WaitForSecondsRealtime(1f);
+
+            //Decrement
+            countdownTime--;
+        }
+
+        resumeCountdownText.text = "GO!";
+
+        //How long to wait again (in seconds) before disabling the text gameObject?
+        yield return new WaitForSecondsRealtime(2f);
+
+        //Disable the gameObject that the countdown text is attached to
+        resumeCountdownUI.SetActive(false);
+
+        //Resumes Gameplay
+        GameManager.Instance.ResumeGameplay();
+
+        //Reset Bool
+        GameManager.Instance.IsResumeCountdownPlaying = false;
+        
+        //Reset countdown timer
+        countdownTime = 3;
+
+    }
+
 }
+
+

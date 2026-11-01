@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private bool isPaused; //Add a bool here for "IsPaused" - Will be used to track if the game is paused or not
     private bool IsBonusRActive = false;
     private bool isBonusRoundIntroPlaying = false;
+    private bool isResumeCountdownPlaying = false;
     private bool isGameOver = false;
     private bool isIntroSeqPlaying { get; set; }
     #endregion
@@ -52,6 +53,12 @@ public class GameManager : MonoBehaviour
     {
         get { return isPaused; }
         set { isPaused = value; }
+    }
+
+     public bool IsResumeCountdownPlaying
+    {
+        get { return isResumeCountdownPlaying; }
+        set { isResumeCountdownPlaying = value; }
     }
     #endregion
 
@@ -189,7 +196,16 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        IsPaused = false;
+        //Set the bool to true
+        IsResumeCountdownPlaying = true;
+        Debug.Log("Bool Value after: " + IsResumeCountdownPlaying); //Displays true
+        StartCoroutine(CountdownManager.Instance.ResumeCountdownTimer());
+    }
+
+    //Separated from the method above, so it can be called in the countdown manager while the game manager still remains responsible for its logic
+    public void ResumeGameplay()
+    {
+        IsPaused = true;
         AudioManager.Instance.PlayMenuSFX(audioSFX.Clips[7], 1f);
         Time.timeScale = 1;
         Debug.Log("Game Resumed!");
