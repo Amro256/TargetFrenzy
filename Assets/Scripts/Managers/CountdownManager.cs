@@ -85,6 +85,9 @@ public class CountdownManager : MonoBehaviour
         //Hide the Pause Menu
         UIManager.Instance.HidePauseMenu();
 
+        //disable touch input
+        PlayerInputHandler.instance.DisableTouchActions();
+
         //Show the countdown text
         resumeCountdownUI.SetActive(true);
 
@@ -110,6 +113,9 @@ public class CountdownManager : MonoBehaviour
 
         //Disable the gameObject that the countdown text is attached to
         resumeCountdownUI.SetActive(false);
+
+        //re-enable inputs
+        PlayerInputHandler.instance.EnableTouchActions();
 
         //Resumes Gameplay
         GameManager.Instance.ResumeGameplay();
