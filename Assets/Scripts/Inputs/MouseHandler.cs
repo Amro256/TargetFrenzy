@@ -9,19 +9,31 @@ public class MouseHandler : MonoBehaviour
     private Vector3 screenTouchPos; //Stores the screen space mouse position    
     private Vector3 screenTouchWorldPos; // Stores the world space mouse position
     private GameObject currentTarget; //To store the target the mouse is current hovering over --14/4/24: This has now been moved to the new Mouse Handler script, as its more relevant to that script than the input handler
+
+    [SerializeField] ParticleSystem particleSym;
+
+    private ParticleSystem.EmitParams emitSettings;
     
     public GameObject CurrentTarget //Property field so the Player Input script can access the 'current target'
     {
-        get { return currentTarget;}
+        get { return currentTarget; }
+    }
+
+    private void Start()
+    {
+        emitSettings = new ParticleSystem.EmitParams();
     }
 
     //Update is called once per frame
     private void Update()
     {
         screenTouchPos = PlayerInputHandler.instance.ReadTouchPosition(); //Reads and updates the mouse position on screen (In screen space)
-        
+
         screenTouchPos.z = Camera.main.nearClipPlane; //Set the z coordinate to the camera's near clip - this will keep it in the visible area
         screenTouchWorldPos = Camera.main.ScreenToWorldPoint(screenTouchPos); //Converts the screen space coordinates to world space (provides xyz coordinates
+
+        emitSettings.position = screenTouchWorldPos;
+        particleSym.Emit(emitSettings, 1);
 
 
         //Raycast code taken from the target detection script for testing - Placing the raycast code here means each target gameobject wont need to have the "target detection"
@@ -30,7 +42,7 @@ public class MouseHandler : MonoBehaviour
         //Fire a raycast that will detect the targets by tag
         RaycastHit2D hit = Physics2D.Raycast(screenTouchWorldPos, Vector2.zero, 0f);
         Debug.DrawRay(screenTouchWorldPos, Vector2.up * 0.1f, Color.red, 10f);
-            
+
 
         if (hit)
         {
@@ -42,6 +54,6 @@ public class MouseHandler : MonoBehaviour
         {
             currentTarget = null;  //Debug.Log("Nothing detected"); //for debugging
         }
-        
+
     }
 }
