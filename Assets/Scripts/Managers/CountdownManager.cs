@@ -72,6 +72,10 @@ public class CountdownManager : MonoBehaviour
         //Disable the gameObject that the countdown text is attached to
         countdownText.gameObject.SetActive(false);
 
+
+        //Reset countdown timer
+        countdownTime = 3;
+
     }
 
 
