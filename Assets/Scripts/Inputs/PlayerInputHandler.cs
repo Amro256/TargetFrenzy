@@ -24,6 +24,7 @@ public class PlayerInputHandler : MonoBehaviour
     //Actions to be invoked
     public static event Action OnPlayerMissUI;
     public static event Action OnReloadPress;
+    public static event Action OnTouchStarted;
     public static event Action OnPlayerMissedShot;
     public static event Action OnConfirmedHit;
     #endregion
@@ -86,7 +87,9 @@ public class PlayerInputHandler : MonoBehaviour
     //Method for shooting / firing - using Unity Events as the notification behaviour 
     private void OnTouchPressed(InputAction.CallbackContext context)
     {
-        if (!context.performed) return; //Check if the action has been performed / completed  
+        if (!context.performed) return; //Check if the action has been performed / completed
+
+        OnTouchStarted?.Invoke();  
 
         if (HasTouchedOverUI()) return; //Check if the player did not touch a UI element
 

@@ -10,18 +10,21 @@ public class MouseHandler : MonoBehaviour
     private Vector3 screenTouchWorldPos; // Stores the world space mouse position
     private GameObject currentTarget; //To store the target the mouse is current hovering over --14/4/24: This has now been moved to the new Mouse Handler script, as its more relevant to that script than the input handler
 
-    [SerializeField] ParticleSystem particleSym;
+    [SerializeField] private ParticleSystem particleSym;
 
-    private ParticleSystem.EmitParams emitSettings;
-    
     public GameObject CurrentTarget //Property field so the Player Input script can access the 'current target'
     {
         get { return currentTarget; }
     }
 
-    private void Start()
+    void OnEnable()
     {
-        emitSettings = new ParticleSystem.EmitParams();
+        PlayerInputHandler.OnTouchStarted += PlayTouchParticle;
+    }
+
+    void OnDisable()
+    {
+        PlayerInputHandler.OnTouchStarted -= PlayTouchParticle;
     }
 
     //Update is called once per frame
@@ -31,9 +34,6 @@ public class MouseHandler : MonoBehaviour
 
         screenTouchPos.z = Camera.main.nearClipPlane; //Set the z coordinate to the camera's near clip - this will keep it in the visible area
         screenTouchWorldPos = Camera.main.ScreenToWorldPoint(screenTouchPos); //Converts the screen space coordinates to world space (provides xyz coordinates
-
-        emitSettings.position = screenTouchWorldPos;
-        particleSym.Emit(emitSettings, 1);
 
 
         //Raycast code taken from the target detection script for testing - Placing the raycast code here means each target gameobject wont need to have the "target detection"
@@ -47,7 +47,6 @@ public class MouseHandler : MonoBehaviour
         if (hit)
         {
             currentTarget = hit.collider.gameObject;
-            GameManager.Instance.UpdateMouseCursor();
 
         }
         else
@@ -55,5 +54,14 @@ public class MouseHandler : MonoBehaviour
             currentTarget = null;  //Debug.Log("Nothing detected"); //for debugging
         }
 
+    }
+    
+    //Method to play the touch particle effect
+    private void PlayTouchParticle()
+    {
+        particleSym.transform.position = screenTouchWorldPos;
+
+        particleSym.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        particleSym.Play();
     }
 }

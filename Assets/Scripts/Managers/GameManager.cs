@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     public int targetHitInARow; //To track the targets hit
     [SerializeField] private float spawnTime =  3.5f;
     [SerializeField] private int maxTargetsToHit = 10;
-    [SerializeField] private Texture2D targetReticleTexture;
     [SerializeField] private SpawnerClass[] spawners;
     [SerializeField] private AudioData audioSFX;
 
@@ -138,11 +137,6 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(spawnTime);  //How long to wait before spawning in targets  
 
         }
-    }
-
-    public void UpdateMouseCursor() //Call this method when the player is hovering over a target
-    {
-        Cursor.SetCursor(targetReticleTexture, Vector2.zero, CursorMode.Auto);
     }
 
     //General Methods 
