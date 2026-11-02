@@ -35,6 +35,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject BonusCountdownText; //Reference to gameobject containing the countdown text for the bonus round
     [SerializeField] private GameObject ReloadWarningText;
     [SerializeField] private GameObject targetCounterGroup;
+    [SerializeField] private Button PauseButton;
+    [SerializeField] private Button ReloadButton;
+
 
 
     [Header("UI Groups")]
@@ -250,6 +253,18 @@ public class UIManager : MonoBehaviour
     public void HidePauseMenu()
     {
         PauseMenuCanvas.gameObject.SetActive(false);
+    }
+
+    public void DisablePauseAndReloadButton()
+    {
+        PauseButton.enabled = false;
+        ReloadButton.enabled = false;
+    }
+
+    public void EnablePauseAndReloadButton()
+    {
+        PauseButton.enabled = true;
+        ReloadButton.enabled = true;
     }
     #endregion
 

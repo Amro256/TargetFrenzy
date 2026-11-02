@@ -20,7 +20,7 @@ public class CountdownManager : MonoBehaviour
     [SerializeField] private GameObject resumeCountdownUI;
     [SerializeField] private TextMeshProUGUI resumeCountdownText;
 
-      [Header("Scriptable Object Reference")]    
+    [Header("Scriptable Object Reference")]
     [SerializeField] private AudioData countdownAudio;
 
     void Awake()
@@ -86,11 +86,7 @@ public class CountdownManager : MonoBehaviour
 
         Debug.Log("Playing Resume Countdown");
 
-        //Hide the Pause Menu
-        UIManager.Instance.HidePauseMenu();
-
-        //disable touch input
-        PlayerInputHandler.instance.DisableTouchActions();
+        DisableElements();
 
         //Show the countdown text
         resumeCountdownUI.SetActive(true);
@@ -118,20 +114,41 @@ public class CountdownManager : MonoBehaviour
         //Disable the gameObject that the countdown text is attached to
         resumeCountdownUI.SetActive(false);
 
-        //re-enable inputs
-        PlayerInputHandler.instance.EnableTouchActions();
-
         //Resumes Gameplay
         GameManager.Instance.ResumeGameplay();
 
+        EnableElements();
+
         //Reset Bool
         GameManager.Instance.IsResumeCountdownPlaying = false;
-        
+
         //Reset countdown timer
         countdownTime = 3;
 
     }
 
+
+    public void DisableElements()
+    {
+        //Hide the Pause Menu
+        UIManager.Instance.HidePauseMenu();
+
+        //disable touch input
+        PlayerInputHandler.instance.DisableTouchActions();
+
+        //Disable the Pause and Reload Buttons
+        UIManager.Instance.DisablePauseAndReloadButton();
+    }
+
+    public void EnableElements()
+    {
+        //re-enable inputs
+        PlayerInputHandler.instance.EnableTouchActions();
+        //Re-enable the buttons
+        UIManager.Instance.EnablePauseAndReloadButton();
+    }
 }
+
+
 
 

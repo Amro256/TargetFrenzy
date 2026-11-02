@@ -8698,6 +8698,8 @@ MonoBehaviour:
   BonusCountdownText: {fileID: 99162027}
   ReloadWarningText: {fileID: 1280186599}
   targetCounterGroup: {fileID: 1140820752}
+  PauseButton: {fileID: 1472052282}
+  ReloadButton: {fileID: 788997958}
   gameHUD:
   - {fileID: 1010896067}
   - {fileID: 1140820752}
