@@ -210,7 +210,6 @@ public class PlayerInputHandler : MonoBehaviour
     public void DisablePlayerAndPauseActions()
     {
         inputs.Touch.Disable();
-        //inputs.Pause.Disable();
     }
 
 

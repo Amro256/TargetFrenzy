@@ -183,6 +183,10 @@ public class GameManager : MonoBehaviour
         IsPaused = true;
         AudioManager.Instance.PlayMenuSFX(audioSFX.Clips[6], 1f);
         Time.timeScale = 0;
+
+        //Disable Input
+        PlayerInputHandler.instance.DisableTouchActions();
+        
         Debug.Log("Game Currently Paused!");
         //Invoke action here to display pause UI
         OnGamePause?.Invoke();
