@@ -31,7 +31,7 @@ public class MouseHandler : MonoBehaviour
     private void Update()
     {
         screenTouchPos = PlayerInputHandler.instance.ReadTouchPosition(); //Reads and updates the mouse position on screen (In screen space)
-
+        
         screenTouchPos.z = Camera.main.nearClipPlane; //Set the z coordinate to the camera's near clip - this will keep it in the visible area
         screenTouchWorldPos = Camera.main.ScreenToWorldPoint(screenTouchPos); //Converts the screen space coordinates to world space (provides xyz coordinates
 

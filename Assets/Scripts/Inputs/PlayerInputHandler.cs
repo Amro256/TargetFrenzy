@@ -82,14 +82,17 @@ public class PlayerInputHandler : MonoBehaviour
         touchData = new PointerEventData(EventSystem.current);
         raycastResults = new List<RaycastResult>();
     }
+    
 
     #region Methods for Input Actions
     //Method for shooting / firing - using Unity Events as the notification behaviour 
     private void OnTouchPressed(InputAction.CallbackContext context)
-    {
+    {   
         if (!context.performed) return; //Check if the action has been performed / completed
 
-        OnTouchStarted?.Invoke();  
+        //Vector2 touchPosition = inputs.Touch.ScreenPosition.ReadValue<Vector2>();
+        
+        OnTouchStarted?.Invoke();
 
         if (HasTouchedOverUI()) return; //Check if the player did not touch a UI element
 

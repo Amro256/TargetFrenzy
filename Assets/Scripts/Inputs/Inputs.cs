@@ -107,7 +107,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                     ""id"": ""ab3ea0f1-674b-4efd-af71-5357869741c4"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -115,7 +115,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""64be658b-2e1c-4592-b26e-8eb4d940efdf"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Touch"",
@@ -126,7 +126,7 @@ public partial class @TargetFrenzy: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""12b3e826-f300-40c6-a8ea-4235f0e22a78"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Touch"",
