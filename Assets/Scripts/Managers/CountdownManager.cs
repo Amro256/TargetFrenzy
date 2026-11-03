@@ -144,8 +144,15 @@ public class CountdownManager : MonoBehaviour
 
     public void EnableElements()
     {
-        //re-enable inputs
-        PlayerInputHandler.instance.EnableTouchActions();
+        //re-enable inputs after checking if the player is out of ammo
+        if (AmmoManager.Instance.IsAmmoEmpty())
+        {
+            PlayerInputHandler.instance.DisableTouchActions();
+        }
+        else
+        {
+            PlayerInputHandler.instance.EnableTouchActions();
+        }
         //Re-enable the buttons
         UIManager.Instance.EnablePauseAndReloadButton();
     }
