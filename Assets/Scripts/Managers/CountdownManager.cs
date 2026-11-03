@@ -88,6 +88,8 @@ public class CountdownManager : MonoBehaviour
 
         DisableElements();
 
+        UIManager.Instance.HideReloadWarning();
+
         //Show the countdown text
         resumeCountdownUI.SetActive(true);
 

@@ -63,11 +63,26 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
         CurrentAmmoAmount = MaxAmmo; //Set the current Ammo amount to the Max Ammo when the game starts
     }
 
+    void Update()
+    {
+        //If statement to check if the currentAmmo Amount is less than 0
+        if (GameManager.Instance.IsResumeCountdownPlaying)
+        {
+            UIManager.Instance.HideReloadWarning();
+            AnimationManager.Instance.StopAnimation(1, "IsLowOnAmmo");
+        }
+        else if (IsOutOfAmmo)
+        {   
+            //Show warning and play the animation
+            UIManager.Instance.ShowReloadWarning();
+            AnimationManager.Instance.StartAnimation(1, "IsLowOnAmmo");
+        }
+    }
+
     public void UpdateAmmoValue(int amount) //This method will be responsible for updating the Ammo Value
     {
         CurrentAmmoAmount = Math.Max(0, CurrentAmmoAmount - amount); //The current ammo amount sometimes drops to -1, so using math.max prevents that by returning the highest value
 
-        //If statement to check if the currentAmmo Amount is less than 0
 
         if (CurrentAmmoAmount <= 0 && !IsOutOfAmmo)
         {
@@ -75,11 +90,6 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
             OnOutOfAmmo?.Invoke();
             Debug.LogError("Please Reload!");
             IsOutOfAmmo = true;
-
-            UIManager.Instance.ShowReloadWarning();
-
-            //Play animation here
-            AnimationManager.Instance.StartAnimation(1, "IsLowOnAmmo");
         }
     }
 
