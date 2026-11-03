@@ -13321,7 +13321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetHitInARow: 0
   spawnTime: 3.5
-  maxTargetsToHit: 10
+  maxTargetsToHit: 2
   spawners:
   - {fileID: 777882535}
   - {fileID: 1808147572}

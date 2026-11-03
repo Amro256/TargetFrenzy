@@ -39,7 +39,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button ReloadButton;
 
 
-
     [Header("UI Groups")]
     [SerializeField] private GameObject[] gameHUD; //Reference to the score, time, and multiplier group //11/6/26: Changed to an array for refactoring purposes
     [SerializeField] private GameObject BonusRoundGroup; //Reference to the bonus round UI group

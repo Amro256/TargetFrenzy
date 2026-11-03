@@ -52,11 +52,11 @@ public class PlayerInputHandler : MonoBehaviour
         //Subscribe the actions to the "performed" binding
         inputs.Touch.TouchPressed.performed += OnTouchPressed;
 
-        AmmoManager.OnOutOfAmmo += DisableFiringFunctionality;
-        AmmoManager.OnFullAmmo += EnableFiringFunctionality;
+        AmmoManager.OnOutOfAmmo += DisableTouchActions;
+        AmmoManager.OnFullAmmo += EnableTouchActions;
 
-        UIManager.OnInputsEnable += EnablePlayerAndPauseActions;
-        UIManager.OnInputsDisable += DisablePlayerAndPauseActions;
+        UIManager.OnInputsEnable += EnableTouchActions;
+        UIManager.OnInputsDisable += DisableTouchActions;
     }
 
     void OnDisable()
@@ -67,11 +67,11 @@ public class PlayerInputHandler : MonoBehaviour
         //unsubscribe the actions from the "performed" binding
         inputs.Touch.TouchPressed.performed -= OnTouchPressed;
 
-        AmmoManager.OnOutOfAmmo -= DisableFiringFunctionality;
-        AmmoManager.OnFullAmmo -= EnableFiringFunctionality;
+        AmmoManager.OnOutOfAmmo -= DisableTouchActions;
+        AmmoManager.OnFullAmmo -= EnableTouchActions;
 
-        UIManager.OnInputsEnable -= EnablePlayerAndPauseActions;
-        UIManager.OnInputsDisable -= DisablePlayerAndPauseActions;
+        UIManager.OnInputsEnable -= EnableTouchActions;
+        UIManager.OnInputsDisable -= DisableTouchActions;
     }
 
     private void Start()
@@ -199,40 +199,6 @@ public class PlayerInputHandler : MonoBehaviour
     public void DisableTouchActions()
     {
         inputs.Touch.Disable();
-    }
-
-    public void EnablePlayerAndPauseActions()
-    {
-        inputs.Touch.Enable();
-        //inputs.Pause.Enable();
-    }
-
-    public void DisablePlayerAndPauseActions()
-    {
-        inputs.Touch.Disable();
-    }
-
-
-    //  public void EnablePauseAction()
-    // {
-    //     inputs.Pause.Enable();
-    // }
-
-    // public void DisablePauseAction()
-    // {
-    //     inputs.Pause.Disable();
-    // }
-
-    //Method to handle ONLY enabling and disabling the fire input / action
-    void EnableFiringFunctionality()
-    {
-        inputs.Touch.ScreenPosition.Enable(); //Remember to chance the method name later
-    }
-
-    void DisableFiringFunctionality()
-    {
-        inputs.Touch.ScreenPosition.Disable(); //Remember to chance the method name later
-
     }
     #endregion
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -66,11 +65,11 @@ public class AmmoManager : MonoBehaviour  //This script's purpose is to isolate 
 
     public void UpdateAmmoValue(int amount) //This method will be responsible for updating the Ammo Value
     {
-        CurrentAmmoAmount -= amount; //Reduce the ammo value by one
+        CurrentAmmoAmount = Math.Max(0, CurrentAmmoAmount - amount); //The current ammo amount sometimes drops to -1, so using math.max prevents that by returning the highest value
 
         //If statement to check if the currentAmmo Amount is less than 0
 
-        if (CurrentAmmoAmount <= 0)
+        if (CurrentAmmoAmount <= 0 && !IsOutOfAmmo)
         {
             //Disable the Player's fire input
             OnOutOfAmmo?.Invoke();
